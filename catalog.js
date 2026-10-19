@@ -1,0 +1,33 @@
+// Catalogue éditorial explicite : aucun dépôt privé n'est automatiquement publié.
+// Les descriptions proviennent des README examinés et de l'audit Constella.
+const project = (id, name, category, description, extra = {}) => ({id, name, category, description, art:'orbit', mode:'Présentation', ...extra});
+export const categories = {jeux:'Jeux', experiences:'Expériences', outils:'Outils'};
+export const projects = [
+project('sensoria','Sensoria','experiences','Explore des tableaux sensoriels où chacun de tes gestes transforme l’image.',{art:'ink',mode:'Navigateur',live:'https://mathieubal.github.io/Sensoria/',repo:'https://github.com/MathieuBal/Sensoria',action:'Lancer l’expérience',detail:'Un espace pour explorer librement des tableaux interactifs. Choisis une ambiance, essaie un geste et observe la réaction.',hint:'L’expérience s’ouvre dans un nouvel onglet. Les performances dépendent de ton appareil.'}),
+project('million-de-pixels','Million de pixels','jeux','Transforme ton image en un million de pixels à détruire, couleur par couleur.',{art:'pixels',mode:'Navigateur',live:'https://mathieubal.github.io/million-de-pixels/',repo:'https://github.com/MathieuBal/million-de-pixels',action:'Jouer',detail:'Une image devient ton terrain de jeu : explore les couleurs et fais disparaître les pixels.',hint:'Ouvre le jeu pour choisir ton image et découvrir ses commandes.'}),
+project('lootchest','Lootchest','jeux','Ouvre des coffres, équipe ton héros et explore des donjons toujours plus profonds.',{art:'chest',mode:'Navigateur',live:'https://mathieubal.github.io/Lootchest/',repo:'https://github.com/MathieuBal/Lootchest',action:'Jouer',detail:'Des coffres, de l’équipement et une progression dans les donjons. Découvre ce que réserve la prochaine ouverture.',hint:'Le jeu s’ouvre dans un nouvel onglet. Garde le même navigateur pour retrouver ses données locales.'}),
+project('diagnostic','Diagnostic numérique','outils','Fais le point sur tes usages numériques à travers des questions et des manipulations.',{art:'tools',repo:'https://github.com/MathieuBal/diagnostic-numerique',detail:'Un support conçu pour des ateliers de médiation numérique. L’accès à une session dépend du cadre de l’atelier.'}),
+project('constella','Constella','outils','Explore tes sujets en constellations et transforme ta veille en journaux éditables.',{art:'orbit',detail:'Un outil de veille et d’exploration, avec collecte de sources, synthèses assistées par IA et édition d’articles. Le projet nécessite encore une installation et des services dédiés.',hint:'Une démonstration publique reste à préparer.'}),
+project('chess','Chess Vision Trainer','jeux','Apprends à repérer les menaces, les défenses et les occasions tactiques sur un échiquier.',{art:'chess',detail:'Un projet d’entraînement à la lecture de l’échiquier.',hint:'L’accès public reste à préparer.'}),
+project('afk-farm','AFK Farm','jeux','Aimante des particules, récolte des Lumens et développe ta puissance de collecte.',{art:'pixels'}),
+project('tricat','Tricat','jeux','Classe chaque objet dans la bonne catégorie avant la fin du chrono.',{art:'tools'}),
+project('clicreflex-python','ClicReflex — Python','jeux','Vise les cibles et mets ta rapidité et ta précision à l’épreuve en 60 secondes.',{art:'pixels',mode:'Programme PC'}),
+project('ball-passing','Ball Passing Simulation','experiences','Compte les passes d’une équipe sans te laisser distraire par ce qui traverse l’écran.',{mode:'Programme PC'}),
+project('pipboy','Pip-Boy JDR','outils','Retrouve cartes, quêtes et documents dans un compagnon de campagne pour tes parties de JDR.',{art:'tools'}),
+project('zeprasso','ZepRasso','outils','Organise un rassemblement automobile GTA RP et fais voter les visiteurs pour leurs véhicules favoris.'),
+project('zepevents','Zepevents','outils','Pilote tes événements RP : inscriptions, votes, caisse et résultats réunis au même endroit.',{mode:'Programme PC'}),
+project('hotzdoggz','HotzDoggz-bot','outils','Suis les ventes, les validations et les paies de ton restaurant GTA RP depuis Discord.',{mode:'Bot Discord'}),
+project('saloon','Bot Saloon','outils','Gère les ventes, les stocks et la comptabilité de ton saloon depuis Discord.',{mode:'Bot Discord'}),
+project('atelierflow','AtelierFlow','outils','Prépare la répartition de ton équipe dans l’atelier en gardant la décision finale.',{art:'tools'}),
+project('perfoptimize','Perfoptimize','outils','Un assistant expérimental pour comprendre les performances de ton PC et ajuster tes jeux.',{mode:'Programme PC'}),
+project('totalwar','TotalWarAI','experiences','Explore un projet d’IA tactique pour les batailles solo de Total War: WARHAMMER III.',{mode:'Prototype'}),
+project('blackjack','GTA Blackjack Assistant','outils','Analyse tes mains de blackjack dans GTA avec un assistant de stratégie et de suivi.',{art:'chess',mode:'Programme PC'}),
+project('sudoku','Sudoku Solver','outils','Saisis ta grille de sudoku et découvre sa solution en un clic.',{art:'tools',mode:'Programme PC'}),
+project('vlc','botlecturevlc','outils','Enchaîne les épisodes de tes séries locales dans un lecteur basé sur VLC.',{mode:'Programme PC'}),
+project('deezer','DeezerInfo','outils','Récupère les informations de tes morceaux Deezer pour alimenter un affichage musical.',{mode:'Programme PC'}),
+project('ecoride','EcoRide','outils','Découvre un projet d’application consacré au covoiturage.',{art:'tools'}),
+project('quai-antique','Quai Antique','outils','Explore un projet de site de restaurant avec carte, photos et réservation de table.'),
+project('books','Books to Scrape','outils','Extrais les prix et les fiches de Books to Scrape dans des fichiers CSV.',{mode:'Script Python',art:'tools'})
+];
+export const updates = [{date:'2026-10-19',project:'Le Labs',title:'Le labo prend forme',description:'Une première interface pour parcourir les projets, chercher une idée et ouvrir les expériences. Les retours sont encore des brouillons locaux.'}];
+export function filterProjects(query='',category='all') {const normalize=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();const q=normalize(query.trim());return projects.filter(p=>(category==='all'||p.category===category)&&normalize(`${p.name} ${p.description} ${p.mode} ${categories[p.category]}`).includes(q));}
