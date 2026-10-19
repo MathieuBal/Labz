@@ -1,20 +1,48 @@
-name: Check Labz
+name: Build and deploy Labz
 on:
   push:
+    branches: [main]
   pull_request:
+  workflow_dispatch:
+
 permissions:
   contents: read
+
 jobs:
-  check:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: npm run check
-      - run: npm run build
-      - uses: actions/upload-artifact@v4
+      - name: Check catalogue and JavaScript
+        run: npm run check
+      - name: Build static site
+        run: npm run build
+      - name: Verify GitHub Pages paths
+        run: node scripts/check-pages.mjs
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: labz-static-site
           path: dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

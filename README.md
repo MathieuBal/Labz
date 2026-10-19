@@ -51,6 +51,26 @@ Le site statique se trouve dans `dist/`. Les chemins relatifs et le routage `#/p
 
 Ne jamais placer une clé GitHub dans le JavaScript public. Une évolution serveur sera nécessaire pour la boîte de réception et les actions GitHub.
 
-## Publication
+## Publication sur GitHub Pages
 
-Le workflow de vérification compile le site mais ne le publie pas automatiquement. Pour GitHub Pages, utiliser un déploiement statique du contenu de `dist/` après activation de Pages. Aucune URL publique du Labs n’est annoncée tant que le déploiement n’est pas confirmé.
+Le workflow `.github/workflows/check.yml` vérifie et compile le site, valide ses chemins sous `/Labz/`, puis déploie `dist/` sur GitHub Pages. Les pull requests sont vérifiées sans publication. Chaque push sur `main` publie après réussite des contrôles ; un lancement manuel est également disponible.
+
+### Activation initiale (une seule fois)
+
+Dans le dépôt GitHub, ouvrir **Settings → Pages → Build and deployment → Source**, puis sélectionner **GitHub Actions**. Cette activation demande l’accès d’administration du propriétaire et ne peut pas être faite par le connecteur utilisé ici.
+
+Ensuite, dans **Actions → Build and deploy Labz**, relancer le job en échec ou choisir **Run workflow**. Les mises à jour suivantes de `main` sont automatiques.
+
+Adresse attendue une fois le premier déploiement réussi : https://mathieubal.github.io/Labz/
+
+L’URL réelle du déploiement apparaît dans l’environnement `github-pages` et dans le résumé du workflow. Ne pas confondre réussite de la compilation et publication effective : le job `deploy` doit également réussir.
+
+### Vérifications locales de publication
+
+```sh
+npm run check
+npm run build
+node scripts/check-pages.mjs
+```
+
+Le paquet contient une page 404 de retour au catalogue et un fichier `.nojekyll`. Aucun serveur ni secret n’est nécessaire pour cette première version. GitHub Pages héberge uniquement la partie statique ; la réception des commentaires et la création de tickets demanderont un service séparé.
