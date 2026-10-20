@@ -14,5 +14,6 @@ for(const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)){
 for(const p of projects)await access(new URL(`assets/${p.art}.svg`,root));
 const app=await readFile(new URL('app.js',root),'utf8');
 assert.match(app,/from '\.\/catalog\.js'/,'Catalogue must resolve relative to the Pages base');
+for (const file of ['model.js','github-activity.js']) await access(new URL(file,root));
 await access(new URL('.nojekyll',root));
 console.log('GitHub Pages package verified under /Labz/: HTML assets, module import, covers and .nojekyll.');

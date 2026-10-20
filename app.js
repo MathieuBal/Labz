@@ -1,3 +1,4 @@
+import { activityRepositories, loadActivity } from './github-activity.js';
 import { projects, categories, updates, filterProjects } from './catalog.js';
 import { COLLECTION_KEY, readCollection, writeCollection, rememberLaunch, parseRoute,
   catalogueHref, feedbackKinds, validateFeedback, feedbackText, githubFeedbackUrl } from './model.js';
@@ -11,6 +12,8 @@ try { storage = window.localStorage; } catch { storage = null; }
 let collection = readCollection(storage, knownIds);
 let feedbackProject = null, feedbackOpener = null, toastTimer, draftTimer;
 let dirtyDraft = false;
+let activityController = null;
+let activityBusy = false;
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
 const favorite = id => collection.favorites.includes(id);
 
@@ -72,12 +75,14 @@ function detail(project) {
   return `<a class="back" href="#/catalogue">← Retour aux projets</a><section class="detail-hero">${art(project,true)}<div class="detail-content"><span class="eyebrow">${categories[project.category]} <span class="separator">/</span> ${esc(project.mode)}</span><h1>${esc(project.name)}</h1><p>${esc(project.description)}</p><div class="detail-actions">${project.live ? external(project.live, esc(project.action), 'primary', project.id) : '<span class="availability">Présentation · accès public à préparer</span>'}<button class="button secondary" data-feedback="${project.id}">Laisser un retour</button></div>${project.live ? '<small>S’ouvre dans un nouvel onglet.</small>' : ''}</div><span class="art-caption">ILLUSTRATION PROVISOIRE</span></section>
     <nav class="detail-tabs" aria-label="Sections du projet"><a href="#presentation">Présentation</a><a href="#evolutions">Évolutions</a><a href="#retours">Retours</a></nav>
     <div class="detail-columns"><div><section id="presentation" tabindex="-1"><span class="eyebrow">L’IDÉE DE DÉPART</span><h2>${project.id === 'sensoria' ? 'Un geste, une réaction.' : 'Une idée à explorer.'}</h2><p class="body-copy">${esc(project.detail || project.description)}</p><p class="muted">${esc(project.hint || 'Cette fiche présente le concept. Une version accessible ou un téléchargement testé reste à préparer.')}</p></section>
-    <section id="evolutions" tabindex="-1"><span class="eyebrow">LE PROJET AVANCE</span><h2>Au fil des versions.</h2><p class="muted">Le journal des évolutions de ce projet n’est pas encore relié au Labs.</p>${project.repo ? external(project.repo, 'Voir le dépôt GitHub') : ''}</section>
+    <section id="evolutions" tabindex="-1"><span class="eyebrow">LE PROJET AVANCE</span><h2>Au fil des versions.</h2>${activityRepositories[project.id] ? `<div id="github-activity" data-project="${project.id}" aria-busy="true"><p class="muted" role="status">Lecture des nouveautés GitHub…</p></div><button class="text-link activity-refresh" data-refresh-activity>Actualiser ↻</button>` : '<p class="muted">Aucune source publique n’est encore reliée à cette fiche.</p>'}${project.repo ? external(project.repo, 'Voir le dépôt GitHub') : ''}</section>
     <section id="retours" tabindex="-1"><span class="eyebrow">UNE PLACE POUR TES IDÉES</span><h2>Qu’est-ce que tu en penses ?</h2><p class="muted">Prépare ton retour ici. Garde-le en brouillon privé sur ton appareil, exporte-le, ou choisis de le publier sur GitHub.</p><button class="button secondary" data-feedback="${project.id}">Préparer mon retour →</button></section></div>
     <aside class="project-info"><span class="eyebrow">EN QUELQUES MOTS</span><dl><dt>Catégorie</dt><dd>${categories[project.category]}</dd><dt>Accès</dt><dd>${esc(project.mode)}</dd><dt>Création</dt><dd>Mathieu</dd></dl><hr>${favoriteButton(project, true)}<button class="button secondary full" data-share="${project.id}">Partager le projet ↗</button><p class="local-note">Les favoris sont conservés sur cet appareil.</p></aside></div>
     <section>${heading('ENCORE UN DÉTOUR ?', 'À découvrir aussi.')}<div class="project-grid">${related.map(card).join('')}</div></section>`;
 }
 function render({focus=true, scroll=true}={}) {
+  activityController?.abort();
+  activityController = null;
   const route = parseRoute(location.hash);
   let active = 'home';
   if (route.segments[0] === 'projet') {
@@ -90,7 +95,7 @@ function render({focus=true, scroll=true}={}) {
     active = options.favorites ? 'favorites' : options.category === 'all' ? 'catalogue' : options.category;
     document.title = `${options.favorites ? 'Mes favoris' : 'Le catalogue'} — Mathieu / Labs`;
   } else if (route.segments[0] === 'nouveautes') {
-    main.innerHTML = `<div class="page-intro"><span class="eyebrow">LE CARNET DU LABO</span><h1>Ce qui bouge ici.</h1><p>Des étapes concrètes, au fil des projets.</p></div>${updates.map(updateCard).join('')}`;
+    main.innerHTML = `<div class="page-intro"><span class="eyebrow">LE CARNET DU LABO</span><h1>Ce qui bouge ici.</h1><p>Des étapes concrètes, au fil des projets.</p></div>${updates.map(updateCard).join('')}<section class="activity-section">${heading('LES PROJETS BOUGENT AUSSI', 'Du côté des projets.')}<p class="muted">Versions publiées sur GitHub ou, à défaut, derniers changements du code. Un commit ne garantit pas une mise à jour du jeu en ligne.</p><div id="github-activity" data-project="all" aria-busy="true"><p class="muted" role="status">Lecture des nouveautés GitHub…</p></div><button class="button secondary" data-refresh-activity>Actualiser les projets ↻</button></section>`;
     active = 'nouveautes'; document.title = 'Nouveautés — Mathieu / Labs';
   } else if (!route.segments.length) {
     main.innerHTML = home(); document.title = 'Mathieu / Labs — Des créations à explorer';
@@ -104,7 +109,43 @@ function render({focus=true, scroll=true}={}) {
   });
   if (scroll) window.scrollTo(0,0);
   if (focus) main.focus({preventScroll:true});
+  if (document.querySelector('#github-activity')) void refreshActivity();
 }
+
+function activityMarkup(result, project) {
+  const label = result.state === 'stale' ? '<p class="activity-warning">Actualisation impossible. Les dernières données déjà reçues sont affichées.</p>' : '';
+  if (result.state === 'error') return `<p class="muted" role="status">${result.error === 'rate-limit' ? 'GitHub limite temporairement les consultations. Réessaie plus tard.' : 'Les nouveautés GitHub sont momentanément indisponibles.'} Tu peux toujours explorer le projet.</p>`;
+  if (!result.items.length) return '<p class="muted">Aucune version ni activité disponible pour le moment.</p>';
+  const commits = result.items[0].kind === 'commit';
+  return `${label}<p class="activity-source">${commits ? 'Activité du code · aucune version publiée trouvée' : 'Versions publiées sur GitHub'}</p><div class="activity-list">${result.items.map(item => `<article class="activity-entry"><div><span class="activity-badge ${item.kind}">${item.kind === 'commit' ? 'CODE' : item.preview ? 'PRÉVERSION' : 'VERSION'}</span><time datetime="${esc(item.date)}">${new Date(item.date).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric',timeZone:'Europe/Paris'})}</time></div><a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(item.title)} ↗</a>${item.excerpt ? `<details><summary>Lire les notes de version</summary><p class="release-excerpt">${esc(item.excerpt)}${item.excerpt.length === 600 ? '…' : ''}</p></details>` : ''}</article>`).join('')}</div>`;
+}
+async function refreshActivity(force=false) {
+  const target = document.querySelector('#github-activity');
+  if (!target) return;
+  activityController?.abort();
+  const controller = new AbortController();
+  activityController = controller; activityBusy = true;
+  const refresh = document.querySelector('[data-refresh-activity]');
+  if (refresh) refresh.disabled = true;
+  target.setAttribute('aria-busy','true');
+  const timeout = setTimeout(() => controller.abort(), 12000);
+  try {
+    const ids = target.dataset.project === 'all' ? Object.keys(activityRepositories) : [target.dataset.project];
+    const results = await Promise.all(ids.map(id => loadActivity(id,{signal:controller.signal,force})));
+    if (activityController !== controller || !target.isConnected) return;
+    if (ids.length === 1) target.innerHTML = activityMarkup(results[0], projects.find(p => p.id === ids[0]));
+    else target.innerHTML = ids.map((id,index) => `<section class="project-activity"><h3><a href="#/projet/${id}">${esc(projects.find(p => p.id === id).name)} →</a></h3>${activityMarkup(results[index],projects.find(p => p.id === id))}</section>`).join('');
+  } catch {
+    if (activityController === controller && target.isConnected) target.innerHTML = '<p class="muted" role="status">La réponse de GitHub prend trop de temps. Tu peux réessayer.</p>';
+  } finally {
+    clearTimeout(timeout);
+    if (activityController === controller) {
+      activityBusy = false; target.setAttribute('aria-busy','false');
+      if (refresh?.isConnected) refresh.disabled = false;
+    }
+  }
+}
+
 function toast(message) {
   const element = document.querySelector('#toast');
   element.textContent = message; element.hidden = false;
@@ -213,6 +254,7 @@ document.addEventListener('click', async event => {
   }
   const launch = event.target.closest('[data-launch]');
   if (launch) { collection = rememberLaunch(collection, launch.dataset.launch); saveCollection(); }
+  if (event.target.closest('[data-refresh-activity]') && !activityBusy) void refreshActivity(true);
   const filter = event.target.closest('[data-toggle]');
   if (filter) {
     const options = catalogueOptions();

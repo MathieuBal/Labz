@@ -1,6 +1,6 @@
 # Labz — Mathieu / Labs
 
-Un point d’entrée pour découvrir les jeux, expériences et outils de Mathieu. Version 0.2 inspirée des maquettes validées : interface sombre, accents citron, titres éditoriaux et navigation mobile dédiée.
+Un point d’entrée pour découvrir les jeux, expériences et outils de Mathieu. Version 0.3 inspirée des maquettes validées : interface sombre, accents citron, titres éditoriaux et navigation mobile dédiée.
 
 ## Déjà développé
 
@@ -13,6 +13,7 @@ Un point d’entrée pour découvrir les jeux, expériences et outils de Mathieu
 - Retours : sauvegarde automatique des brouillons locaux, export texte et passage optionnel vers un formulaire GitHub prérempli. **Aucune publication automatique** : le visiteur est informé du caractère public et doit valider lui-même sur GitHub avec son compte. Les longs textes restent exportables sans troncature.
 - Accessibilité de base : HTML sémantique, focus visible, lien d’évitement, dialog natif avec Escape et retour du focus, réduction des mouvements.
 - Illustrations SVG originales provisoires, pas de captures des applications.
+- Nouveautés GitHub en lecture publique pour les quatre dépôts explicitement autorisés : versions publiées (préversions identifiées), ou activité du code en leur absence. Cache mémoire de 15 minutes, délai maximal de 12 secondes et interruption lors d’un changement de page. Aucun token ni découverte de dépôts privés.
 
 Les accroches reprennent les descriptions README examinées. Les projets privés ne sont pas automatiquement rendus publics, et aucun lien vers leur code n’est publié. Les fiches sans version publique validée restent des présentations. Les cinq projets dont la présentation manquait ne sont pas inventés ni affichés.
 
@@ -34,6 +35,7 @@ Le site statique se trouve dans `dist/`. Les chemins relatifs et le routage `#/p
 
 - `catalog.js` : contenu éditorial, catégories, liens et journal du Labs.
 - `app.js` : navigation, rendu, recherche, formulaires locaux et partage.
+- `github-activity.js` : lecture et normalisation défensive des releases/commits publics.
 - `model.js` : filtres, persistance défensive, validation et préparation des retours GitHub.
 - `tests/` : tests Node de persistance, navigation et préparation des retours.
 - `styles.css` : thèmes et dispositions ordinateur/mobile.
@@ -50,7 +52,7 @@ Le site statique se trouve dans `dist/`. Les chemins relatifs et le routage `#/p
 2. Stockage serveur des retours privés, antispam, limites de taille/fréquence et interface de modération.
 3. Publication de suggestions choisies, soutien aux idées et suivi de leur état.
 4. Modération des retours anonymes et conversion choisie en issues, côté serveur. Le passage public vers GitHub existe déjà sans clé embarquée.
-5. Synchronisation contrôlée des projets et releases : liste autorisée, jamais publication automatique des dépôts privés.
+5. Étendre la liste de dépôts publics vérifiés ; enrichir le catalogue après validation éditoriale. Les releases des quatre dépôts actuellement reliés sont déjà lues à l’ouverture. Aucun nouveau projet n’est ajouté automatiquement.
 6. Téléchargements uniquement lorsqu’un exécutable et sa notice ont été vérifiés.
 
 Ne jamais placer une clé GitHub dans le JavaScript public. Une évolution serveur sera nécessaire pour la boîte de réception et les actions GitHub.
@@ -78,3 +80,7 @@ node scripts/check-pages.mjs
 ```
 
 Le paquet contient une page 404 de retour au catalogue et un fichier `.nojekyll`. Aucun serveur ni secret n’est nécessaire pour cette première version. GitHub Pages héberge uniquement la partie statique ; la réception privée de commentaires anonymes et les actions automatiques sur GitHub demanderont un service séparé.
+
+## Données GitHub
+
+Les visiteurs consultent directement l’API publique GitHub depuis leur navigateur à l’ouverture d’une fiche reliée ou de la page Nouveautés. Le cache dure uniquement pendant la session de la page. Aucun appel n’est effectué en arrière-plan une fois le Labs fermé. Le bouton Actualiser force une nouvelle lecture. Une limite ou une panne affiche un message et conserve les données déjà reçues lorsque possible. Les commits restent explicitement séparés des releases : ils ne prouvent pas le déploiement d’une nouvelle version jouable. Les notes de version sont rendues en texte brut, limitées à 600 caractères, avec un lien vers leur source complète.
