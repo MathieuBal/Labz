@@ -1,3 +1,5 @@
+import { feedbackEndpoint } from './feedback-config.js';
+import { sendPrivateFeedback } from './feedback-client.js';
 import { activityRepositories, loadActivity } from './github-activity.js';
 import { projects, categories, updates, filterProjects, retiredProjectIds } from './catalog.js';
 import { COLLECTION_KEY, readCollection, writeCollection, rememberLaunch, parseRoute,
@@ -12,6 +14,8 @@ try { storage = window.localStorage; } catch { storage = null; }
 let collection = readCollection(storage, knownIds);
 let feedbackProject = null, feedbackOpener = null, toastTimer, draftTimer;
 let dirtyDraft = false;
+let privateSendBusy = false;
+const privateSubmissionIds = new Map();
 let activityController = null;
 let activityBusy = false;
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
@@ -200,6 +204,9 @@ function openFeedback(id, opener) {
   document.querySelector('#feedback-context').textContent = `À propos de ${feedbackProject.name}`;
   document.querySelector('#feedback-result').textContent = draft ? 'Ton dernier brouillon a été retrouvé.' : '';
   document.querySelector('#github-handoff').hidden = true;
+  document.querySelector('#private-feedback').hidden = !feedbackEndpoint;
+  document.querySelector('#send-private-feedback').disabled = privateSendBusy;
+  if (feedbackEndpoint) document.querySelector('#feedback .notice').textContent = 'Ton brouillon reste sur cet appareil. Tu peux envoyer ton retour en privé à Mathieu, sans créer de compte.';
   dialog.showModal();
 }
 function validPayload() {
@@ -208,6 +215,33 @@ function validPayload() {
   if (error) { document.querySelector('#feedback-result').textContent = error; return null; }
   return data;
 }
+document.querySelector('#send-private-feedback').addEventListener('click', async () => {
+  if (!feedbackEndpoint || privateSendBusy) return;
+  const data = validPayload(); if (!data) return;
+  saveDraft(true);
+  const message = {project:data.project,kind:data.kind,summary:data.summary,message:data.message,nickname:data.nickname,website:form.elements.website.value};
+  const signature = JSON.stringify(message);
+  let requestId = privateSubmissionIds.get(signature);
+  if (!requestId) {
+    requestId = crypto.randomUUID();
+    if (privateSubmissionIds.size >= 20) privateSubmissionIds.clear();
+    privateSubmissionIds.set(signature,requestId);
+  }
+  const button = document.querySelector('#send-private-feedback');
+  privateSendBusy = true; button.disabled = true; button.textContent = 'Envoi en cours…';
+  const show = text => {
+    if (dialog.open && feedbackProject?.id === data.project && form.elements.message.value.trim() === data.message) document.querySelector('#feedback-result').textContent = text;
+    else toast(text);
+  };
+  try {
+    await sendPrivateFeedback(feedbackEndpoint,{...message,requestId},{signal:AbortSignal.timeout(12000)});
+    show('Retour reçu en privé. Merci ! Ton brouillon reste disponible sur cet appareil.');
+  } catch (error) {
+    show(error.message === 'limited' ? 'La boîte de réception est temporairement pleine. Ton brouillon est conservé ; réessaie plus tard.' : 'La réception n’a pas pu être confirmée. Ton brouillon est conservé. Tu peux réessayer.');
+  } finally {
+    privateSendBusy = false; button.disabled = false; button.textContent = 'Envoyer à Mathieu';
+  }
+});
 form.addEventListener('submit', event => { event.preventDefault(); if (validPayload()) saveDraft(true); });
 form.addEventListener('input', () => {
   dirtyDraft = true;

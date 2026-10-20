@@ -85,3 +85,10 @@ Le paquet contient une page 404 de retour au catalogue et un fichier `.nojekyll`
 ## Données GitHub
 
 Les visiteurs consultent directement l’API publique GitHub depuis leur navigateur à l’ouverture d’une fiche reliée ou de la page Nouveautés. Le cache dure uniquement pendant la session de la page. Aucun appel n’est effectué en arrière-plan une fois le Labs fermé. Le bouton Actualiser force une nouvelle lecture. Une limite ou une panne affiche un message et conserve les données déjà reçues lorsque possible. Les commits restent explicitement séparés des releases : ils ne prouvent pas le déploiement d’une nouvelle version jouable. Les notes de version sont rendues en texte brut, limitées à 600 caractères, avec un lien vers leur source complète.
+
+## Réception privée préparée (non activée)
+
+Le service Supabase et le bouton conditionnel sont codés, mais `feedbackEndpoint`
+reste vide. Aucun envoi privé n’est proposé tant que le service n’a pas été
+déployé et vérifié. Voir [la procédure et les limites](docs/private-feedback.md).
+Les brouillons et la publication volontaire sur GitHub continuent de fonctionner.

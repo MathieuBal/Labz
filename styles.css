@@ -31,3 +31,5 @@
 .art-chest.source-art img { width:42%; height:60%; object-fit:contain; image-rendering:pixelated; }
 .art-pixels.source-art img { object-fit:cover; }
 @media(max-width:760px) { .visitor-guide .button { width:100%; } .visitor-guide { overflow-wrap:anywhere; } }
+
+.feedback-honeypot { position:absolute; left:-10000px; width:1px; height:1px; overflow:hidden; }

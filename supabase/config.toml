@@ -1,0 +1,2 @@
+[functions.labz-feedback]
+verify_jwt = false
