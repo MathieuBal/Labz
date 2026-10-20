@@ -33,3 +33,15 @@
 @media(max-width:760px) { .visitor-guide .button { width:100%; } .visitor-guide { overflow-wrap:anywhere; } }
 
 .feedback-honeypot { position:absolute; left:-10000px; width:1px; height:1px; overflow:hidden; }
+
+/* v0.8: compact project pages, actions before the editorial detail. */
+.project-overview{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,30%);gap:32px;align-items:center;padding:26px;border:1px solid var(--line);border-radius:16px;background:var(--panel);margin-bottom:16px!important}
+.project-lead{min-width:0}.project-lead h1{font-size:clamp(34px,4vw,54px);margin-bottom:20px;overflow-wrap:anywhere}.project-lead .eyebrow{font-size:10px;line-height:1.6}
+.project-lead .detail-actions{gap:10px}.project-lead .detail-actions .button{min-width:140px}.project-intro{font-size:15px;color:var(--muted);margin:20px 0 0;max-width:60ch}
+.project-visual .art{border-radius:10px}.project-visual small{display:block;color:var(--muted);font-size:9px;margin-top:8px;text-align:right}
+.project-quick-tools{display:flex;gap:20px;align-items:center;margin:0 0 26px}.project-quick-tools .button{width:auto;background:transparent;border:0;color:var(--muted);padding:8px 0;box-shadow:none;font-size:12px}.project-quick-tools .text-link{background:none;border:0;min-height:44px;padding:8px}
+.project-summary{max-width:880px}.project-summary>p{color:var(--muted);font-size:16px;line-height:1.7;margin-bottom:24px}.project-disclosure{border-top:1px solid var(--line)}.project-disclosure:last-child{border-bottom:1px solid var(--line)}
+.project-disclosure>summary{cursor:pointer;font-size:16px;padding:20px 4px;min-height:56px}.project-disclosure>summary:focus-visible,.feedback-privacy>summary:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+.disclosure-body{padding:0 4px 22px}.project-disclosure .visitor-guide{margin:0 0 20px;background:transparent;border:0;padding:4px}.project-disclosure .visitor-guide .eyebrow{display:none}
+.feedback-privacy{margin-top:16px;color:var(--muted);font-size:12px}.feedback-privacy summary{cursor:pointer;min-height:44px;padding:12px 0}.feedback-privacy p{font-size:12px}#feedback .notice{padding:0;background:none;border:0;line-height:1.6}#feedback-result:empty{display:none}
+@media(max-width:760px){.project-overview{display:block;padding:22px 18px}.project-visual{display:none}.project-lead h1{font-size:36px}.project-lead .detail-actions{display:grid;grid-template-columns:1fr 1fr}.project-lead .detail-actions .button{min-width:0;padding:12px 8px;font-size:13px;gap:7px}.project-lead .availability{grid-column:1/-1}.project-intro{font-size:14px}.project-quick-tools{margin-bottom:18px}.project-summary>p{font-size:15px}}
