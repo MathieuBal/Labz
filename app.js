@@ -4,7 +4,7 @@ import { sendPrivateFeedback } from './feedback-client.js';
 import { activityRepositories, loadActivity } from './github-activity.js';
 import { projects, categories, updates, filterProjects, retiredProjectIds } from './catalog.js';
 import { COLLECTION_KEY, readCollection, writeCollection, rememberLaunch, parseRoute,
-  catalogueHref, feedbackKinds, validateFeedback, feedbackText, githubFeedbackUrl } from './model.js';
+  catalogueHref, feedbackKinds, validateFeedback } from './model.js';
 
 const main = document.querySelector('#main');
 let disposeAdmin = null;
@@ -51,7 +51,7 @@ function home() {
     ${recentSection()}
     <section>${heading('COMMENCE PAR ICI', 'À toi de jouer.', '<a class="text-link" href="#/catalogue?playable=1">À essayer maintenant →</a>')}<div class="project-grid featured">${[projects[1], projects[2], projects[0]].map(card).join('')}</div><p class="rail-hint">Fais défiler pour explorer →</p></section>
     <section>${heading('DANS L’ATELIER', 'Les idées prennent forme.', '<a class="text-link" href="#/catalogue">Toute la sélection →</a>')}<div class="project-grid">${['diagnostic','constella','pipboy'].map(id => projects.find(p => p.id === id)).map(card).join('')}</div></section>
-    <section class="participate"><span class="participate-symbol" aria-hidden="true">✳</span><div><span class="eyebrow">ÇA SE CONSTRUIT ENSEMBLE</span><h2>Ton regard change la suite.</h2><p>Une idée, un bug ou un ressenti ? Chaque fiche te permet de préparer un retour.</p></div><a class="button secondary" href="#/catalogue">Choisir un projet →</a></section>
+    <section class="participate"><span class="participate-symbol" aria-hidden="true">✳</span><div><span class="eyebrow">ÇA SE CONSTRUIT ENSEMBLE</span><h2>Ton regard change la suite.</h2><p>Une idée, un bug ou un ressenti ? Dépose ton avis directement depuis la fiche du projet.</p></div><a class="button secondary" href="#/catalogue">Choisir un projet →</a></section>
     <section>${heading('CARNET DU LABO', 'Le travail continue.', '<a class="text-link" href="#/nouveautes">Les nouveautés →</a>')}${updateCard(updates[0])}</section>`;
 }
 function catalogueOptions() {
@@ -84,17 +84,23 @@ function updateCard(update) {
 }
 function visitorGuide(project) {
   if (!project.steps) return '';
-  return `<div class="visitor-guide"><span class="eyebrow">TES PREMIERS PAS</span><h3>${esc(project.firstTry)}</h3><ol>${project.steps.map(step => `<li>${esc(step)}</li>`).join('')}</ol><dl><dt>Les commandes</dt><dd>${esc(project.controls)}</dd><dt>Ta sauvegarde</dt><dd>${esc(project.saveNote)}</dd><dt>Bon à savoir</dt><dd>${esc(project.comfort)}</dd></dl>${external(project.live, esc(project.action), 'primary', project.id)}</div>`;
+  return `<div class="visitor-guide"><span class="eyebrow">TES PREMIERS PAS</span><h3>${esc(project.firstTry)}</h3><ol>${project.steps.map(step => `<li>${esc(step)}</li>`).join('')}</ol><dl><dt>Les commandes</dt><dd>${esc(project.controls)}</dd><dt>Ta sauvegarde</dt><dd>${esc(project.saveNote)}</dd><dt>Bon à savoir</dt><dd>${esc(project.comfort)}</dd></dl></div>`;
 }
 function detail(project) {
   const related = projects.filter(p => p.id !== project.id).sort((a,b) => Number(b.category === project.category) - Number(a.category === project.category)).slice(0,3);
-  return `<a class="back" href="#/catalogue">← Retour aux projets</a><section class="detail-hero">${art(project,true)}<div class="detail-content"><span class="eyebrow">${categories[project.category]} <span class="separator">/</span> ${esc(project.mode)}</span><h1>${esc(project.name)}</h1><p>${esc(project.invitation || project.description)}</p><div class="detail-actions">${project.live ? external(project.live, esc(project.action), 'primary', project.id) : '<span class="availability">Présentation · accès public à préparer</span>'}<button class="button secondary" data-feedback="${project.id}">Laisser un retour</button></div>${project.live ? '<small>S’ouvre dans un nouvel onglet.</small>' : ''}</div><span class="art-caption">${esc(project.coverLabel || 'ILLUSTRATION PROVISOIRE')}</span></section>
-    <nav class="detail-tabs" aria-label="Sections du projet"><a href="#presentation">Présentation</a><a href="#evolutions">Évolutions</a><a href="#retours">Retours</a></nav>
-    <div class="detail-columns"><div><section id="presentation" tabindex="-1"><span class="eyebrow">L’IDÉE DE DÉPART</span><h2>${project.id === 'sensoria' ? 'Un geste, une réaction.' : 'Une idée à explorer.'}</h2><p class="body-copy">${esc(project.takeaway || project.detail || project.description)}</p>${visitorGuide(project)}<p class="muted">${esc(project.hint || 'Cette fiche présente le concept. Une version accessible ou un téléchargement testé reste à préparer.')}</p></section>
-    <section id="evolutions" tabindex="-1"><span class="eyebrow">LE PROJET AVANCE</span><h2>Au fil des versions.</h2><p class="muted">Les détails techniques du projet, pour les curieux.</p>${activityRepositories[project.id] ? `<div id="github-activity" data-project="${project.id}" aria-busy="true"><p class="muted" role="status">Lecture des nouveautés GitHub…</p></div><button class="text-link activity-refresh" data-refresh-activity>Actualiser ↻</button>` : '<p class="muted">Aucune source publique n’est encore reliée à cette fiche.</p>'}${project.repo ? external(project.repo, 'Voir le dépôt GitHub') : ''}</section>
-    <section id="retours" tabindex="-1"><span class="eyebrow">UNE PLACE POUR TES IDÉES</span><h2>Qu’est-ce que tu en penses ?</h2><p class="muted">Prépare ton retour ici. Garde-le en brouillon privé sur ton appareil, exporte-le, ou choisis de le publier sur GitHub.</p><button class="button secondary" data-feedback="${project.id}">Préparer mon retour →</button></section></div>
-    <aside class="project-info"><span class="eyebrow">EN QUELQUES MOTS</span><dl><dt>Catégorie</dt><dd>${categories[project.category]}</dd><dt>Accès</dt><dd>${esc(project.mode)}</dd><dt>Création</dt><dd>Mathieu</dd></dl><hr>${favoriteButton(project, true)}<button class="button secondary full" data-share="${project.id}">Partager le projet ↗</button><p class="local-note">Les favoris sont conservés sur cet appareil.</p></aside></div>
-    <section>${heading('ENCORE UN DÉTOUR ?', 'À découvrir aussi.')}<div class="project-grid">${related.map(card).join('')}</div></section>`;
+  return `<a class="back" href="#/catalogue">← Tous les projets</a>
+    <section class="project-overview"><div class="project-lead"><span class="eyebrow">${categories[project.category]} · ${esc(project.mode)}</span>
+    <h1>${esc(project.name)}</h1><div class="detail-actions">
+    ${project.live ? external(project.live, 'Lancer', 'primary', project.id) : '<span class="availability">Pas encore de démo publique</span>'}
+    <button class="button secondary" data-feedback="${project.id}">Déposer un avis</button></div>
+    <p class="project-intro">${esc(project.invitation || project.description)}</p></div>
+    <div class="project-visual">${art(project)}<small>${esc(project.coverLabel || 'Illustration provisoire')}</small></div></section>
+    <div class="project-quick-tools">${favoriteButton(project, true)}<button class="text-link" data-share="${project.id}">Partager ↗</button></div>
+    <section class="project-summary"><p>${esc(project.takeaway || project.detail || project.description)}</p>
+    ${project.steps ? `<details class="project-disclosure"><summary>Comment en profiter ?</summary>${visitorGuide(project)}</details>` : ''}
+    <details class="project-disclosure"><summary>À propos du projet</summary><div class="disclosure-body"><p class="muted">${esc(project.hint || 'Cette fiche présente le concept. Une version publique reste à préparer.')}</p>${project.repo ? external(project.repo, 'Voir le code sur GitHub') : ''}</div></details>
+    ${activityRepositories[project.id] ? `<details class="project-disclosure" data-project-activity><summary>Dernières évolutions</summary><div class="disclosure-body"><div id="github-activity" data-project="${project.id}" aria-busy="false"><p class="muted">Ouvre cette rubrique pour consulter les évolutions.</p></div><button class="text-link activity-refresh" data-refresh-activity>Actualiser ↻</button></div></details>` : ''}</section>
+    <section>${heading('POURSUIVRE LA DÉCOUVERTE', 'À essayer aussi.')}<div class="project-grid">${related.map(card).join('')}</div></section>`;
 }
 function render({focus=true, scroll=true}={}) {
   disposeAdmin?.(); disposeAdmin = null;
@@ -129,7 +135,13 @@ function render({focus=true, scroll=true}={}) {
   });
   if (scroll) window.scrollTo(0,0);
   if (focus) main.focus({preventScroll:true});
-  if (document.querySelector('#github-activity')) void refreshActivity();
+  const activityDetails = document.querySelector('[data-project-activity]');
+  if (activityDetails) activityDetails.addEventListener('toggle', () => {
+    if (activityDetails.open && !activityDetails.dataset.loaded) {
+      activityDetails.dataset.loaded = 'true'; void refreshActivity();
+    }
+  });
+  else if (document.querySelector('#github-activity')) void refreshActivity();
 }
 
 function activityMarkup(result, project) {
@@ -190,7 +202,7 @@ function saveDraft(explicit=false) {
     storage.setItem(draftKey(), JSON.stringify(payload())); dirtyDraft = false;
     result.textContent = 'Brouillon enregistré sur cet appareil. Aucun message envoyé.';
   } catch {
-    result.textContent = 'Stockage indisponible. Copie ou exporte ton retour pour le conserver.';
+    result.textContent = 'Ton brouillon ne peut pas être sauvegardé sur cet appareil.';
   }
 }
 function updateFeedbackHint() {
@@ -209,10 +221,9 @@ function openFeedback(id, opener) {
   updateFeedbackHint();
   document.querySelector('#feedback-context').textContent = `À propos de ${feedbackProject.name}`;
   document.querySelector('#feedback-result').textContent = draft ? 'Ton dernier brouillon a été retrouvé.' : '';
-  document.querySelector('#github-handoff').hidden = true;
-  document.querySelector('#private-feedback').hidden = !feedbackEndpoint;
-  document.querySelector('#send-private-feedback').disabled = privateSendBusy;
-  if (feedbackEndpoint) document.querySelector('#feedback .notice').textContent = 'Ton brouillon reste sur cet appareil. Tu peux envoyer ton retour en privé à Mathieu, sans créer de compte.';
+  document.querySelector('#private-feedback').hidden = false;
+  document.querySelector('#send-private-feedback').disabled = privateSendBusy || !feedbackEndpoint;
+  if (!feedbackEndpoint) document.querySelector('#feedback-result').textContent = 'La messagerie est temporairement indisponible. Ton brouillon est conservé.';
   dialog.showModal();
 }
 function validPayload() {
@@ -221,7 +232,8 @@ function validPayload() {
   if (error) { document.querySelector('#feedback-result').textContent = error; return null; }
   return data;
 }
-document.querySelector('#send-private-feedback').addEventListener('click', async () => {
+form.addEventListener('submit', async event => {
+  event.preventDefault();
   if (!feedbackEndpoint || privateSendBusy) return;
   const data = validPayload(); if (!data) return;
   saveDraft(true);
@@ -248,35 +260,12 @@ document.querySelector('#send-private-feedback').addEventListener('click', async
     privateSendBusy = false; button.disabled = false; button.textContent = 'Envoyer à Mathieu';
   }
 });
-form.addEventListener('submit', event => { event.preventDefault(); if (validPayload()) saveDraft(true); });
 form.addEventListener('input', () => {
   dirtyDraft = true;
-  document.querySelector('#github-handoff').hidden = true;
   document.querySelector('#feedback-result').textContent = 'Enregistrement du brouillon…';
   clearTimeout(draftTimer); draftTimer = setTimeout(() => saveDraft(), 650);
 });
 form.addEventListener('change', updateFeedbackHint);
-document.querySelector('#export-feedback').addEventListener('click', () => {
-  const data = validPayload(); if (!data) return;
-  const url = URL.createObjectURL(new Blob([feedbackText(data)], {type:'text/plain;charset=utf-8'}));
-  const a = document.createElement('a'); a.href = url; a.download = `retour-${data.project}.txt`; a.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000); toast('Retour exporté. Il n’a pas été envoyé.');
-});
-document.querySelector('#prepare-github').addEventListener('click', () => {
-  const data = validPayload(); if (!data) return;
-  saveDraft(true);
-  const link = document.querySelector('#github-feedback-link'), handoff = document.querySelector('#github-handoff');
-  const url = githubFeedbackUrl(data);
-  handoff.hidden = false;
-  link.href = url || 'https://github.com/MathieuBal/Labz/issues/new';
-  document.querySelector('#github-prefill-note').textContent = url ? 'Le titre et le message seront préremplis. Tu pourras les relire avant de publier.' : 'Ton retour est trop long pour le préremplissage. Copie-le ci-dessous, puis colle-le sur GitHub.';
-  handoff.scrollIntoView({block:'nearest', behavior:'auto'});
-});
-document.querySelector('#copy-feedback').addEventListener('click', async () => {
-  const data = validPayload(); if (!data) return;
-  try { await navigator.clipboard.writeText(feedbackText(data)); toast('Texte du retour copié.'); }
-  catch { document.querySelector('#feedback-result').textContent = 'Copie indisponible. Utilise « Exporter le retour ».'; }
-});
 dialog.querySelector('.close').addEventListener('click', () => dialog.close());
 dialog.addEventListener('close', () => { saveDraft(); feedbackOpener?.focus(); });
 document.addEventListener('visibilitychange', () => { if (document.hidden && dialog.open) saveDraft(); });
