@@ -16,3 +16,18 @@
 /* Curated catalogue */
 .catalogue-section { margin-block: 2.5rem; }
 .catalogue-section > .muted { max-width: 65ch; margin-bottom: 1.5rem; }
+
+/* Guides de découverte et éléments graphiques des jeux */
+.card-launch { width:100%; margin:4px 0 12px; min-height:44px; }
+.visitor-guide { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:clamp(18px,3vw,30px); margin:24px 0; }
+.visitor-guide h3 { font-size:clamp(22px,3vw,28px); }
+.visitor-guide ol { padding-left:24px; line-height:1.65; }
+.visitor-guide li { padding-left:8px; margin:14px 0; }
+.visitor-guide li::marker { color:var(--lime); font-weight:700; }
+.visitor-guide dt { font-weight:650; margin-top:20px; }
+.visitor-guide dd { margin:7px 0 0; color:var(--muted); line-height:1.65; }
+.visitor-guide .button { margin-top:24px; }
+.art-chest.source-art { background:radial-gradient(ellipse at center,#59401c,#17131a 70%); display:flex; align-items:center; justify-content:center; }
+.art-chest.source-art img { width:42%; height:60%; object-fit:contain; image-rendering:pixelated; }
+.art-pixels.source-art img { object-fit:cover; }
+@media(max-width:760px) { .visitor-guide .button { width:100%; } .visitor-guide { overflow-wrap:anywhere; } }

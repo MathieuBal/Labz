@@ -1,6 +1,6 @@
 # Labz — Mathieu / Labs
 
-Un point d’entrée pour découvrir les jeux, expériences et outils de Mathieu. Version 0.4 inspirée des maquettes validées : interface sombre, accents citron, titres éditoriaux et navigation mobile dédiée.
+Un point d’entrée pour découvrir les jeux, expériences et outils de Mathieu. Version 0.5 inspirée des maquettes validées : interface sombre, accents citron, titres éditoriaux et navigation mobile dédiée.
 
 ## Déjà développé
 
@@ -12,7 +12,8 @@ Un point d’entrée pour découvrir les jeux, expériences et outils de Mathieu
 - Bouton de découverte aléatoire parmi les projets lançables et partage natif lorsqu’il est disponible.
 - Retours : sauvegarde automatique des brouillons locaux, export texte et passage optionnel vers un formulaire GitHub prérempli. **Aucune publication automatique** : le visiteur est informé du caractère public et doit valider lui-même sur GitHub avec son compte. Les longs textes restent exportables sans troncature.
 - Accessibilité de base : HTML sémantique, focus visible, lien d’évitement, dialog natif avec Escape et retour du focus, réduction des mouvements.
-- Illustrations SVG originales provisoires, pas de captures des applications.
+- Fiches des trois expériences lançables : premiers pas, commandes, sauvegarde et limites. Lancement direct depuis les cartes.
+- Visuels : toile de campagne Million de pixels optimisée en WebP, coffre pixel art de Lootchest, illustrations SVG provisoires pour les autres projets. Aucun de ces visuels n’est présenté comme une capture de l’interface.
 - Nouveautés GitHub en lecture publique pour les quatre dépôts explicitement autorisés : versions publiées (préversions identifiées), ou activité du code en leur absence. Cache mémoire de 15 minutes, délai maximal de 12 secondes et interruption lors d’un changement de page. Aucun token ni découverte de dépôts privés.
 
 Les accroches reprennent les descriptions README examinées. Les projets privés ne sont pas automatiquement rendus publics, et aucun lien vers leur code n’est publié. Les fiches sans version publique validée restent des présentations. Les expériences lançables et les présentations sont regroupées séparément. Les anciennes adresses des 17 projets retirés expliquent le changement et renvoient à la sélection. Voir [les décisions éditoriales](docs/selection.md).
