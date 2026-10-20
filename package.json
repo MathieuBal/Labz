@@ -1,9 +1,9 @@
 {
   "name": "mathieu-labs",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
-  "description": "Les jeux, expériences et outils de Mathieu, réunis dans un labo personnel.",
+  "description": "Les jeux, exp\u00e9riences et outils de Mathieu, r\u00e9unis dans un labo personnel.",
   "scripts": {
     "start": "node scripts/serve.mjs",
     "check": "node --check app.js && node --check catalog.js && node --check model.js && node --check github-activity.js && node scripts/check.mjs && node --test tests/*.test.mjs",

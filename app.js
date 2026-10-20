@@ -1,5 +1,5 @@
 import { activityRepositories, loadActivity } from './github-activity.js';
-import { projects, categories, updates, filterProjects } from './catalog.js';
+import { projects, categories, updates, filterProjects, retiredProjectIds } from './catalog.js';
 import { COLLECTION_KEY, readCollection, writeCollection, rememberLaunch, parseRoute,
   catalogueHref, feedbackKinds, validateFeedback, feedbackText, githubFeedbackUrl } from './model.js';
 
@@ -30,7 +30,7 @@ function favoriteButton(p, full=false) {
   return `<button class="${full ? 'button secondary full' : 'favorite-button'}" data-favorite="${p.id}" aria-pressed="${favorite(p.id)}" aria-label="${favorite(p.id) ? 'Retirer' : 'Ajouter'} ${esc(p.name)} ${favorite(p.id) ? 'des' : 'aux'} favoris"><span aria-hidden="true">${favorite(p.id) ? '♥' : '♡'}</span>${full ? (favorite(p.id) ? 'Dans mes favoris' : 'Garder en favori') : ''}</button>`;
 }
 function card(p) {
-  return `<article class="project-card"><div class="cover-wrap"><a class="card-cover" href="#/projet/${p.id}" aria-label="Découvrir ${esc(p.name)}">${art(p)}<span class="cover-label">${p.live ? 'À ESSAYER' : 'À DÉCOUVRIR'}</span></a>${favoriteButton(p)}</div><div class="card-body"><span class="eyebrow">${categories[p.category]} <span class="separator">/</span> ${esc(p.mode)}</span><h3><a href="#/projet/${p.id}">${esc(p.name)}</a></h3><p>${esc(p.description)}</p><a class="card-link" href="#/projet/${p.id}">Découvrir le projet <span>↗</span></a></div></article>`;
+  return `<article class="project-card"><div class="cover-wrap"><a class="card-cover" href="#/projet/${p.id}" aria-label="Découvrir ${esc(p.name)}">${art(p)}<span class="cover-label">${p.live ? 'À ESSAYER' : 'PRÉSENTATION'}</span></a>${favoriteButton(p)}</div><div class="card-body"><span class="eyebrow">${categories[p.category]} <span class="separator">/</span> ${esc(p.mode)}</span><h3><a href="#/projet/${p.id}">${esc(p.name)}</a></h3><p>${esc(p.description)}</p><a class="card-link" href="#/projet/${p.id}">Découvrir le projet <span>↗</span></a></div></article>`;
 }
 function heading(kicker, title, link='') {
   return `<div class="section-heading"><div><span class="eyebrow">${kicker}</span><h2>${title}</h2></div>${link}</div>`;
@@ -44,7 +44,7 @@ function home() {
   return `<section class="hero">${art(projects[0], true)}<div class="hero-content"><span class="eyebrow"><span class="dot"></span> LE LABO DE MATHIEU</span><h1>La curiosité<br>a un terrain de jeu.</h1><p>Des jeux, des expériences et des outils.<br>Entre, essaie un truc. Fais comme chez toi.</p><div class="hero-actions"><a class="button primary" href="#/projet/sensoria">Explorer Sensoria <span>↗</span></a><button class="text-link random-button" data-random>Surprends-moi ↗</button></div></div><span class="art-caption">SENSORIA · ILLUSTRATION PROVISOIRE</span></section>
     ${recentSection()}
     <section>${heading('COMMENCE PAR ICI', 'À toi de jouer.', '<a class="text-link" href="#/catalogue?playable=1">À essayer maintenant →</a>')}<div class="project-grid featured">${[projects[1], projects[2], projects[0]].map(card).join('')}</div><p class="rail-hint">Fais défiler pour explorer →</p></section>
-    <section>${heading('UNE AUTRE FAÇON D’EXPLORER', 'Apprendre. Créer. Comprendre.')}<div class="project-grid">${projects.slice(3,6).map(card).join('')}</div></section>
+    <section>${heading('DANS L’ATELIER', 'Les idées prennent forme.', '<a class="text-link" href="#/catalogue">Toute la sélection →</a>')}<div class="project-grid">${['diagnostic','constella','pipboy'].map(id => projects.find(p => p.id === id)).map(card).join('')}</div></section>
     <section class="participate"><span class="participate-symbol" aria-hidden="true">✳</span><div><span class="eyebrow">ÇA SE CONSTRUIT ENSEMBLE</span><h2>Ton regard change la suite.</h2><p>Une idée, un bug ou un ressenti ? Chaque fiche te permet de préparer un retour.</p></div><a class="button secondary" href="#/catalogue">Choisir un projet →</a></section>
     <section>${heading('CARNET DU LABO', 'Le travail continue.', '<a class="text-link" href="#/nouveautes">Les nouveautés →</a>')}${updateCard(updates[0])}</section>`;
 }
@@ -61,11 +61,17 @@ function catalogue(options) {
   if (options.favorites) list = list.filter(p => favorite(p.id));
   if (options.sort === 'name') list = [...list].sort((a,b) => a.name.localeCompare(b.name, 'fr'));
   const emptyFavorites = options.favorites && !collection.favorites.length;
-  return `<div class="page-intro"><span class="eyebrow">${options.favorites ? 'TES ENVIES DE DÉCOUVERTE' : 'LA COLLECTION'}</span><h1>${options.favorites ? 'Garde une place pour la suite.' : 'Trouve ton prochain détour.'}</h1><p>${options.favorites ? 'Ta sélection reste sur cet appareil, sans créer de compte.' : 'Un petit jeu, une expérience inattendue ou un outil à découvrir.'}</p></div>
+  return `<div class="page-intro"><span class="eyebrow">${options.favorites ? 'TES ENVIES DE DÉCOUVERTE' : 'LA COLLECTION'}</span><h1>${options.favorites ? 'Garde une place pour la suite.' : 'Trouve ton prochain détour.'}</h1><p>${options.favorites ? 'Ta sélection reste sur cet appareil, sans créer de compte.' : 'Huit créations choisies pour leur expérience ou leur utilité. Les projets sans accès direct sont présentés séparément.'}</p></div>
     ${chips(options)}
     <div class="catalogue-toolbar"><div class="quick-filters"><button class="filter-toggle ${options.playable ? 'active' : ''}" data-toggle="playable" aria-pressed="${options.playable}"><span aria-hidden="true">▷</span> À essayer maintenant</button><button class="filter-toggle ${options.favorites ? 'active' : ''}" data-toggle="favorites" aria-pressed="${options.favorites}"><span aria-hidden="true">♡</span> Mes favoris</button></div><label class="sort-label">Trier <select id="catalogue-sort"><option value="selection" ${options.sort === 'selection' ? 'selected' : ''}>Sélection du labo</option><option value="name" ${options.sort === 'name' ? 'selected' : ''}>Nom A–Z</option></select></label></div>
     <p class="results-count" role="status">${list.length} projet${list.length > 1 ? 's' : ''}${options.query ? ` pour « ${esc(options.query)} »` : ''}</p>
-    ${list.length ? `<div class="project-grid catalogue-grid">${list.map(card).join('')}</div>` : `<div class="empty"><span class="empty-symbol" aria-hidden="true">${emptyFavorites ? '♡' : '⌕'}</span><h2>${emptyFavorites ? 'Ta sélection commence ici.' : 'Aucun projet avec ces critères.'}</h2><p>${emptyFavorites ? 'Touche le cœur d’un projet pour le retrouver ici.' : 'Essaie une recherche plus courte ou retire un filtre.'}</p><a href="#/catalogue" class="button secondary">Explorer tous les projets →</a></div>`}`;
+    ${list.length ? catalogueGroups(list) : `<div class="empty"><span class="empty-symbol" aria-hidden="true">${emptyFavorites ? '♡' : '⌕'}</span><h2>${emptyFavorites ? 'Ta sélection commence ici.' : 'Aucun projet avec ces critères.'}</h2><p>${emptyFavorites ? 'Touche le cœur d’un projet pour le retrouver ici.' : 'Essaie une recherche plus courte ou retire un filtre.'}</p><a href="#/catalogue" class="button secondary">Explorer tous les projets →</a></div>`}`;
+}
+function catalogueGroups(list) {
+  const ready = list.filter(p => p.live);
+  const workshop = list.filter(p => !p.live);
+  return `${ready.length ? `<section class="catalogue-section">${heading('OUVRE ET EXPLORE', 'À essayer maintenant.')}<div class="project-grid catalogue-grid">${ready.map(card).join('')}</div></section>` : ''}
+    ${workshop.length ? `<section class="catalogue-section">${heading('DANS L’ATELIER', 'À découvrir en présentation.')}<p class="muted">Des projets sélectionnés pour leur idée ou leur usage. Leur accès public reste à préparer ou à vérifier ; aucun lancement direct n’est proposé ici.</p><div class="project-grid catalogue-grid">${workshop.map(card).join('')}</div></section>` : ''}`;
 }
 function updateCard(update) {
   return `<article class="update"><time datetime="${update.date}">${new Date(update.date+'T12:00:00Z').toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric', timeZone:'Europe/Paris'})}</time><div><span class="eyebrow">${esc(update.project)}</span><h3>${esc(update.title)}</h3><p>${esc(update.description)}</p>${update.items ? `<ul class="update-items">${update.items.map(item => `<li>${esc(item)}</li>`).join('')}</ul>` : ''}</div><span class="update-arrow" aria-hidden="true">↗</span></article>`;
@@ -87,7 +93,7 @@ function render({focus=true, scroll=true}={}) {
   let active = 'home';
   if (route.segments[0] === 'projet') {
     const project = projects.find(p => p.id === route.segments[1]);
-    main.innerHTML = project ? detail(project) : '<div class="empty"><h1>Projet introuvable.</h1><a href="#/catalogue" class="button secondary">Retour au catalogue</a></div>';
+    main.innerHTML = project ? detail(project) : retiredProjectIds.includes(route.segments[1]) ? '<div class="empty"><span class="eyebrow">LA SÉLECTION ÉVOLUE</span><h1>Ce projet a quitté la sélection.</h1><p>Le Labs se concentre sur quelques créations. Le dépôt d’origine reste conservé.</p><a href="#/catalogue" class="button primary">Découvrir la sélection →</a></div>' : '<div class="empty"><h1>Projet introuvable.</h1><a href="#/catalogue" class="button secondary">Retour au catalogue</a></div>';
     document.title = project ? `${project.name} — Mathieu / Labs` : 'Projet introuvable — Mathieu / Labs';
   } else if (route.segments[0] === 'catalogue') {
     const options = catalogueOptions();
