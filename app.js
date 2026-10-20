@@ -1,3 +1,4 @@
+import { mountAdmin } from './admin-view.js';
 import { feedbackEndpoint } from './feedback-config.js';
 import { sendPrivateFeedback } from './feedback-client.js';
 import { activityRepositories, loadActivity } from './github-activity.js';
@@ -6,6 +7,7 @@ import { COLLECTION_KEY, readCollection, writeCollection, rememberLaunch, parseR
   catalogueHref, feedbackKinds, validateFeedback, feedbackText, githubFeedbackUrl } from './model.js';
 
 const main = document.querySelector('#main');
+let disposeAdmin = null;
 const dialog = document.querySelector('#feedback');
 const form = document.querySelector('#feedback-form');
 const knownIds = new Set(projects.map(p => p.id));
@@ -95,11 +97,15 @@ function detail(project) {
     <section>${heading('ENCORE UN DÉTOUR ?', 'À découvrir aussi.')}<div class="project-grid">${related.map(card).join('')}</div></section>`;
 }
 function render({focus=true, scroll=true}={}) {
+  disposeAdmin?.(); disposeAdmin = null;
   activityController?.abort();
   activityController = null;
   const route = parseRoute(location.hash);
   let active = 'home';
-  if (route.segments[0] === 'projet') {
+  if (route.segments[0] === 'admin') {
+    disposeAdmin = mountAdmin(main, projects);
+    active = 'admin'; document.title = 'Administration — Mathieu / Labs';
+  } else if (route.segments[0] === 'projet') {
     const project = projects.find(p => p.id === route.segments[1]);
     main.innerHTML = project ? detail(project) : retiredProjectIds.includes(route.segments[1]) ? '<div class="empty"><span class="eyebrow">LA SÉLECTION ÉVOLUE</span><h1>Ce projet a quitté la sélection.</h1><p>Le Labs se concentre sur quelques créations. Le dépôt d’origine reste conservé.</p><a href="#/catalogue" class="button primary">Découvrir la sélection →</a></div>' : '<div class="empty"><h1>Projet introuvable.</h1><a href="#/catalogue" class="button secondary">Retour au catalogue</a></div>';
     document.title = project ? `${project.name} — Mathieu / Labs` : 'Projet introuvable — Mathieu / Labs';

@@ -57,3 +57,15 @@ Reporter les votes publics, profils sociaux, notifications multiples et classeme
 
 ## Prochaine livraison
 Terminer et valider la boîte privée. Associer le propriétaire. Publier. Utiliser les premiers retours réels pour choisir ensuite un seul chantier : regroupement des demandes en sujets de travail.
+
+## Reprise : administration préparée, non publiée
+La branche `codex/admin-inbox` et la PR #1 contiennent l'interface reconstruite.
+Droits RLS appliqués et testés sur la base existante ; 23 tests Node, build et chemins Pages validés par CI.
+Le compte propriétaire et le parcours d'activation restent à finaliser ; aucune invitation envoyée.
+Le rendu mobile et le parcours réel ne sont pas encore testés. Ne pas confondre cette étape avec une livraison.
+État précis, résultats et procédure de reprise : [admin-handoff.md](admin-handoff.md).
+
+### Décision de publication v0.7
+À la demande de Mathieu, publier les versions validées sans nouvelle confirmation.
+La v0.7 livre l'interface Administration ; le compte propriétaire reste à activer séparément.
+L'absence de compte n'ouvre aucun accès public aux retours. La récupération de mot de passe et la recette navigateur restent à terminer.
