@@ -3,7 +3,7 @@
 ## État réel
 - Base de départ : main, ed4bc9337f15957139cdd6ee11c1615a5c74d517.
 - Aucun AGENTS.md présent dans l'arbre du dépôt. README et docs/feedback-roadmap.md lus.
-- Interface reconstruite dans cette branche ; non publiée tant que l'accès propriétaire n'est pas validé.
+- v0.7 : interface prête pour publication après CI, sur demande explicite de Mathieu. L'activation du propriétaire reste une étape distincte ; aucun accès privé n'est ouvert par cette publication.
 - Migration labz_admin_inbox appliquée au projet existant kforawentogotkizxldl (version serveur 20261020210907).
 - Aucun administrateur réel attribué. La recherche ciblée de l'adresse fournie par Mathieu n'a trouvé aucun compte.
 - L'environnement d'exécution local était indisponible. Aucun clone local, serveur de prévisualisation ou navigateur de test n'a pu être lancé.
@@ -70,3 +70,8 @@ Créer une publication distincte, rédigée et approuvée : titre public, synth�
 Ne donner aucun accès public aux sujets internes, messages ou pseudonymes.
 Les liens vers des retours purgés peuvent disparaître ; les décisions et synthèses minimisées survivent.
 Ne pas recopier les messages bruts dans les décisions. Ce chantier n'est pas implémenté.
+
+## Activation ponctuelle sans transmettre de secret
+En l'absence d'outil Auth administrateur, Mathieu peut créer lui-même son compte dans le tableau de bord Supabase du projet Labz, rubrique Authentication / Users. Utiliser uniquement son adresse choisie et définir un mot de passe personnel dans Supabase, jamais dans la conversation.
+Après confirmation de la création, vérifier uniquement cette adresse et son état de confirmation, puis associer l'identifiant Auth obtenu à labz_admins. Aucun utilisateur n'est automatiquement promu.
+Cette méthode permet la connexion par mot de passe déjà implémentée. Elle ne remplace pas le futur parcours de récupération de mot de passe dans Labz.
