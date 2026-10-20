@@ -13,9 +13,10 @@ create table public.labz_feedback_quota(day date primary key, count integer not 
 alter table public.labz_feedback enable row level security;
 alter table public.labz_feedback_quota enable row level security;
 revoke all on public.labz_feedback, public.labz_feedback_quota from public, anon, authenticated, service_role;
--- Inbox is only readable by the project owner through the database dashboard.
+grant select, insert, update, delete on public.labz_feedback, public.labz_feedback_quota to service_role;
+-- No visitor access; the server uses its own privileged role.
 create function public.labz_submit_feedback(p_request_id uuid,p_project text,p_kind text,p_summary text,p_message text,p_nickname text)
-returns text language plpgsql security definer set search_path = '' as $$
+returns text language plpgsql security invoker set search_path = '' as $$
 declare current_count integer; today date := (now() at time zone 'UTC')::date;
 begin
   -- Serializes admissions: simultaneous requests cannot exceed the quota.

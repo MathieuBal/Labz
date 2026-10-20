@@ -2,7 +2,7 @@ const {PGlite} = await import(process.env.LABZ_PGLITE_MODULE || '@electric-sql/p
 import {readFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const db=new PGlite();
-await db.exec('create role anon; create role authenticated; create role service_role;');
+await db.exec('create role anon; create role authenticated; create role service_role bypassrls;');
 await db.exec(await readFile(new URL('../supabase/migrations/20261020150000_labz_feedback.sql', import.meta.url),'utf8'));
 const id='12345678-1234-4123-8123-123456789abc';
 const submit=async()=> (await db.query("select public.labz_submit_feedback($1,'sensoria','idea','Une idée','Un message de test','') as result",[id])).rows[0].result;

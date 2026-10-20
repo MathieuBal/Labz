@@ -1,3 +1,2 @@
-// Enable only after deploying and verifying the receiving service.
-// Public URL only. NEVER place a secret or an admin key here.
-export const feedbackEndpoint = '';
+// Public endpoint only: no secret or admin key belongs in this file.
+export const feedbackEndpoint = 'https://kforawentogotkizxldl.supabase.co/functions/v1/labz-feedback';

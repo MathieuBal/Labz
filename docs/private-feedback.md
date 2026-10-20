@@ -1,4 +1,4 @@
-# Retours privés — service préparé, activation en attente
+# Retours privés — service activé
 
 Le site reste sur GitHub Pages. Une Edge Function Supabase reçoit les messages
 sans création de compte et les enregistre dans une table privée. Aucun email
@@ -7,12 +7,22 @@ espace Supabase ; il peut y lire et supprimer les retours.
 
 ## État au 20 octobre 2026
 
-Code du serveur, migration SQL, client et branchement de l’interface préparés.
-`feedback-config.js` contient une URL vide : le bouton d’envoi privé reste masqué.
-Le projet Supabase n’est pas connecté dans cette session. Rien n’a été déployé
-sur Supabase et aucun message réel n’a été envoyé pour tester.
+Projet dédié : `kforawentogotkizxldl`, organisation Sagazo, région Paris.
+Fonction `labz-feedback` déployée et URL publique renseignée dans le site.
+Un message synthétique a été reçu via HTTP, retrouvé une seule fois en base
+après une relance, puis supprimé. Prévol CORS 204, envoi 201, origine étrangère
+403. Les rôles anon et authenticated ne peuvent pas lire la table ; anon ne
+peut pas appeler la fonction SQL. La fonction SQL utilise SECURITY INVOKER.
 
-## Activation
+Les contrôles Supabase ne signalent que deux informations RLS sans politique :
+c’est volontaire pour ces tables privées, sans droits visiteurs. Explication :
+https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy
+
+Consultation des messages par le propriétaire :
+https://supabase.com/dashboard/project/kforawentogotkizxldl/editor
+Table : `labz_feedback`. Les limites de volume ci-dessous restent en place.
+
+## Procédure de déploiement (déjà exécutée)
 
 1. Connecter Supabase et choisir un projet appartenant à Mathieu. Privilégier un
    projet dédié ; vérifier l’absence de tables `labz_feedback*` avant migration.
@@ -64,7 +74,7 @@ npm install --prefix /tmp/labz-sql-check @electric-sql/pglite
 LABZ_PGLITE_MODULE=/tmp/labz-sql-check/node_modules/@electric-sql/pglite/dist/index.js node scripts/check-feedback-db.mjs
 ```
 
-Ces vérifications ne remplacent pas un test sur le projet Supabase déployé.
+Le test HTTP sur le projet déployé a aussi réussi. Une recette sur iPhone réel reste nécessaire.
 
 Références officielles consultées :
 - https://supabase.com/docs/guides/functions/secrets
