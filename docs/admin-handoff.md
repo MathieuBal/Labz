@@ -39,7 +39,10 @@ Réalisées dans la base déployée, avec fixtures intégralement annulées par 
 L'advisor Supabase n'indique que labz_feedback_quota sans politique : refus voulu pour cette table serveur.
 Les tests Node de cette branche couvrent filtres, échappement, statut confirmé, compte refusé,
 retours tardifs après déconnexion (lecture, connexion, écriture), expiration, erreur réseau et absence de ligne modifiée.
-Consulter le résultat Actions de la PR pour savoir s'ils ont réellement été exécutés.
+Exécution confirmée sur GitHub Actions : 23 tests réussis (dont 9 nouveaux), zéro échec.
+Compilation et chemins Pages validés. Run : https://github.com/MathieuBal/Labz/actions/runs/39498690135
+Commit de code testé : 99ec19d20c2ea936b2b3f3f07cdcc04bab29b5ad. Job deploy volontairement ignoré sur PR.
+Contrôle après ROLLBACK : zéro administrateur attribué, zéro message/compte de test restant.
 Non réalisés : parcours HTTP avec le vrai propriétaire, invitation Auth, contrôle DOM/XSS dans un navigateur,
 rendu mobile/ordinateur, saisie clavier et gestion du focus après changement de statut.
 
