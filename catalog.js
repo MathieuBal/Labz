@@ -3,6 +3,19 @@
 const project = (id, name, category, description, extra = {}) => ({id, name, category, description, art:'orbit', mode:'Présentation', ...extra});
 export const categories = {jeux:'Jeux', experiences:'Expériences', outils:'Outils'};
 const visitorGuides = {
+  "diagnostic": {
+    "invitation": "Sur le site, ouvre « Essayer avant de commencer », puis « Essayer la démonstration ».",
+    "firstTry": "Essaie une question puis un mini-jeu",
+    "steps": [
+      "Ouvre le site et déplie « Essayer avant de commencer » sous le formulaire.",
+      "Clique sur « Essayer la démonstration » : aucun prénom ni code de séance n’est nécessaire.",
+      "Passe les habitudes, réponds à la première question puis essaie le mini-jeu des touches. Tu peux changer de partie librement."
+    ],
+    "controls": "Boutons, choix et listes au doigt ou à la souris. Les manipulations de fichiers sont conçues pour un ordinateur.",
+    "saveNote": "En démonstration, les réponses restent dans ce navigateur, séparées des vraies séances. Utilise « Reprendre mon essai » pour les retrouver.",
+    "comfort": "Le parcours complet est prévu pour un atelier de 90 minutes. Pour découvrir le projet, quelques activités suffisent. Les corrections sont prévues pour le débrief avec un animateur.",
+    "takeaway": "Questions, mini-jeux et manipulations pour préparer des ateliers adaptés. La démonstration ne transmet pas tes réponses à un animateur."
+  },
   "sensoria": {
     "invitation": "Dessine un geste. Regarde la matière lui répondre.",
     "firstTry": "Pour commencer : Encres flottantes",
@@ -51,7 +64,7 @@ export const projects = [
 project('sensoria','Sensoria','experiences','Explore des tableaux sensoriels où chacun de tes gestes transforme l’image.',{art:'ink',mode:'Navigateur',live:'https://mathieubal.github.io/Sensoria/',repo:'https://github.com/MathieuBal/Sensoria',action:'Lancer l’expérience',detail:'Un espace pour explorer librement des tableaux interactifs. Choisis une ambiance, essaie un geste et observe la réaction.',hint:'L’expérience s’ouvre dans un nouvel onglet. Les performances dépendent de ton appareil.'}),
 project('million-de-pixels','Million de pixels','jeux','Transforme ton image en un million de pixels à détruire, couleur par couleur.',{art:'pixels',mode:'Navigateur',live:'https://mathieubal.github.io/million-de-pixels/',repo:'https://github.com/MathieuBal/million-de-pixels',action:'Jouer',detail:'Une image devient ton terrain de jeu : explore les couleurs et fais disparaître les pixels.',hint:'Ouvre le jeu pour choisir ton image et découvrir ses commandes.'}),
 project('lootchest','Lootchest','jeux','Ouvre des coffres, équipe ton héros et explore des donjons toujours plus profonds.',{art:'chest',mode:'Navigateur',live:'https://mathieubal.github.io/Lootchest/',repo:'https://github.com/MathieuBal/Lootchest',action:'Jouer',detail:'Des coffres, de l’équipement et une progression dans les donjons. Découvre ce que réserve la prochaine ouverture.',hint:'Le jeu s’ouvre dans un nouvel onglet. Garde le même navigateur pour retrouver ses données locales.'}),
-project('diagnostic','Diagnostic numérique','outils','Fais le point sur tes usages numériques à travers des questions et des manipulations.',{art:'tools',repo:'https://github.com/MathieuBal/diagnostic-numerique',detail:'Un support conçu pour des ateliers de médiation numérique. L’accès à une session dépend du cadre de l’atelier.'}),
+project('diagnostic','Diagnostic numérique','outils','Fais le point sur tes usages numériques à travers des questions et des manipulations.',{art:'tools',mode:'Démo guidée',live:'https://mathieubal.github.io/diagnostic-numerique/',action:'Ouvrir le site',launchLabel:'Ouvrir le site',hint:'La démonstration est accessible depuis « Essayer avant de commencer ». Le bouton « Rejoindre la séance » est réservé aux vrais ateliers.',repo:'https://github.com/MathieuBal/diagnostic-numerique',detail:'Un support conçu pour des ateliers de médiation numérique. L’accès à une session dépend du cadre de l’atelier.'}),
 project('constella','Constella','outils','Explore tes sujets en constellations et transforme ta veille en journaux éditables.',{art:'orbit',detail:'Un outil de veille et d’exploration, avec collecte de sources, synthèses assistées par IA et édition d’articles. Le projet nécessite encore une installation et des services dédiés.',hint:'Une démonstration publique reste à préparer.'}),
 project('chess','Chess Vision Trainer','jeux','Apprends à repérer les menaces, les défenses et les occasions tactiques sur un échiquier.',{art:'chess',detail:'Un projet d’entraînement à la lecture de l’échiquier.',hint:'L’accès public reste à préparer.'}),
 project('pipboy','Pip-Boy JDR','outils','Retrouve cartes, quêtes et documents dans un compagnon de campagne pour tes parties de JDR.',{art:'tools',detail:'Un compagnon de campagne avec carte, quêtes, documents et console du maître du jeu. Le mode local et la session connectée ont des usages distincts.',hint:'La démonstration publique reste à vérifier avant d’ajouter un bouton de lancement.'}),
