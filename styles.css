@@ -45,3 +45,5 @@
 .disclosure-body{padding:0 4px 22px}.project-disclosure .visitor-guide{margin:0 0 20px;background:transparent;border:0;padding:4px}.project-disclosure .visitor-guide .eyebrow{display:none}
 .feedback-privacy{margin-top:16px;color:var(--muted);font-size:12px}.feedback-privacy summary{cursor:pointer;min-height:44px;padding:12px 0}.feedback-privacy p{font-size:12px}#feedback .notice{padding:0;background:none;border:0;line-height:1.6}#feedback-result:empty{display:none}
 @media(max-width:760px){.project-overview{display:block;padding:22px 18px}.project-visual{display:none}.project-lead h1{font-size:36px}.project-lead .detail-actions{display:grid;grid-template-columns:1fr 1fr}.project-lead .detail-actions .button{min-width:0;padding:12px 8px;font-size:13px;gap:7px}.project-lead .availability{grid-column:1/-1}.project-intro{font-size:14px}.project-quick-tools{margin-bottom:18px}.project-summary>p{font-size:15px}}
+
+.draft-erase{display:block;margin:12px auto 0;padding:12px;min-height:44px;border:0;background:transparent;white-space:normal}.draft-erase:disabled{opacity:.5}

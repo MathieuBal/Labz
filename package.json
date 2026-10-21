@@ -1,6 +1,6 @@
 {
   "name": "mathieu-labs",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "private": true,
   "type": "module",
   "description": "Les jeux, expériences et outils de Mathieu, réunis dans un labo personnel.",
