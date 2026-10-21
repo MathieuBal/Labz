@@ -97,7 +97,7 @@ function detail(project) {
   return `<a class="back" href="#/catalogue">← Tous les projets</a>
     <section class="project-overview"><div class="project-lead"><span class="eyebrow">${categories[project.category]} · ${esc(project.mode)}</span>
     <h1>${esc(project.name)}</h1><div class="detail-actions">
-    ${project.live ? external(project.live, 'Lancer', 'primary', project.id) : '<span class="availability">Pas encore de démo publique</span>'}
+    ${project.live ? external(project.live, esc(project.launchLabel || 'Lancer'), 'primary', project.id) : '<span class="availability">Pas encore de démo publique</span>'}
     <button class="button secondary" data-feedback="${project.id}">${project.live ? 'Déposer un avis' : 'Donner un avis sur le concept'}</button></div>
     <p class="project-intro">${esc(project.invitation || project.description)}</p></div>
     <div class="project-visual">${art(project)}<small>${esc(project.coverLabel || 'Illustration provisoire')}</small></div></section>

@@ -65,3 +65,9 @@ Visuels représentatifs, vrais aperçus de partage et pages projet statiques ; c
 - Vérifier la réussite du déploiement et l'affichage publié, pas seulement le build.
 - Mettre à jour ce plan et la documentation lors de chaque livraison.
 - Ne jamais annoncer de test mobile, connecté ou de sécurité qui n'a pas été réalisé.
+
+## Avancement des démonstrations — v0.12.0
+
+Étude comparative enregistrée dans `docs/demo-strategy.md`. Diagnostic numérique devient le premier outil essayable depuis Labz : accès au site, guide visible pour choisir sa démonstration, premières activités vérifiées en navigateur. Aucun changement à sa collecte ou à Supabase. La démo existait déjà ; cette livraison la rend découvrable.
+
+Ordre proposé pour la préparation de nouvelles démos : Chess Vision Trainer, Pip-Boy, Constella, AtelierFlow. Une seule à la fois. Les limites et vérifications encore nécessaires figurent dans l'étude ; aucun des quatre n'est annoncé comme déployé.

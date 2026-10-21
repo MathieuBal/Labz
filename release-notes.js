@@ -1,6 +1,16 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.12.0",
+    "date": "2026-10-21",
+    "title": "Un premier outil à essayer",
+    "description": "Diagnostic numérique rejoint les projets essayables, avec un guide pour ouvrir sa démonstration.",
+    "items": [
+      "Accès au site et consignes visibles pour choisir la démonstration sans rejoindre une vraie séance.",
+      "Un parcours de découverte court : une question et un mini-jeu."
+    ]
+  },
+  {
     "version": "0.11.0",
     "date": "2026-10-21",
     "title": "Des retours plus faciles à reprendre",
