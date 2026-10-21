@@ -1,12 +1,14 @@
 # Retours Labz : plan d'évolution
-Date : 20 octobre 2026
+Mise à jour : 21 octobre 2026
+
+Plan opérationnel : [development-plan.md](development-plan.md).
 
 ## État et objectif
-La version 0.6 a activé l'envoi privé des retours. L'administration intégrée est en cours, non publiée à la rédaction de ce document. Le compte propriétaire reste à associer explicitement. Ce document décrit des travaux à réaliser, pas des fonctionnalités déjà disponibles.
+La v0.6 a activé les retours privés, la v0.7 a publié l’administration et le compte propriétaire a depuis été associé explicitement. La v0.8 a allégé les fiches, la v0.9 a synchronisé les nouveautés. La priorité actuelle est la fiabilité de la réception et de l’accès, puis le regroupement des retours en décisions. Les fonctions des sections 2 à 5 restent à développer.
 
 Objectif : permettre au visiteur de découvrir, essayer et améliorer les projets, et au propriétaire de prendre ses décisions dans Labz. Supabase assure le stockage et les autorisations en arrière-plan ; son tableau de bord ne doit pas être nécessaire à la gestion quotidienne.
 
-## 1. Terminer la boîte de réception privée
+## 1. Boîte privée publiée — validation à compléter
 - Connexion réservée au propriétaire, autorisation contrôlée dans la base.
 - Liste des retours avec projet, type, date, titre et message.
 - Recherche et filtres par projet et statut.
@@ -56,9 +58,11 @@ Avant une diffusion large : revoir la protection contre le spam, les quotas et l
 Reporter les votes publics, profils sociaux, notifications multiples et classements tant que la boucle réception → décision → livraison n'est pas fiable.
 
 ## Prochaine livraison
-Terminer et valider la boîte privée. Associer le propriétaire. Publier. Utiliser les premiers retours réels pour choisir ensuite un seul chantier : regroupement des demandes en sujets de travail.
+Fiabiliser les brouillons et les relances, intégrer la récupération d’accès, gérer la capacité et compléter la recette mobile/connectée. Ensuite seulement, regrouper les demandes en sujets de travail.
 
-## Reprise : administration préparée, non publiée
+## Archive du 20 octobre : avant publication et activation
+
+Les paragraphes suivants sont historiques. Le compte a depuis été associé et les versions publiées ; ne pas réexécuter la création ou la promotion d’un compte.
 La branche `codex/admin-inbox` et la PR #1 contiennent l'interface reconstruite.
 Droits RLS appliqués et testés sur la base existante ; 23 tests Node, build et chemins Pages validés par CI.
 Le compte propriétaire et le parcours d'activation restent à finaliser ; aucune invitation envoyée.

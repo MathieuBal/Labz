@@ -1,4 +1,16 @@
-# Administration Labz — reprise du 20 octobre 2026
+# Administration Labz — état au 21 octobre 2026
+
+## État courant faisant autorité
+
+Interface publiée depuis la v0.7. Le compte propriétaire a depuis été créé et associé explicitement à `labz_admins`. Ne pas recréer de compte ni attribuer de nouveaux droits lors d’une reprise. La récupération de mot de passe dans Labz reste à développer.
+
+L’audit du 21 octobre a relu les politiques et privilèges réels : RLS sur les trois tables, lecture limitée aux administrateurs, UPDATE limité à `status`. Les tests de client passent ; ils ne remplacent pas un parcours connecté réel. L’entrée de connexion a été examinée sur ordinateur, mais pas le parcours propriétaire ni le rendu sur iPhone.
+
+Plan actif : [development-plan.md](development-plan.md).
+
+## Archive du 20 octobre — ne décrit plus l’état courant
+
+Les sections suivantes conservent les vérifications et blocages historiques. Les mentions « aucun administrateur », « compte à créer » et « environnement indisponible » concernaient cette date, avant l’activation et les publications suivantes.
 
 ## État réel
 - Base de départ : main, ed4bc9337f15957139cdd6ee11c1615a5c74d517.

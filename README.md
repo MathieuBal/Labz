@@ -1,96 +1,66 @@
 # Labz — Mathieu / Labs
 
-Un point d’entrée pour découvrir les jeux, expériences et outils de Mathieu. Version 0.6 inspirée des maquettes validées : interface sombre, accents citron, titres éditoriaux et navigation mobile dédiée.
+Un point d'entrée pour découvrir les jeux, expériences et outils de Mathieu, puis lui envoyer des retours privés sans compte.
 
-## Déjà développé
+Site : https://mathieubal.github.io/Labz/
 
-- Accueil avec Sensoria, Million de pixels et Lootchest mis en avant.
-- Catalogue éditorial de 8 projets, catégories et recherche insensible aux accents.
-- Fiches individuelles, liens partageables par fragment et liens externes des trois projets mis en avant.
-- Mobile : navigation basse avec safe-area iPhone, rail horizontal de projets, fiches pleine largeur, formulaire en panneau inférieur.
-- Favoris locaux, huit derniers projets lancés, filtres combinables « à essayer maintenant » / catégorie / favoris et tri par nom.
-- Bouton de découverte aléatoire parmi les projets lançables et partage natif lorsqu’il est disponible.
-- Retours : sauvegarde automatique des brouillons locaux, export texte et passage optionnel vers un formulaire GitHub prérempli. **Aucune publication automatique** : le visiteur est informé du caractère public et doit valider lui-même sur GitHub avec son compte. Les longs textes restent exportables sans troncature.
-- Accessibilité de base : HTML sémantique, focus visible, lien d’évitement, dialog natif avec Escape et retour du focus, réduction des mouvements.
-- Fiches des trois expériences lançables : premiers pas, commandes, sauvegarde et limites. Lancement direct depuis les cartes.
-- Visuels : toile de campagne Million de pixels optimisée en WebP, coffre pixel art de Lootchest, illustrations SVG provisoires pour les autres projets. Aucun de ces visuels n’est présenté comme une capture de l’interface.
-- Nouveautés GitHub en lecture publique pour les quatre dépôts explicitement autorisés : versions publiées (préversions identifiées), ou activité du code en leur absence. Cache mémoire de 15 minutes, délai maximal de 12 secondes et interruption lors d’un changement de page. Aucun token ni découverte de dépôts privés.
+## État courant
 
-Les accroches reprennent les descriptions README examinées. Les projets privés ne sont pas automatiquement rendus publics, et aucun lien vers leur code n’est publié. Les fiches sans version publique validée restent des présentations. Les expériences lançables et les présentations sont regroupées séparément. Les anciennes adresses des 17 projets retirés expliquent le changement et renvoient à la sélection. Voir [les décisions éditoriales](docs/selection.md).
+Le numéro de version et les nouveautés viennent de `release-notes.js` ; ils sont validés contre `package.json` et publiés ensemble.
 
-## Développement
+- Catalogue éditorial de huit projets, dont trois expériences lançables. Présentations séparées, recherche, catégories et filtres combinables.
+- Fiches compactes : Lancer et Déposer un avis en tête, guides et évolutions dépliables. Favoris et historique locaux ; partage natif ou copie du lien.
+- Retours privés via Supabase, sans compte visiteur. Un seul bouton d'envoi. Brouillon automatiquement sauvegardé sur l'appareil ; aucun export ni publication GitHub dans ce parcours.
+- Administration `#/admin`, accessible en pied de page : connexion propriétaire, recherche, filtres, compteurs et statuts Nouveau / En cours / Traité. Autorisation explicite en base, aucun premier inscrit automatiquement administrateur.
+- Jetons et messages privés en mémoire ; sortie de l'admin, rechargement, expiration et déconnexion effacent l'état local.
+- Activité publique GitHub de quatre dépôts autorisés : versions, ou commits clairement identifiés en leur absence. Cache mémoire de quinze minutes ; aucun token public privilégié.
 
-Node 22 ou plus récent. Aucune dépendance npm à installer.
+Les visuels ne sont pas tous des captures d'écran. Les projets sans démo validée restent des présentations. Aucun dépôt privé n'est exposé automatiquement.
 
-```sh
-npm run check
-npm run build
-npm start
-```
+## Développement et validation
 
-Puis ouvrir http://127.0.0.1:4173. Les commandes sont à lancer à la racine du dépôt.
-
-Le site statique se trouve dans `dist/`. Les chemins relatifs et le routage `#/projet/...` permettent un hébergement sous `/Labz/`. Les pages projet s’ouvrent dans un nouvel onglet pour conserver le point de départ et l’origine de leurs sauvegardes.
-
-## Structure
-
-- `catalog.js` : contenu éditorial, catégories, liens et journal du Labs.
-- `app.js` : navigation, rendu, recherche, formulaires locaux et partage.
-- `github-activity.js` : lecture et normalisation défensive des releases/commits publics.
-- `model.js` : filtres, persistance défensive, validation et préparation des retours GitHub.
-- `tests/` : tests Node de persistance, navigation et préparation des retours.
-- `styles.css` : thèmes et dispositions ordinateur/mobile.
-- `assets/` : illustrations vectorielles et icône.
-- `scripts/` : validation, compilation statique, serveur local, générateur d’illustrations.
-
-## Vérification
-
-`npm run check` vérifie la syntaxe JS, la cohérence des données, les assets et les recherches, puis exécute les tests de robustesse (données locales corrompues, filtres combinés et retours). `npm run build` produit un dossier statique autonome. Une recette visuelle sur iPhone et ordinateur reste nécessaire ; les contrôles statiques ne prouvent pas l’ergonomie ni la disponibilité des jeux tiers.
-
-## Prochaines étapes
-
-1. Recette visuelle réelle sur mobile et ordinateur, puis affinage des cartes et visuels.
-2. Stockage serveur des retours privés, antispam, limites de taille/fréquence et interface de modération.
-3. Publication de suggestions choisies, soutien aux idées et suivi de leur état.
-4. Modération des retours anonymes et conversion choisie en issues, côté serveur. Le passage public vers GitHub existe déjà sans clé embarquée.
-5. Étendre la liste de dépôts publics vérifiés ; enrichir le catalogue après validation éditoriale. Les releases des quatre dépôts actuellement reliés sont déjà lues à l’ouverture. Aucun nouveau projet n’est ajouté automatiquement.
-6. Téléchargements uniquement lorsqu’un exécutable et sa notice ont été vérifiés.
-
-Ne jamais placer une clé GitHub dans le JavaScript public. Une évolution serveur sera nécessaire pour la boîte de réception et les actions GitHub.
-
-## Publication sur GitHub Pages
-
-Le workflow `.github/workflows/check.yml` vérifie et compile le site, valide ses chemins sous `/Labz/`, puis déploie `dist/` sur GitHub Pages. Les pull requests sont vérifiées sans publication. Chaque push sur `main` publie après réussite des contrôles ; un lancement manuel est également disponible.
-
-### Activation initiale (une seule fois)
-
-Dans le dépôt GitHub, ouvrir **Settings → Pages → Build and deployment → Source**, puis sélectionner **GitHub Actions**. Cette activation demande l’accès d’administration du propriétaire et ne peut pas être faite par le connecteur utilisé ici.
-
-Ensuite, dans **Actions → Build and deploy Labz**, relancer le job en échec ou choisir **Run workflow**. Les mises à jour suivantes de `main` sont automatiques.
-
-Site publié (Pages activé le 19 octobre 2026) : https://mathieubal.github.io/Labz/
-
-L’URL réelle du déploiement apparaît dans l’environnement `github-pages` et dans le résumé du workflow. Ne pas confondre réussite de la compilation et publication effective : le job `deploy` doit également réussir.
-
-### Vérifications locales de publication
+Node 22 ou plus récent. Aucune dépendance npm nécessaire.
 
 ```sh
 npm run check
 npm run build
 node scripts/check-pages.mjs
+npm start
 ```
 
-Le paquet contient une page 404 de retour au catalogue et un fichier `.nojekyll`. Aucun serveur ni secret n’est nécessaire pour cette première version. GitHub Pages héberge uniquement la partie statique ; la réception privée de commentaires anonymes et les actions automatiques sur GitHub demanderont un service séparé.
+Ouvrir http://127.0.0.1:4173. Le site compilé est dans `dist/`. Les chemins relatifs supportent `/Labz/`. Les tests Node ne remplacent pas une recette navigateur, mobile ou propriétaire connecté.
 
-## Données GitHub
+## Structure
 
-Les visiteurs consultent directement l’API publique GitHub depuis leur navigateur à l’ouverture d’une fiche reliée ou de la page Nouveautés. Le cache dure uniquement pendant la session de la page. Aucun appel n’est effectué en arrière-plan une fois le Labs fermé. Le bouton Actualiser force une nouvelle lecture. Une limite ou une panne affiche un message et conserve les données déjà reçues lorsque possible. Les commits restent explicitement séparés des releases : ils ne prouvent pas le déploiement d’une nouvelle version jouable. Les notes de version sont rendues en texte brut, limitées à 600 caractères, avec un lien vers leur source complète.
+- `catalog.js` : catalogue et guides éditoriaux.
+- `release-notes.js` : historique public et version affichée.
+- `app.js`, `model.js`, `styles.css` : navigation, rendu et état public local.
+- `feedback-client.js`, `feedback-config.js` : envoi privé.
+- `admin-client.js`, `admin-view.js`, `admin-config.js`, `admin.css` : espace propriétaire.
+- `github-activity.js` : lecture défensive des nouveautés publiques.
+- `supabase/` : migrations, réception serveur et configuration.
+- `scripts/`, `tests/` : validation, préparation de version, build et publication.
 
-## Réception privée activée
+## Publication
 
-Les visiteurs peuvent envoyer un retour privé sans compte depuis une fiche.
-La réception est hébergée dans le projet Supabase Labz (Sagazo, Paris).
-Seule l’URL publique figure dans le client ; les clés restent côté serveur.
-L’enregistrement réel, la relance sans doublon et les droits d’accès ont été vérifiés.
-Voir [la procédure et les limites](docs/private-feedback.md).
-Les brouillons et la publication volontaire sur GitHub restent disponibles.
+GitHub Pages est activé via Actions. `.github/workflows/check.yml` teste et compile les PR ; les pushs sur `main` publient après validation. Vérifier le job `deploy`, puis la version en ligne.
+
+Préparer une livraison avec `npm run release` : [procédure](docs/releases.md). La CI compare les changements au commit précédent : une modification autre que README/docs Markdown exige une version supérieure et une note modifiée. Une republication manuelle conserve la version. Les scripts et styles partagent une empreinte de cache ; les images remplacées doivent recevoir un nom versionné si nécessaire.
+
+## Limites à connaître
+
+- Réception : 100 admissions par jour UTC, 500 messages présents. Le statut Traité ne libère pas de capacité.
+- Messages de plus de 90 jours purgés lors du prochain envoi, sans tâche périodique actuellement.
+- Brouillons persistants sans commande d'effacement ; déduplication garantie seulement pendant la session actuelle. Ce sont les prochains correctifs.
+- Récupération de mot de passe non intégrée. La consultation propriétaire est autorisée mais la recette complète de connexion/récupération sur téléphone reste à terminer.
+- Les nouveautés Labz sont rédigées dans le dépôt ; leur diffusion est automatisée, leur rédaction n'est pas encore gérée depuis l'administration.
+
+## Documents de continuité
+
+- [Plan de développement et validations](docs/development-plan.md)
+- [Évolution des retours et des décisions](docs/feedback-roadmap.md)
+- [Administration : état et protections](docs/admin-handoff.md)
+- [Réception privée : architecture et limites](docs/private-feedback.md)
+- [Choix éditoriaux](docs/selection.md)
+
+Ne jamais embarquer de clé GitHub, de clé secrète Supabase ou de mot de passe dans le client. Réutiliser le projet Supabase existant ; aucun nouveau projet requis.

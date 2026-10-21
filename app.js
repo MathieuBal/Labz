@@ -69,7 +69,7 @@ function catalogue(options) {
   if (options.favorites) list = list.filter(p => favorite(p.id));
   if (options.sort === 'name') list = [...list].sort((a,b) => a.name.localeCompare(b.name, 'fr'));
   const emptyFavorites = options.favorites && !collection.favorites.length;
-  return `<div class="page-intro"><span class="eyebrow">${options.favorites ? 'TES ENVIES DE DÉCOUVERTE' : 'LA COLLECTION'}</span><h1>${options.favorites ? 'Garde une place pour la suite.' : 'Trouve ton prochain détour.'}</h1><p>${options.favorites ? 'Ta sélection reste sur cet appareil, sans créer de compte.' : 'Huit créations choisies pour leur expérience ou leur utilité. Les projets sans accès direct sont présentés séparément.'}</p></div>
+  return `<div class="page-intro"><span class="eyebrow">${options.favorites ? 'TES ENVIES DE DÉCOUVERTE' : 'LA COLLECTION'}</span><h1>${options.favorites ? 'Garde une place pour la suite.' : 'Trouve ton prochain détour.'}</h1><p>${options.favorites ? 'Ta sélection reste sur cet appareil, sans créer de compte.' : `${projects.length} créations choisies pour leur expérience ou leur utilité. Les projets sans accès direct sont présentés séparément.`}</p></div>
     ${chips(options)}
     <div class="catalogue-toolbar"><div class="quick-filters"><button class="filter-toggle ${options.playable ? 'active' : ''}" data-toggle="playable" aria-pressed="${options.playable}"><span aria-hidden="true">▷</span> À essayer maintenant</button><button class="filter-toggle ${options.favorites ? 'active' : ''}" data-toggle="favorites" aria-pressed="${options.favorites}"><span aria-hidden="true">♡</span> Mes favoris</button></div><label class="sort-label">Trier <select id="catalogue-sort"><option value="selection" ${options.sort === 'selection' ? 'selected' : ''}>Sélection du labo</option><option value="name" ${options.sort === 'name' ? 'selected' : ''}>Nom A–Z</option></select></label></div>
     <p class="results-count" role="status">${list.length} projet${list.length > 1 ? 's' : ''}${options.query ? ` pour « ${esc(options.query)} »` : ''}</p>
@@ -81,8 +81,8 @@ function catalogueGroups(list) {
   return `${ready.length ? `<section class="catalogue-section">${heading('OUVRE ET EXPLORE', 'À essayer maintenant.')}<div class="project-grid catalogue-grid">${ready.map(card).join('')}</div></section>` : ''}
     ${workshop.length ? `<section class="catalogue-section">${heading('DANS L’ATELIER', 'À découvrir en présentation.')}<p class="muted">Des projets sélectionnés pour leur idée ou leur usage. Leur accès public reste à préparer ou à vérifier ; aucun lancement direct n’est proposé ici.</p><div class="project-grid catalogue-grid">${workshop.map(card).join('')}</div></section>` : ''}`;
 }
-function updateCard(update) {
-  return `<article class="update"><time datetime="${update.date}">${new Date(update.date+'T12:00:00Z').toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric', timeZone:'Europe/Paris'})}</time><div><span class="eyebrow">${esc(update.project)}</span><h3>${esc(update.title)}</h3><p>${esc(update.description)}</p>${update.items ? `<ul class="update-items">${update.items.map(item => `<li>${esc(item)}</li>`).join('')}</ul>` : ''}</div><span class="update-arrow" aria-hidden="true">↗</span></article>`;
+function updateCard(update, level=3) {
+  return `<article class="update"><time datetime="${update.date}">${new Date(update.date+'T12:00:00Z').toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric', timeZone:'Europe/Paris'})}</time><div><span class="eyebrow">${esc(update.project)}</span><h${level}>${esc(update.title)}</h${level}><p>${esc(update.description)}</p>${update.items ? `<ul class="update-items">${update.items.map(item => `<li>${esc(item)}</li>`).join('')}</ul>` : ''}</div><span class="update-arrow" aria-hidden="true">↗</span></article>`;
 }
 function visitorGuide(project) {
   if (!project.steps) return '';
@@ -94,7 +94,7 @@ function detail(project) {
     <section class="project-overview"><div class="project-lead"><span class="eyebrow">${categories[project.category]} · ${esc(project.mode)}</span>
     <h1>${esc(project.name)}</h1><div class="detail-actions">
     ${project.live ? external(project.live, 'Lancer', 'primary', project.id) : '<span class="availability">Pas encore de démo publique</span>'}
-    <button class="button secondary" data-feedback="${project.id}">Déposer un avis</button></div>
+    <button class="button secondary" data-feedback="${project.id}">${project.live ? 'Déposer un avis' : 'Donner un avis sur le concept'}</button></div>
     <p class="project-intro">${esc(project.invitation || project.description)}</p></div>
     <div class="project-visual">${art(project)}<small>${esc(project.coverLabel || 'Illustration provisoire')}</small></div></section>
     <div class="project-quick-tools">${favoriteButton(project, true)}<button class="text-link" data-share="${project.id}">Partager ↗</button></div>
@@ -102,7 +102,7 @@ function detail(project) {
     ${project.steps ? `<details class="project-disclosure"><summary>Comment en profiter ?</summary>${visitorGuide(project)}</details>` : ''}
     <details class="project-disclosure"><summary>À propos du projet</summary><div class="disclosure-body"><p class="muted">${esc(project.hint || 'Cette fiche présente le concept. Une version publique reste à préparer.')}</p>${project.repo ? external(project.repo, 'Voir le code sur GitHub') : ''}</div></details>
     ${activityRepositories[project.id] ? `<details class="project-disclosure" data-project-activity><summary>Dernières évolutions</summary><div class="disclosure-body"><div id="github-activity" data-project="${project.id}" aria-busy="false"><p class="muted">Ouvre cette rubrique pour consulter les évolutions.</p></div><button class="text-link activity-refresh" data-refresh-activity>Actualiser ↻</button></div></details>` : ''}</section>
-    <section>${heading('POURSUIVRE LA DÉCOUVERTE', 'À essayer aussi.')}<div class="project-grid">${related.map(card).join('')}</div></section>`;
+    <section>${heading('POURSUIVRE LA DÉCOUVERTE', 'À découvrir aussi.')}<div class="project-grid">${related.map(card).join('')}</div></section>`;
 }
 function render({focus=true, scroll=true}={}) {
   disposeAdmin?.(); disposeAdmin = null;
@@ -123,7 +123,7 @@ function render({focus=true, scroll=true}={}) {
     active = options.favorites ? 'favorites' : options.category === 'all' ? 'catalogue' : options.category;
     document.title = `${options.favorites ? 'Mes favoris' : 'Le catalogue'} — Mathieu / Labs`;
   } else if (route.segments[0] === 'nouveautes') {
-    main.innerHTML = `<div class="page-intro"><span class="eyebrow">LE CARNET DU LABO</span><h1>Ce qui bouge ici.</h1><p>Des étapes concrètes, au fil des projets.</p></div>${updates.map(updateCard).join('')}<section class="activity-section">${heading('LES PROJETS BOUGENT AUSSI', 'Du côté des projets.')}<p class="muted">Versions publiées sur GitHub ou, à défaut, derniers changements du code. Un commit ne garantit pas une mise à jour du jeu en ligne.</p><div id="github-activity" data-project="all" aria-busy="true"><p class="muted" role="status">Lecture des nouveautés GitHub…</p></div><button class="button secondary" data-refresh-activity>Actualiser les projets ↻</button></section>`;
+    main.innerHTML = `<div class="page-intro"><span class="eyebrow">LE CARNET DU LABO</span><h1>Ce qui bouge ici.</h1><p>Des étapes concrètes, au fil des projets.</p></div>${updates.map(update => updateCard(update, 2)).join('')}<section class="activity-section">${heading('LES PROJETS BOUGENT AUSSI', 'Du côté des projets.')}<p class="muted">Versions publiées sur GitHub ou, à défaut, derniers changements du code. Un commit ne garantit pas une mise à jour du jeu en ligne.</p><div id="github-activity" data-project="all" aria-busy="true"><p class="muted" role="status">Lecture des nouveautés GitHub…</p></div><button class="button secondary" data-refresh-activity>Actualiser les projets ↻</button></section>`;
     active = 'nouveautes'; document.title = 'Nouveautés — Mathieu / Labs';
   } else if (!route.segments.length) {
     main.innerHTML = home(); document.title = 'Mathieu / Labs — Des créations à explorer';
@@ -283,6 +283,12 @@ function refreshFavoriteButtons(id) {
   });
 }
 document.addEventListener('click', async event => {
+  if (event.target.closest('.skip')) {
+    event.preventDefault();
+    main.focus({preventScroll:true});
+    main.scrollIntoView({block:'start'});
+    return;
+  }
   const feedback = event.target.closest('[data-feedback]');
   if (feedback) openFeedback(feedback.dataset.feedback, feedback);
   const toggleFavorite = event.target.closest('[data-favorite]');
