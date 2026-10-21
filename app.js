@@ -1,11 +1,13 @@
+import { updates, currentRelease } from './release-notes.js';
 import { mountAdmin } from './admin-view.js';
 import { feedbackEndpoint } from './feedback-config.js';
 import { sendPrivateFeedback } from './feedback-client.js';
 import { activityRepositories, loadActivity } from './github-activity.js';
-import { projects, categories, updates, filterProjects, retiredProjectIds } from './catalog.js';
+import { projects, categories, filterProjects, retiredProjectIds } from './catalog.js';
 import { COLLECTION_KEY, readCollection, writeCollection, rememberLaunch, parseRoute,
   catalogueHref, feedbackKinds, validateFeedback } from './model.js';
 
+document.querySelector('[data-site-version]').textContent = `v${currentRelease.version}`;
 const main = document.querySelector('#main');
 let disposeAdmin = null;
 const dialog = document.querySelector('#feedback');
