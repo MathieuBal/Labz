@@ -1,6 +1,15 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.9.1",
+    "date": "2026-10-21",
+    "title": "Les nouveautés restent à jour après rechargement",
+    "description": "Le site évite de mélanger les anciens fichiers en cache avec une nouvelle version.",
+    "items": [
+      "Les scripts et les styles partagent une empreinte propre à chaque publication."
+    ]
+  },
+  {
     "version": "0.9.0",
     "date": "2026-10-21",
     "title": "Les nouveautés suivent les versions du labo",
