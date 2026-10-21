@@ -17,3 +17,9 @@ La CI et le build refusent une version sans note correspondante, les doublons et
 Les changements sans nouveau numéro de version (corrections documentaires, par exemple) ne créent pas de nouveauté. Pour une modification visible, préparer une version, même corrective. Ne plus modifier le journal dans catalog.js ni écrire le numéro manuellement dans index.html.
 
 Ce mécanisme concerne Labz. Les actualités des autres projets gardent leur source GitHub publique existante ; leurs commits ne sont pas présentés comme des versions déployées.
+
+## Contrôle entre deux publications
+
+La CI compare le commit testé à la base de la PR ou au commit précédant le push. Toute modification autre que `README.md` et `docs/**/*.md` exige un numéro supérieur et une modification du journal. `npm run check` valide ensuite leur cohérence. Ainsi, modifier le code sans changer ni la version ni le journal est aussi refusé.
+
+Pour vérifier localement un commit préparé : `node scripts/check-release-change.mjs COMMIT_PRECEDENT`. Le contrôle porte sur les commits, pas les fichiers non enregistrés. Une republication manuelle (`workflow_dispatch`) n’exige pas d’incrément, mais garde tous les autres contrôles.

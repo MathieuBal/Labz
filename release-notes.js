@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.10.0",
+    "date": "2026-10-21",
+    "title": "Une navigation plus cohérente",
+    "description": "Les fiches distinguent mieux les expériences et les concepts, et la navigation au clavier conserve la page ouverte.",
+    "items": [
+      "Le lien Aller au contenu fonctionne sans quitter la page.",
+      "Les suggestions sont présentées comme des projets à découvrir.",
+      "Les nouveautés utilisent une hiérarchie de titres cohérente."
+    ]
+  },
+  {
     "version": "0.9.1",
     "date": "2026-10-21",
     "title": "Les nouveautés restent à jour après rechargement",

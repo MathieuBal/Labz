@@ -1,5 +1,17 @@
 # Retours privés — service activé
 
+## État courant au 21 octobre 2026
+
+La consultation et les changements de statut se font dans Labz `#/admin`, pour le propriétaire explicitement autorisé. Aucun utilisateur anonyme ou authentifié sans cette autorisation ne peut consulter les retours. Le rôle authentifié possède SELECT sous RLS et UPDATE sur la seule colonne `status`, sous RLS. Les export/publication GitHub du formulaire ont été retirés en v0.8.
+
+Les quotas et la purge décrits plus bas restent en place. Le statut Traité ne libère pas de capacité et aucune suppression intégrée n’est encore disponible. La déduplication après rechargement, l’effacement des brouillons, la récupération d’accès et une purge planifiée restent à développer : [plan actif](development-plan.md).
+
+L’advisor du 21 octobre signale la table quota sans politique (refus volontaire) et la protection contre les mots de passe compromis désactivée (à examiner selon l’offre).
+
+## Archive technique de mise en service — 20 octobre 2026
+
+La description initiale ci-dessous précède la migration d’administration : les mentions d’absence de droits authenticated et de consultation uniquement via Supabase ne représentent plus l’état actuel. Les tests et nombres cités sont ceux de cette mise en service.
+
 Le site reste sur GitHub Pages. Une Edge Function Supabase reçoit les messages
 sans création de compte et les enregistre dans une table privée. Aucun email
 n’est envoyé automatiquement. Le propriétaire consulte la table depuis son
