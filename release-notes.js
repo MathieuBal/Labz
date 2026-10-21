@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.11.0",
+    "date": "2026-10-21",
+    "title": "Des retours plus faciles à reprendre",
+    "description": "Le formulaire retrouve ton texte et son état après rechargement, et te permet de les effacer sur cet appareil.",
+    "items": [
+      "Une relance conserve son identifiant lorsque le stockage local est disponible.",
+      "Un retour déjà reçu est identifié pour éviter de le renvoyer par erreur.",
+      "Les brouillons locaux expirent après 30 jours sans modification, au prochain passage."
+    ]
+  },
+  {
     "version": "0.10.0",
     "date": "2026-10-21",
     "title": "Une navigation plus cohérente",

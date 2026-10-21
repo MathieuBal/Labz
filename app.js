@@ -2,6 +2,7 @@ import { updates, currentRelease } from './release-notes.js';
 import { mountAdmin } from './admin-view.js';
 import { feedbackEndpoint } from './feedback-config.js';
 import { sendPrivateFeedback } from './feedback-client.js';
+import {createFeedbackDrafts,submissionSignature} from './feedback-drafts.js';
 import { activityRepositories, loadActivity } from './github-activity.js';
 import { projects, categories, filterProjects, retiredProjectIds } from './catalog.js';
 import { COLLECTION_KEY, readCollection, writeCollection, rememberLaunch, parseRoute,
@@ -19,7 +20,10 @@ let collection = readCollection(storage, knownIds);
 let feedbackProject = null, feedbackOpener = null, toastTimer, draftTimer;
 let dirtyDraft = false;
 let privateSendBusy = false;
-const privateSubmissionIds = new Map();
+const drafts = createFeedbackDrafts({storage});
+for (const id of knownIds) drafts.read(id);
+let feedbackView = 0;
+let draftPersisted = true;
 let activityController = null;
 let activityBusy = false;
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
@@ -191,21 +195,26 @@ function payload() {
     summary:String(data.get('summary')).trim(), message:String(data.get('message')).trim(),
     nickname:String(data.get('nickname')).trim(), createdAt:new Date().toISOString(), status:'local-draft'};
 }
-function draftKey() { return `labs-draft-${feedbackProject.id}`; }
-function readDraft(id) {
-  try { const data = JSON.parse(storage.getItem(`labs-draft-${id}`) || 'null'); return data && typeof data === 'object' ? data : null; }
-  catch { return null; }
+function feedbackStatus(message='') {
+  if (!feedbackProject) return;
+  const state = drafts.state(feedbackProject.id,payload());
+  const button = document.querySelector('#send-private-feedback');
+  button.disabled = privateSendBusy || !feedbackEndpoint || state === 'received';
+  button.textContent = privateSendBusy ? 'Envoi en cours…' : state === 'received' ? 'Retour déjà reçu' : state === 'uncertain' || state === 'pending' ? 'Réessayer l’envoi' : 'Envoyer à Mathieu';
+  document.querySelector('#erase-feedback-draft').disabled = privateSendBusy;
+  draftPersisted = drafts.isPersistent(feedbackProject.id);
+  const warning = draftPersisted ? '' : ' Le stockage local est indisponible : le texte reste seulement dans cet onglet et une relance après rechargement peut créer un doublon.';
+  document.querySelector('#feedback-result').textContent = (message ||
+    (state === 'received' ? 'Ce retour a été reçu en privé. Tu peux fermer ce formulaire ou modifier le texte pour écrire un nouveau retour.' :
+     state === 'pending' || state === 'uncertain' ? 'La réception de ce texte n’est pas confirmée. Réessaie : le même identifiant sera réutilisé.' :
+     drafts.read(feedbackProject.id) ? 'Brouillon conservé. Le texte actuel n’a pas été confirmé comme reçu.' : '')) + warning;
 }
 function saveDraft(explicit=false) {
   clearTimeout(draftTimer);
   if (!feedbackProject || (!dirtyDraft && !explicit)) return;
-  const result = document.querySelector('#feedback-result');
-  try {
-    storage.setItem(draftKey(), JSON.stringify(payload())); dirtyDraft = false;
-    result.textContent = 'Brouillon enregistré sur cet appareil. Aucun message envoyé.';
-  } catch {
-    result.textContent = 'Ton brouillon ne peut pas être sauvegardé sur cet appareil.';
-  }
+  draftPersisted = drafts.save(feedbackProject.id,payload()).persisted;
+  dirtyDraft = false;
+  if (!privateSendBusy) feedbackStatus();
 }
 function updateFeedbackHint() {
   const kind = form.elements.kind.value;
@@ -214,17 +223,16 @@ function updateFeedbackHint() {
 function openFeedback(id, opener) {
   feedbackProject = projects.find(p => p.id === id);
   if (!feedbackProject) return;
-  feedbackOpener = opener; form.reset(); dirtyDraft = false;
-  const draft = readDraft(id);
+  feedbackOpener = opener; feedbackView++; form.reset(); dirtyDraft = false; draftPersisted = true;
+  const draft = drafts.read(id)?.data;
   if (draft) {
     for (const key of ['summary','message','nickname']) if (typeof draft[key] === 'string') form.elements[key].value = draft[key];
     if (feedbackKinds[draft.kind]) form.elements.kind.value = draft.kind;
   }
   updateFeedbackHint();
   document.querySelector('#feedback-context').textContent = `À propos de ${feedbackProject.name}`;
-  document.querySelector('#feedback-result').textContent = draft ? 'Ton dernier brouillon a été retrouvé.' : '';
+  feedbackStatus();
   document.querySelector('#private-feedback').hidden = false;
-  document.querySelector('#send-private-feedback').disabled = privateSendBusy || !feedbackEndpoint;
   if (!feedbackEndpoint) document.querySelector('#feedback-result').textContent = 'La messagerie est temporairement indisponible. Ton brouillon est conservé.';
   dialog.showModal();
 }
@@ -238,39 +246,50 @@ form.addEventListener('submit', async event => {
   event.preventDefault();
   if (!feedbackEndpoint || privateSendBusy) return;
   const data = validPayload(); if (!data) return;
-  saveDraft(true);
+  clearTimeout(draftTimer); dirtyDraft = false;
+  const ticket = drafts.prepare(data.project,data);
+  draftPersisted = ticket.persisted;
+  if (ticket.alreadyReceived) { feedbackStatus(); return; }
+  const view = feedbackView;
   const message = {project:data.project,kind:data.kind,summary:data.summary,message:data.message,nickname:data.nickname,website:form.elements.website.value};
-  const signature = JSON.stringify(message);
-  let requestId = privateSubmissionIds.get(signature);
-  if (!requestId) {
-    requestId = crypto.randomUUID();
-    if (privateSubmissionIds.size >= 20) privateSubmissionIds.clear();
-    privateSubmissionIds.set(signature,requestId);
-  }
-  const button = document.querySelector('#send-private-feedback');
-  privateSendBusy = true; button.disabled = true; button.textContent = 'Envoi en cours…';
-  const show = text => {
-    if (dialog.open && feedbackProject?.id === data.project && form.elements.message.value.trim() === data.message) document.querySelector('#feedback-result').textContent = text;
-    else toast(text);
-  };
+  privateSendBusy = true; feedbackStatus('Envoi en cours…');
+  let result;
   try {
-    await sendPrivateFeedback(feedbackEndpoint,{...message,requestId},{signal:AbortSignal.timeout(12000)});
-    show('Retour reçu en privé. Merci ! Ton brouillon reste disponible sur cet appareil.');
+    await sendPrivateFeedback(feedbackEndpoint,{...message,requestId:ticket.requestId},{signal:AbortSignal.timeout(12000)});
+    drafts.settle(ticket,true);
+    result = 'Le texte envoyé a été reçu en privé. Merci !';
   } catch (error) {
-    show(error.message === 'limited' ? 'La boîte de réception est temporairement pleine. Ton brouillon est conservé ; réessaie plus tard.' : 'La réception n’a pas pu être confirmée. Ton brouillon est conservé. Tu peux réessayer.');
+    drafts.settle(ticket,false);
+    result = error.message === 'limited' ? 'La réception est temporairement limitée. Ton texte est conservé ; réessaie plus tard.' : 'La réception n’a pas pu être confirmée. Tu peux réessayer sans changer le texte.';
   } finally {
-    privateSendBusy = false; button.disabled = false; button.textContent = 'Envoyer à Mathieu';
+    privateSendBusy = false;
+    if (dialog.open) {
+      // A late acknowledgement belongs to the submitted snapshot, not to edits
+      // or another project's dialog opened while the request was in flight.
+      if (feedbackView === view && feedbackProject?.id === data.project) {
+        feedbackStatus(submissionSignature(payload()) !== ticket.attempt.signature ? result + ' Ce résultat concerne le texte précédent, pas tes modifications actuelles.' : result);
+      } else feedbackStatus();
+    }
+    if (!dialog.open || feedbackView !== view) toast(result);
   }
 });
 form.addEventListener('input', () => {
   dirtyDraft = true;
-  document.querySelector('#feedback-result').textContent = 'Enregistrement du brouillon…';
+  if (!privateSendBusy) feedbackStatus('Enregistrement du brouillon…');
   clearTimeout(draftTimer); draftTimer = setTimeout(() => saveDraft(), 650);
 });
 form.addEventListener('change', updateFeedbackHint);
 dialog.querySelector('.close').addEventListener('click', () => dialog.close());
 dialog.addEventListener('close', () => { saveDraft(); feedbackOpener?.focus(); });
 document.addEventListener('visibilitychange', () => { if (document.hidden && dialog.open) saveDraft(); });
+document.querySelector('#erase-feedback-draft').addEventListener('click', () => {
+  if (privateSendBusy || !feedbackProject) return;
+  if (!window.confirm('Effacer le texte et son accusé sur cet appareil ? Cela ne supprime pas un retour déjà reçu par Mathieu.')) return;
+  clearTimeout(draftTimer); dirtyDraft = false; feedbackView++;
+  const erased = drafts.erase(feedbackProject.id);
+  form.reset(); updateFeedbackHint(); draftPersisted = true;
+  feedbackStatus(erased ? 'Texte et accusé effacés sur cet appareil.' : 'L’effacement du stockage local a échoué. Efface les données du site dans ton navigateur.');
+});
 
 function refreshFavoriteButtons(id) {
   document.querySelectorAll(`[data-favorite="${id}"]`).forEach(button => {

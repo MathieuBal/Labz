@@ -6,7 +6,9 @@ Date : 21 octobre 2026. Décision : réaliser les améliorations par livraisons 
 
 Découvrir les projets, recevoir des retours privés et décider de leur suite directement dans Labz. Préserver la simplicité de l'interface et la confidentialité des messages. Le regroupement en sujets vient après la fiabilisation de la boîte.
 
-## Lot A — Navigation, cohérence et publication (v0.10.0)
+## Lot A — Livré en v0.10.0
+
+Publié et vérifié en ligne : 28 tests, garde-fou Git, navigation clavier sur accueil/fiche/admin et formulaire. Pas de recette iPhone réel.
 
 1. Navigation accessible : réparer Aller au contenu sans perdre la route ; titres des nouveautés cohérents.
 2. Fiches : recommandations « À découvrir aussi », avis explicitement sur le concept sans démo ; nombre de projets calculé.
@@ -14,13 +16,23 @@ Découvrir les projets, recevoir des retours privés et décider de leur suite d
 
 Validation : tests Node, build, chemins Pages, essai du garde-fou sur historique Git ; vérification en navigateur du lien d'évitement sur accueil, fiche et admin, formulaire et nouveautés. Confirmer le job de déploiement et la version en ligne. Aucune modification de base dans ce lot.
 
-## Lot B — Réception fiable (prochaine livraison)
+## Lot B — Réception fiable (v0.11.0)
 
 1. Identifiant d'envoi durable associé au contenu exact et au brouillon ; conserver l'accusé après rechargement ; distinguer un nouveau texte d'une relance.
 2. Commande d'effacement du brouillon, durée locale documentée, états reçu / modifié / non confirmé. Aucun effacement silencieux après panne.
 3. Tests réponse perdue → rechargement → relance, modification pendant l'envoi, stockage indisponible, fermeture du formulaire pendant requête.
 
 Validation : un seul message enregistré pour une relance identique, texte modifié traité comme nouveau retour, message privé rendu comme texte. Recette iPhone requise ; annoncer séparément ce qui est simulé et testé réellement.
+
+## Exploration suivante — Rendre les présentations essayables
+
+Demande de Mathieu du 21 octobre : évaluer ensuite les programmes sans démo, sans ouvrir automatiquement leurs données ou dépôts.
+
+Pour chacun (Diagnostic numérique, Pip-Boy JDR, Chess Vision Trainer, Constella, AtelierFlow), lire le dépôt actuel et déterminer : point d’entrée, dépendances, données privées, secrets, besoins serveur, licence des contenus et fonctionnement tactile. Livrer une recommandation et un effort estimé fondés sur le code.
+
+Options à comparer : version navigateur autonome ; démo avec données fictives et réinitialisation ; environnement serveur isolé et limité ; téléchargement/installateur vérifié si le Web n’est pas adapté. Pour les applications IA, éviter tout appel payant sans quota et consentement. Une vidéo reste une présentation, pas une démo jouable.
+
+Choisir une seule première démo après cette étude. Un bouton Lancer n’est ajouté qu’après un essai réel du parcours visiteur et une validation de l’isolation des données. Ce chantier exploratoire n’implique pas de rendre un dépôt privé public.
 
 ## Lot C — Administration autonome et capacité
 
