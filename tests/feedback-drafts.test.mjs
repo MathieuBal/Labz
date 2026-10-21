@@ -58,6 +58,13 @@ test('legacy drafts migrate without being mistaken for delivered messages',()=>{
   assert.equal(drafts.state('sensoria'),'draft');drafts.prepare('sensoria',data);
   assert.equal(JSON.parse(f.entries.get('labs-draft-sensoria')).version,2);
 });
+test('expired receipt text is removed from storage even when the current draft is recent',()=>{
+  const f=fixture(),drafts=f.create(),ticket=drafts.prepare('sensoria',data);
+  drafts.settle(ticket,true);f.advance(DRAFT_TTL-1000);
+  drafts.save('sensoria',{...data,message:'Texte récent'});f.advance(1000);
+  assert.equal(f.create().read('sensoria').attempts.length,0);
+  assert.equal(JSON.parse(f.entries.get('labs-draft-sensoria')).attempts.length,0);
+});
 test('corrupt stored data is bounded and cannot invent valid receipt fields',()=>{
   const f=fixture();f.entries.set('labs-draft-sensoria',JSON.stringify({version:2,updatedAt:f.options.now(),data:{kind:'__proto__',message:'x'.repeat(10000)},attempts:[{signature:'bad',requestId:'invalid',status:'received',createdAt:f.options.now()}]}));
   const record=f.create().read('sensoria');assert.equal(record.data.kind,'idea');

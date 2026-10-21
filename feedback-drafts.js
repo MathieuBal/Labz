@@ -36,12 +36,19 @@ export function createFeedbackDrafts({storage,now=Date.now,uuid=()=>crypto.rando
               a.createdAt<=now() && now()-a.createdAt<DRAFT_TTL).slice(-10);
             records.set(project,record);
             persisted.set(project,true);
+            // Write back the bounded/migrated record so expired attempts also
+            // disappear from disk, even if the visitor never edits the draft.
+            persist(project,record);
           }
         }
         if(!record)storage.removeItem(key(project));
       } catch { /* Storage may be blocked; in-memory drafts still work. */ }
     }
     if(record && now()-record.updatedAt>=DRAFT_TTL) {erase(project);record=null;}
+    if(record) {
+      const active=record.attempts.filter(a=>now()-a.createdAt<DRAFT_TTL);
+      if(active.length!==record.attempts.length) {record.attempts=active;persist(project,record);}
+    }
     return record||null;
   }
   function save(project,data) {
