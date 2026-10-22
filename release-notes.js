@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.15.0",
+    "date": "2026-10-23",
+    "title": "Pip-Boy s’ouvre, Constella se clarifie",
+    "description": "Pip-Boy devient directement essayable depuis Labz et Constella est présenté selon ses deux usages réellement distincts.",
+    "items": [
+      "Pip-Boy JDR gagne un lancement direct vers sa GitHub Page, un guide de découverte et trois visuels différents issus du projet.",
+      "La fiche unique Constella est remplacée par Constella Explore, centré sur les goûts, les évaluations et la carte 3D, et Constella Watch, centré sur la veille, les journaux et les articles.",
+      "Les deux Constella restent sur un socle technique partagé pour éviter de dupliquer trop tôt le store, la persistance et le design system."
+    ]
+  },
+  {
     "version": "0.14.0",
     "date": "2026-10-22",
     "title": "Les fiches projet gagnent un vrai hero visuel",
