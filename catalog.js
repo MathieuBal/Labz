@@ -19,6 +19,11 @@ const visitorGuides = {
   "perfoptimize": {
     "cover": "assets/perfoptimize-cockpit.svg",
     "coverLabel": "APERÇU REPRÉSENTATIF · DONNÉES ILLUSTRATIVES",
+    "gallery": [
+      {"src":"assets/perfoptimize-cockpit.svg","alt":"Vue d’ensemble représentative du cockpit Perfoptimize","label":"Cockpit complet · données illustratives","zoom":1},
+      {"src":"assets/perfoptimize-cockpit.svg","alt":"Vue rapprochée des mesures FPS GPU et frametimes de Perfoptimize","label":"Mesures FPS, GPU et frametimes · données illustratives","zoom":1.55,"x":"56%","y":"48%"},
+      {"src":"assets/perfoptimize-cockpit.svg","alt":"Vue rapprochée du diagnostic et du plan à prévisualiser de Perfoptimize","label":"Diagnostic et plan à prévisualiser · données illustratives","zoom":1.65,"x":"72%","y":"73%"}
+    ],
     "invitation": "Perfoptimize est une application locale Windows : elle doit tourner sur ton PC pour lire le jeu en cours et mesurer CPU, GPU, mémoire, FPS et frametimes. Commence par une analyse : elle ne modifie rien.",
     "firstTry": "Ton premier test : analyser un jeu en cours d’exécution",
     "steps": [
@@ -48,6 +53,10 @@ const visitorGuides = {
   "million-de-pixels": {
     "cover": "assets/pixels-campaign.webp",
     "coverLabel": "TOILE ISSUE DU JEU · PAS UNE CAPTURE",
+    "gallery": [
+      {"src":"assets/pixels-campaign.webp","alt":"Toile issue du jeu Million de pixels","label":"Toile issue du jeu","zoom":1},
+      {"src":"assets/pixels-campaign.webp","alt":"Vue rapprochée de la toile de Million de pixels","label":"Vue rapprochée de la toile","zoom":1.55,"x":"62%","y":"55%"}
+    ],
     "invitation": "Une image entière à grignoter, couleur après couleur.",
     "firstTry": "Ton premier objectif : observer une couleur disparaître",
     "steps": [
@@ -63,6 +72,10 @@ const visitorGuides = {
   "lootchest": {
     "cover": "assets/lootchest-chest.png",
     "coverLabel": "COFFRE ISSU DU JEU · PAS UNE CAPTURE",
+    "gallery": [
+      {"src":"assets/lootchest-chest.png","alt":"Coffre issu de Lootchest","label":"Coffre issu du jeu","zoom":1},
+      {"src":"assets/lootchest-chest.png","alt":"Détail rapproché du coffre de Lootchest","label":"Détail du coffre","zoom":1.65,"x":"50%","y":"51%"}
+    ],
     "invitation": "Un coffre, une trouvaille, puis un étage de plus.",
     "firstTry": "Ton premier objectif : préparer ton héros pour le donjon",
     "steps": [
