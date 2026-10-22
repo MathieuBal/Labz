@@ -8,14 +8,14 @@ Site : https://mathieubal.github.io/Labz/
 
 Le numéro de version et les nouveautés viennent de `release-notes.js` ; ils sont validés contre `package.json` et publiés ensemble.
 
-- Catalogue éditorial de huit projets, dont trois expériences lançables. Présentations séparées, recherche, catégories et filtres combinables.
+- Catalogue éditorial de neuf projets, dont quatre expériences ou outils directement essayables. Présentations séparées, recherche, catégories et filtres combinables.
 - Fiches compactes : Lancer et Déposer un avis en tête, guides et évolutions dépliables. Favoris et historique locaux ; partage natif ou copie du lien.
 - Retours privés via Supabase, sans compte visiteur. Un seul bouton d'envoi. Brouillon automatiquement sauvegardé sur l'appareil ; aucun export ni publication GitHub dans ce parcours.
 - Administration `#/admin`, accessible en pied de page : connexion propriétaire, recherche, filtres, compteurs et statuts Nouveau / En cours / Traité. Autorisation explicite en base, aucun premier inscrit automatiquement administrateur.
 - Jetons et messages privés en mémoire ; sortie de l'admin, rechargement, expiration et déconnexion effacent l'état local.
 - Activité publique GitHub de quatre dépôts autorisés : versions, ou commits clairement identifiés en leur absence. Cache mémoire de quinze minutes ; aucun token public privilégié.
 
-Les visuels ne sont pas tous des captures d'écran. Les projets sans démo validée restent des présentations. Aucun dépôt privé n'est exposé automatiquement.
+Les visuels ne sont pas tous des captures d'écran. Les projets sans démo validée restent des présentations. Un binaire public peut être distribué sans exposer automatiquement le dépôt source privé correspondant.
 
 ## Développement et validation
 
