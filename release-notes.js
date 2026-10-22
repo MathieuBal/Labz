@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.14.0",
+    "date": "2026-10-22",
+    "title": "Les fiches projet gagnent un vrai hero visuel",
+    "description": "Les pages projet affichent désormais leur visuel en grand dès l’ouverture, avec un carrousel quand plusieurs aperçus pertinents sont disponibles.",
+    "items": [
+      "Le visuel n’est plus masqué sur mobile : il devient le premier élément fort de chaque fiche.",
+      "Les galeries se parcourent au swipe, avec flèches, points de navigation et clavier lorsque plusieurs vues existent.",
+      "Perfoptimize montre trois cadrages utiles du cockpit ; Million de pixels et Lootchest proposent aussi plusieurs vues de leurs visuels existants."
+    ]
+  },
+  {
     "version": "0.13.1",
     "date": "2026-10-22",
     "title": "Perfoptimize montre mieux ce qu’il lance",
