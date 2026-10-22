@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.13.1",
+    "date": "2026-10-22",
+    "title": "Perfoptimize montre mieux ce qu’il lance",
+    "description": "La fiche explique pourquoi l’outil doit s’exécuter localement sur Windows et montre un aperçu représentatif de son interface.",
+    "items": [
+      "Un aperçu du cockpit remplace l’illustration générique de la fiche Perfoptimize.",
+      "La page explique que l’exécutable est nécessaire pour lire les processus du jeu, les compteurs matériels et les fichiers de configuration locaux.",
+      "Le parcours rappelle qu’une analyse seule n’écrit rien et que les changements compatibles sont prévisualisés, sauvegardés puis restaurables."
+    ]
+  },
+  {
     "version": "0.13.0",
     "date": "2026-10-22",
     "title": "Perfoptimize passe en alpha testable",

@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Aperçu représentatif de l’interface Perfoptimize</title>
+  <desc id="desc">Cockpit sombre affichant une analyse de performances, des mesures FPS, un diagnostic GPU et des recommandations. Les valeurs sont illustratives.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a0d13"/><stop offset="1" stop-color="#090b10"/></linearGradient>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#7dd6f6" stop-opacity=".35"/><stop offset="1" stop-color="#7dd6f6" stop-opacity=".03"/></linearGradient>
+    <radialGradient id="glowA"><stop stop-color="#7dd6f6" stop-opacity=".11"/><stop offset="1" stop-color="#7dd6f6" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glowB"><stop stop-color="#f06b5f" stop-opacity=".08"/><stop offset="1" stop-color="#f06b5f" stop-opacity="0"/></radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="7"/></filter>
+    <style>
+      .ui{font-family:Inter,Segoe UI,Arial,sans-serif}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.muted{fill:#8b97a8}.faint{fill:#5e6a7b}.text{fill:#e7ecf3}.tiny{font-size:12px}.small{font-size:14px}.label{font-size:12px;font-weight:700;letter-spacing:1.6px}.title{font-size:31px;font-weight:750}.metric{font-size:32px;font-weight:750}.card{fill:#12161f;stroke:#232b38}.sunken{fill:#0e131b;stroke:#1b222d}.line{stroke:#232b38}.accent{fill:#7dd6f6}.good{fill:#6ee7a8}.warn{fill:#f5c96c}.bad{fill:#f06b5f}
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="430" cy="45" r="430" fill="url(#glowA)"/>
+  <circle cx="1510" cy="90" r="390" fill="url(#glowB)"/>
+
+  <!-- sidebar -->
+  <rect width="230" height="900" fill="#0b0e15"/>
+  <path d="M230 0v900" stroke="#1b222d"/>
+  <path d="M0 78h230" stroke="#1b222d"/>
+  <circle cx="38" cy="38" r="18" fill="none" stroke="#232b38" stroke-width="6"/>
+  <path d="M25 51a18 18 0 1 1 26-26" fill="none" stroke="#7dd6f6" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="38" cy="38" r="3.5" fill="#7dd6f6"/>
+  <text x="65" y="35" class="ui text" font-size="16" font-weight="750" letter-spacing="1">PERFOPTIMIZE</text>
+  <text x="65" y="54" class="mono faint" font-size="10">cockpit d’optimisation</text>
+
+  <g class="ui small">
+    <g transform="translate(12 106)"><rect width="206" height="40" rx="10" fill="#12161f" stroke="#232b38"/><rect x="10" y="12" width="3" height="16" rx="1.5" fill="#7dd6f6"/><text x="26" y="25" class="mono accent tiny">01</text><text x="60" y="25" class="text">Vue d’ensemble</text></g>
+    <g transform="translate(12 154)"><rect x="10" y="12" width="3" height="16" rx="1.5" fill="#232b38"/><text x="26" y="25" class="mono faint tiny">02</text><text x="60" y="25" class="muted">Analyse</text></g>
+    <g transform="translate(12 202)"><rect x="10" y="12" width="3" height="16" rx="1.5" fill="#232b38"/><text x="26" y="25" class="mono faint tiny">03</text><text x="60" y="25" class="muted">Moniteur</text></g>
+    <g transform="translate(12 250)"><rect x="10" y="12" width="3" height="16" rx="1.5" fill="#232b38"/><text x="26" y="25" class="mono faint tiny">04</text><text x="60" y="25" class="muted">Jeux installés</text></g>
+    <g transform="translate(12 298)"><rect x="10" y="12" width="3" height="16" rx="1.5" fill="#232b38"/><text x="26" y="25" class="mono faint tiny">05</text><text x="60" y="25" class="muted">Matériel</text></g>
+    <g transform="translate(12 346)"><rect x="10" y="12" width="3" height="16" rx="1.5" fill="#232b38"/><text x="26" y="25" class="mono faint tiny">06</text><text x="60" y="25" class="muted">Système</text></g>
+  </g>
+  <path d="M0 838h230" stroke="#1b222d"/>
+  <text x="20" y="862" class="mono faint" font-size="11">interface locale · alpha</text>
+  <text x="20" y="880" class="ui" fill="#3f4855" font-size="11">moteur Windows + cockpit web local</text>
+
+  <!-- top bar -->
+  <rect x="230" width="1370" height="66" fill="#0c1018" fill-opacity=".94"/>
+  <path d="M230 66h1370" stroke="#1b222d"/>
+  <circle cx="268" cy="33" r="5" fill="#6ee7a8"/>
+  <circle cx="268" cy="33" r="10" fill="#6ee7a8" opacity=".08" filter="url(#soft)"/>
+  <text x="287" y="37" class="mono faint" font-size="10" letter-spacing="1.5">SESSION</text>
+  <text x="358" y="38" class="ui text" font-size="14" font-weight="650">Cyberpunk 2077</text>
+  <text x="488" y="37" class="mono faint" font-size="11">pid 4242</text>
+  <g transform="translate(1245 18)"><rect width="92" height="30" rx="8" class="sunken"/><text x="15" y="20" class="mono muted" font-size="11">PresentMon</text></g>
+  <g transform="translate(1350 18)"><rect width="91" height="30" rx="8" fill="#151814" stroke="#6a5c27"/><text x="12" y="20" class="mono warn" font-size="11">1 alerte</text></g>
+  <g transform="translate(1454 16)"><rect width="105" height="34" rx="9" fill="#0b0d11" stroke="#232b38"/><rect x="14" y="13" width="8" height="8" rx="2" fill="#f06b5f"/><text x="33" y="23" class="ui muted" font-size="13" font-weight="650">Quitter</text></g>
+
+  <!-- content header -->
+  <text x="270" y="110" class="mono faint" font-size="11" letter-spacing="1.8">MONITEUR</text>
+  <text x="270" y="146" class="ui text title">Diagnostic de performance</text>
+  <text x="270" y="176" class="ui muted" font-size="14">Mesure CPU, GPU, mémoire et frametimes, détecte le goulot d’étranglement, puis prépare un plan à prévisualiser avant toute écriture.</text>
+
+  <!-- metrics -->
+  <g transform="translate(270 205)">
+    <g><rect width="285" height="112" rx="13" class="sunken"/><text x="17" y="26" class="ui faint tiny">FPS MOYEN</text><text x="17" y="65" class="ui text metric">74</text><text x="17" y="91" class="ui muted tiny">1 % low : 53 FPS</text></g>
+    <g transform="translate(299)"><rect width="285" height="112" rx="13" class="sunken"/><text x="17" y="26" class="ui faint tiny">GPU</text><text x="17" y="65" class="ui text metric">96%</text><text x="17" y="91" class="ui muted tiny">Limiteur principal</text></g>
+    <g transform="translate(598)"><rect width="285" height="112" rx="13" class="sunken"/><text x="17" y="26" class="ui faint tiny">CPU JEU</text><text x="17" y="65" class="ui text metric">42%</text><text x="17" y="91" class="ui muted tiny">8C / 16T</text></g>
+    <g transform="translate(897)"><rect width="285" height="112" rx="13" class="sunken"/><text x="17" y="26" class="ui faint tiny">VRAM</text><text x="17" y="65" class="ui text metric">91%</text><text x="17" y="91" class="ui muted tiny">Pic mémoire vidéo</text></g>
+  </g>
+
+  <!-- measures card -->
+  <g transform="translate(270 340)">
+    <rect width="735" height="330" rx="16" class="card"/>
+    <rect x="24" y="23" width="7" height="7" rx="2" fill="#7dd6f6"/>
+    <text x="42" y="31" class="ui muted label">MESURES</text>
+    <rect x="24" y="54" width="687" height="244" rx="13" class="sunken"/>
+    <circle cx="48" cy="78" r="5" fill="#7dd6f6"/><text x="60" y="82" class="ui muted tiny">FPS</text>
+    <circle cx="120" cy="78" r="5" fill="#f5c96c"/><text x="132" y="82" class="ui muted tiny">1 % low</text>
+    <circle cx="220" cy="78" r="5" fill="#f06b5f"/><text x="232" y="82" class="ui muted tiny">Frametime</text>
+    <g opacity=".25" stroke="#6b7482"><path d="M44 118h642M44 158h642M44 198h642M44 238h642"/></g>
+    <path d="M44 250 C80 182 116 148 154 155 S226 200 264 186 S338 138 376 141 S448 202 486 190 S558 145 596 148 S650 188 686 157 L686 270 L44 270Z" fill="url(#area)"/>
+    <path d="M44 250 C80 182 116 148 154 155 S226 200 264 186 S338 138 376 141 S448 202 486 190 S558 145 596 148 S650 188 686 157" fill="none" stroke="#7dd6f6" stroke-width="3"/>
+    <path d="M44 265 C85 253 126 246 167 250 S249 263 290 251 S372 216 413 216 S495 254 536 239 S618 246 686 228" fill="none" stroke="#f5c96c" stroke-width="2"/>
+    <path d="M44 127 C96 131 148 130 200 128 S304 138 356 132 S460 149 512 130 S616 144 686 128" fill="none" stroke="#f06b5f" stroke-width="2"/>
+    <text x="44" y="288" class="ui muted tiny">Capture 30 s · scène active · frametimes présents via PresentMon</text>
+  </g>
+
+  <!-- diagnostic card -->
+  <g transform="translate(1025 340)">
+    <rect width="305" height="330" rx="16" class="card"/>
+    <rect x="24" y="23" width="7" height="7" rx="2" fill="#7dd6f6"/>
+    <text x="42" y="31" class="ui muted label">DIAGNOSTIC</text>
+    <rect x="22" y="58" width="261" height="106" rx="12" class="sunken"/>
+    <rect x="36" y="75" width="92" height="27" rx="13" fill="#10291f" stroke="#296d4f"/>
+    <text x="51" y="94" class="ui good" font-size="12" font-weight="750">GPU limité</text>
+    <text x="36" y="124" class="ui muted tiny">Le GPU sature dans la scène mesurée.</text>
+    <text x="36" y="144" class="ui muted tiny">La cible de 90 FPS n’est pas atteinte.</text>
+    <rect x="22" y="180" width="261" height="106" rx="12" class="sunken"/>
+    <rect x="36" y="197" width="96" height="27" rx="13" fill="#2a1413" stroke="#733a35"/>
+    <text x="50" y="216" class="ui bad" font-size="12" font-weight="750">1 advisory</text>
+    <text x="36" y="246" class="ui muted tiny">Upscaling désactivé alors que le GPU</text>
+    <text x="36" y="266" class="ui muted tiny">est le goulot d’étranglement.</text>
+  </g>
+
+  <!-- recommendation strip -->
+  <g transform="translate(270 693)">
+    <rect width="1060" height="160" rx="16" class="card"/>
+    <rect x="24" y="23" width="7" height="7" rx="2" fill="#7dd6f6"/>
+    <text x="42" y="31" class="ui muted label">RECOMMANDATIONS ET PRÉVISUALISATION</text>
+    <g transform="translate(24 58)"><rect width="315" height="76" rx="11" class="sunken"/><text x="16" y="28" class="ui text small" font-weight="700">Réduire Shadow Quality</text><text x="16" y="52" class="ui muted tiny">Impact GPU estimé · réglage à vérifier</text></g>
+    <g transform="translate(353 58)"><rect width="315" height="76" rx="11" class="sunken"/><text x="16" y="28" class="ui text small" font-weight="700">Global Illumination Quality</text><text x="16" y="52" class="ui muted tiny">Recommandation prioritaire</text></g>
+    <g transform="translate(682 58)"><rect width="354" height="76" rx="11" class="sunken"/><text x="16" y="28" class="ui text small" font-weight="700">Plan exact à prévisualiser</text><rect x="205" y="13" width="132" height="29" rx="9" fill="#10232b" stroke="#3b8196"/><text x="220" y="33" class="mono accent tiny">High → Medium</text><text x="16" y="56" class="ui muted tiny">Analyse seule : aucune écriture sur le PC.</text></g>
+  </g>
+
+  <text x="1370" y="846" class="mono faint" font-size="10" letter-spacing="1.2">APERÇU REPRÉSENTATIF · DONNÉES ILLUSTRATIVES</text>
+</svg>
