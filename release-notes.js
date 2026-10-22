@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.13.0",
+    "date": "2026-10-22",
+    "title": "Perfoptimize passe en alpha testable",
+    "description": "Perfoptimize revient dans le labo avec un téléchargement Windows destiné aux essais sur de vraies machines.",
+    "items": [
+      "Téléchargement d’une alpha Windows x64 depuis la fiche du projet.",
+      "Parcours conseillé : analyser d’abord, prévisualiser avant toute modification, puis exporter le rapport de test.",
+      "Le rapport technique exclut le nom d’utilisateur Windows et les chemins absolus de configuration."
+    ]
+  },
+  {
     "version": "0.12.0",
     "date": "2026-10-21",
     "title": "Un premier outil à essayer",
