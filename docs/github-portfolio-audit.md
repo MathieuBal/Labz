@@ -43,7 +43,7 @@ GitHub retourne **31 dépôts appartenant à Mathieu**, Labz compris. La colonne
 | `chess-vision-trainer` | privé | 10 642 | Labz · présentation | **décision recommandée : sortir de Labz puis archiver** |
 | `equiperota` | public | 156 | correspond à l’exploration AtelierFlow | **à garder comme essai, présence Labz à reconsidérer** |
 | `afk-farm` | public | 315 | hors Labz | à qualifier |
-| `Antsimu` | privé | 1 130 | hors Labz | à qualifier |
+| `Antsimu` | privé | 1 130 | hors Labz | **GitHub seulement · fork expérimental privé à conserver** |
 | `ball-passing-simulation` | public | 8 | hors Labz | à qualifier |
 | `botlecturevlc` | public | 12 | hors Labz | à qualifier |
 | `ClicReflex` | public | 7 | hors Labz | **prototype Python antérieur · à archiver** |
@@ -131,6 +131,20 @@ La finalité n’est pas simplement de mesurer la vitesse de clic : il s’agit 
 - considérer `Clicreflexe` comme **candidat à intégrer au Labz**, avec une présentation centrée sur son contexte d’usage en médiation/atelier et non comme simple mini-jeu ;
 - si intégré, expliquer clairement que l’objectif est de proposer une activité ludique complémentaire aux exercices classiques d’atelier.
 
+### Antsimu
+
+Contexte Mathieu : dépôt privé créé à partir d’un projet GitHub tiers de simulation de colonie de fourmis. Mathieu l’a utilisé comme base d’expérimentation, a ajouté de nombreuses fonctionnalités et a aussi dégradé certaines parties du projet d’origine au fil des essais. Le dépôt privé servait notamment à éviter de pousser ces modifications sur le dépôt source.
+
+**Décision : GitHub seulement, privé, à conserver comme bac à sable / historique expérimental.**
+
+Motifs :
+
+- ne pas le présenter comme une création originale complète dans Labz ;
+- conserver les expérimentations et les apprentissages associés ;
+- garder la provenance tierce explicite ;
+- si une idée issue d’Antsimu mérite un vrai projet personnel à l’avenir, repartir dans un dépôt neuf avec une architecture et une identité propres ;
+- toute éventuelle publication du code dérivé devra respecter la licence et les obligations d’attribution du projet d’origine.
+
 ## Projets d’étude
 
 Mathieu indique que certains dépôts ont été créés uniquement pour des études, parfois sans véritable code poussé.
@@ -152,12 +166,13 @@ La revue se fait **un dépôt à la fois**, avec le contexte de Mathieu avant d�
 3. `STUDI_Projet_fil_rouge` — décision : archiver ;
 4. `EcoRide` — décision : archiver ;
 5. `ClicReflex` — décision : archiver ; `Clicreflexe` — conserver, candidat Labz ;
-6. `chess-vision-trainer` — contexte déjà fourni, décision presque complète ;
-7. `equiperota` / AtelierFlow — contexte déjà fourni ;
-8. projets privés inconnus : `Antsimu`, `Crimson-s-Blade`, `Ilia` ;
-9. outils / bots RP : `discortbotsaloon`, `HotzDoggz-bot`, `ZepRasso`, `Zepevents`, `gta-blackjack-assistant` ;
-10. petits projets et utilitaires : `ball-passing-simulation`, `botlecturevlc`, `DeezerInfo`, `sudoku-solver`, `Tricat`, `afk-farm` ;
-11. `Totalwarai` et les autres projets spécialisés restants.
+6. `Antsimu` — décision : GitHub seulement, privé, conserver comme expérimentation dérivée ;
+7. `chess-vision-trainer` — contexte déjà fourni, décision presque complète ;
+8. `equiperota` / AtelierFlow — contexte déjà fourni ;
+9. projets privés inconnus : `Crimson-s-Blade`, `Ilia` ;
+10. outils / bots RP : `discortbotsaloon`, `HotzDoggz-bot`, `ZepRasso`, `Zepevents`, `gta-blackjack-assistant` ;
+11. petits projets et utilitaires : `ball-passing-simulation`, `botlecturevlc`, `DeezerInfo`, `sudoku-solver`, `Tricat`, `afk-farm` ;
+12. `Totalwarai` et les autres projets spécialisés restants.
 
 ## Fiche de revue utilisée pour chaque dépôt
 
