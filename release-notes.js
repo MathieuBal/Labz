@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.17.0",
+    "date": "2026-10-24",
+    "title": "Le catalogue passe l’audit",
+    "description": "La sélection est reconstruite à partir des audits du code et de l’usage réel, avec des statuts plus honnêtes entre projets testables, études de cas et R&D.",
+    "items": [
+      "Chess Vision Trainer et AtelierFlow quittent le catalogue principal ; Constella redevient une seule suite avec Explore et Watch comme deux surfaces.",
+      "AFK Farm revient comme prototype jouable, tandis que les outils d’ateliers mémoire, Crimson’s Blade, l’écosystème RP et Total War AI rejoignent la sélection sous des statuts adaptés à leur réalité.",
+      "Pip-Boy n’est plus lancé directement tant que sa carte Fallout héritée n’a pas été remplacée ; ses visuels Labz utilisent désormais uniquement la campagne Smoky Waters générée pour le projet."
+    ]
+  },
+  {
     "version": "0.16.0",
     "date": "2026-10-24",
     "title": "La boîte montre sa capacité",
