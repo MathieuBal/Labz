@@ -3,21 +3,19 @@
 **Dépôt audité :** `MathieuBal/million-de-pixels`  
 **Révision :** `8ac4ecfe75ec75a19cf1792c8ab85b366955a5dd`  
 **Date :** 24 octobre 2026  
-**Statut proposé :** **conserver dans Labz · projet public/testable et techniquement solide ; renforcer la CI et clarifier les droits des assets de campagne**
+**Statut proposé :** **conserver dans Labz · projet public/testable techniquement fort, avec un bloqueur de cycle idle et une CI à renforcer**
 
 ## Verdict
 
-`million-de-pixels` est l'un des projets techniquement les plus aboutis du portfolio actuel.
+`million-de-pixels` tient réellement sa promesse technique principale : une image devient un plateau logique de **1 048 576 cellules**, sans instancier un million de sprites ou d'objets. L'état est porté par des TypedArrays, la recherche de cibles passe par des index dédiés, le rendu repose sur une texture GPU et une palette, et les traitements lourds d'image / reprise hors-ligne sont déportés dans des workers.
 
-Sa promesse centrale est réelle : une image est quantifiée puis transformée en un plateau logique de **1 048 576 cellules**. Le million de pixels n'est pas représenté par un million d'objets graphiques : l'état repose sur des `TypedArray`, des index dérivés et une texture GPU. Le combat, l'économie, la reprise hors-ligne, la persistance et les migrations sont séparés en modules distincts.
+Le projet possède également une profondeur de jeu réelle : canon sur rail, files de munitions, surface exposée, améliorations, spécialisations, campagne, galerie, doctrines, progression permanente, sauvegarde IndexedDB, migrations de save et reprise hors-ligne.
 
-Le projet possède une suite de tests unitaires importante et surtout un smoke E2E Playwright qui tourne sur le **build de production** servi par `vite preview`. Ce smoke couvre le parcours principal, des invariants de gameplay, la performance, la persistance, la fin d'une toile et plusieurs layouts tactiles.
+C'est donc un **projet Labz fort et légitime**, pas une démo technique maquillée en jeu.
 
-Le dernier déploiement GitHub Pages de la révision auditée est vert.
+Le principal défaut fonctionnel trouvé concerne toutefois une promesse centrale d'un idle : une session laissée ouverte en arrière-plan ne reçoit pas de catch-up au retour. La reprise hors-ligne est bien implémentée après restauration/rechargement, mais pas lors d'un simple `hidden → visible` de la même page/PWA.
 
-Le principal écart qualité n'est donc pas l'absence de tests mais le fait que **la CI de déploiement ne les exécute pas** : elle fait `npm ci`, `npm run build`, puis publie `dist/`. Une régression fonctionnelle peut donc partir en production tant que TypeScript compile.
-
-Le projet peut rester présenté dans Labz comme **prototype de jeu navigateur réellement jouable et techniquement ambitieux**.
+Avant de présenter le projet comme totalement fiabilisé, il faut corriger ce cycle de vie et intégrer les tests déjà riches à la livraison continue.
 
 ---
 
@@ -32,279 +30,211 @@ Le projet peut rester présenté dans Labz comme **prototype de jeu navigateur r
 - `hp` ;
 - `flags`.
 
-Les index de couleurs, macro-tuiles et surface sont dérivés puis tenus à jour lors des destructions.
+Les structures plus coûteuses sont des index dérivés :
 
-La destruction d'une cellule met à jour l'état logique et les index, marque le monde comme modifié et peut notifier le rendu. Les recherches de pixels par couleur s'appuient sur `ColorIndex` au lieu de parcourir systématiquement le million de cellules.
+- `ColorIndex` pour retrouver / retirer des pixels d'une couleur sans scanner le plateau ;
+- `SurfaceIndex` pour savoir quelle cellule fait face à un canon sur une voie ;
+- `MacroTileIndex` pour les statistiques et zones.
 
-Cette architecture justifie l'affirmation principale du README : le million de pixels est une structure de données, pas un million de sprites ou colliders.
+Une destruction met à jour ces index de façon cohérente et rend l'opération idempotente.
 
-### Pipeline d'image
+La formulation README « le million de pixels est un tableau de données, jamais un million d'objets graphiques ou physiques » est donc bien soutenue par le code.
 
-Le dépôt sépare le traitement d'image du thread principal :
+### Traitement d'image et rendu
 
-- worker d'image ;
-- resize / `OffscreenCanvas` ;
-- histogramme ;
-- quantification ;
-- Median Cut ;
-- k-means optionnel ;
-- mapping vers les identifiants de couleur.
+Un worker dédié gère le redimensionnement, l'histogramme, la quantification et le mapping vers la palette. Les gros buffers sont transférés entre threads.
 
-Le code de détection refuse de lancer silencieusement une version structurellement dégradée lorsque WebGL2, Web Workers, `OffscreenCanvas` ou `createImageBitmap` manquent.
+Le rendu PixiJS projette l'état CPU du monde ; il n'est pas la source de vérité. Les effets visuels sont séparés de la simulation et soumis à un budget LOD.
 
-IndexedDB est traité différemment : son absence retire la persistance mais n'est pas considérée comme un prérequis graphique fondamental.
+### Combat
 
-### Combat / rail
+Le système évite une physique générique : le canon suit le périmètre et examine les voies franchies. `SurfaceIndex` fournit la première cellule solide d'une ligne ou colonne depuis le côté d'arrivée.
 
-Le dépôt contient des composants séparés pour :
-
-- canons actifs ;
-- files de canons ;
-- réserves de munitions par couleur ;
-- simulation de combat ;
-- traversée axiale ;
-- effets spéciaux ;
-- index de surface ;
-- rendu des canons et impacts.
-
-Le smoke E2E vérifie notamment l'invariant selon lequel un tir ne détruit jamais plus d'un bloc ordinaire, le nombre maximum de canons simultanés et le fait que plusieurs canons tournent effectivement ensemble.
-
-### Reprise hors-ligne
-
-La reprise hors-ligne est une vraie simulation analytique, pas un simple compteur de monnaie.
-
-`simulateOffline()` :
-
-- borne le temps d'absence ;
-- convertit la production par couleur en nombre de hits ;
-- conserve les fractions de hit entre sessions ;
-- utilise un PRNG déterministe ;
-- supprime réellement des pixels dans `colorId` ;
-- ne touche pas les zones `VOID` ;
-- redistribue les hits d'une couleur épuisée vers les couleurs encore vivantes ;
-- s'arrête proprement si le plateau est entièrement vidé.
-
-Les tests unitaires couvrent :
-
-- le nombre attendu de destructions ;
-- la suppression réelle des pixels ;
-- la reproductibilité byte-identique ;
-- l'équivalence entre une longue absence et plusieurs absences courtes ;
-- la conservation des fractions ;
-- la borne de durée ;
-- une horloge système qui recule ;
-- les zones `VOID` ;
-- le spill ;
-- la fin complète du plateau.
-
-C'est une des parties les mieux vérifiées du projet.
-
-### Persistance et migrations
-
-La persistance utilise IndexedDB avec des buffers stockés comme `ArrayBuffer` via structured clone.
-
-Le dépôt possède une chaîne explicite de migrations jusqu'au schéma de save v6. Chaque version est transformée étape par étape et les sauvegardes non reconnues sont rejetées au lieu d'être chargées partiellement.
-
-La validation finale contrôle notamment la présence des champs requis et la taille des buffers.
-
-Le smoke E2E recharge réellement la page et vérifie que :
-
-- le niveau revient depuis IndexedDB ;
-- le nombre de pixels vivants ne remonte pas ;
-- les améliorations achetées survivent au rechargement.
+Une couleur enterrée derrière une autre peut donc être réellement inaccessible depuis un côté. Le smoke E2E contrôle notamment qu'un tir ordinaire ne détruit jamais plus d'un bloc.
 
 ### Progression
 
-La progression ne se limite plus au vertical slice initial : le dépôt contient notamment :
+Le dépôt contient des modules distincts pour :
 
-- upgrades par toile ;
+- améliorations de niveau ;
+- capacités et automatisation ;
 - progression permanente ;
 - doctrines ;
+- galerie ;
 - campagne ;
-- galerie d'images ;
-- bibliothèque / nuancier ;
-- milestones ;
-- capacités et automatisation.
+- bibliothèque de couleurs ;
+- milestones.
 
-Le smoke E2E vérifie plusieurs de ces parcours : familles d'améliorations, achats par lots, verrouillage de capacités, récompense de fin de toile, crédit des éclats permanents et catalogue de teintes.
+La campagne actuelle embarque **56 images**.
 
 ---
 
-## Validation existante
+## Persistance : point fort
+
+### IndexedDB
+
+Les saves ne sérialisent pas le million de cellules en JSON/base64. Les `ArrayBuffer` sont stockés directement dans IndexedDB via structured clone.
+
+L'indisponibilité/quota est traitée comme erreur remontable à l'interface.
+
+### Chaîne de migrations v1 → v6
+
+La migration transforme explicitement chaque ancien format jusqu'au schéma actuel : ancien canon orbital, ancien deck, introduction des upgrades, suppression de l'ancienne cadence de tir puis ajout du nombre de passages sur une image.
+
+La save finale est validée, notamment sur la taille des quatre gros buffers.
+
+### Image source non persistée
+
+La sauvegarde contient les buffers quantifiés et la palette, pas le fichier image original importé. L'affirmation de l'interface selon laquelle la source n'est pas conservée est cohérente avec le schéma audité.
+
+---
+
+## Reprise hors-ligne : implémentation sérieuse, cycle incomplet
+
+### Ce qui fonctionne
+
+Lors de la restauration d'une save :
+
+1. le temps écoulé depuis `lastSimulatedAtEpochMs` est calculé ;
+2. la production observée par couleur est utilisée ;
+3. l'absence est intégrée analytiquement dans un worker ;
+4. les fractions de hit sont conservées ;
+5. un PRNG `XorShift32` versionné choisit les pixels ;
+6. de vraies cellules du buffer sont marquées mortes ;
+7. le monde est reconstruit avec le résultat ;
+8. la save est réécrite après le catch-up.
+
+Le modèle plafonne également le temps hors-ligne et limite la production par le stock porté par les canons sauvegardés.
+
+### P0 — aucune reprise sur simple retour d'arrière-plan
+
+`installLifecycleHooks()` ne traite que le passage à `hidden` et appelle `save()`.
+
+Il n'existe pas de branche `visible` qui compare le temps écoulé et lance `runOfflineCatchUp()`.
+
+Dans une page/PWA conservée ouverte :
+
+- le navigateur suspend ou bride généralement `requestAnimationFrame` en arrière-plan ;
+- la sauvegarde pose un timestamp au moment du passage caché ;
+- au retour, la session reprend directement sans restaurer la save ;
+- l'absence n'est donc pas compensée par le modèle hors-ligne.
+
+**Impact :** le comportement idle dépend de la manière dont le joueur revient : fermer/recharger peut progresser, laisser l'application ouverte en arrière-plan peut perdre cette progression.
+
+**Correction recommandée :** au `visible`, appliquer le même modèle de catch-up au monde courant depuis le checkpoint posé au `hidden`, avec un test automatisé dédié.
+
+### Nuance : offline analytique ≠ replay exact
+
+Le mode live détruit des cellules accessibles via les surfaces / voies du plateau.
+
+Le modèle offline convertit la production mesurée par couleur en nombre de hits puis détruit aléatoirement des pixels vivants de cette couleur. Il ne rejoue pas les trajectoires exactes du canon ni la géométrie successive des façades.
+
+C'est un compromis raisonnable pour plusieurs heures d'absence, mais la présentation doit rester précise : **de vrais pixels sont supprimés, selon une approximation analytique de la production observée**.
+
+---
+
+## Tests : très bon niveau, mais hors CI
 
 ### Tests unitaires
 
-`npm test` lance Vitest. Le README annonce 101 tests unitaires et l'arbre contient une vingtaine de fichiers de tests couvrant notamment :
+Le dépôt contient des tests Vitest pour le monde, la surface, le combat, les canons, la quantification, le PRNG, le modèle offline, les migrations/persistance, les upgrades, les doctrines, la campagne, la progression permanente, le viewport et les effets spéciaux. Le README annonce 101 tests unitaires.
 
-- monde ;
-- surface ;
-- combat ;
-- canons ;
-- traversée ;
-- RNG ;
-- quantification ;
-- offline ;
-- persistance ;
-- upgrades ;
-- progression permanente ;
-- campagne ;
-- viewport ;
-- effets spéciaux.
+### E2E sur build de production
 
-Le niveau de couverture fonctionnelle est élevé pour un prototype de jeu personnel.
-
-### Smoke E2E sur le build de production
-
-`tests/e2e/smoke.mjs` démarre `vite preview`, donc teste bien le bundle construit et non le serveur de développement.
+`tests/e2e/smoke.mjs` démarre `vite preview`, donc exerce bien le `dist/` construit.
 
 Il couvre notamment :
 
-- compatibilité de démarrage ;
-- import et quantification d'une image ;
-- démarrage explicite de la partie ;
-- plateau allant jusqu'à 1 048 576 cellules ;
-- rail / cartes / canons ;
+- import et quantification ;
+- démarrage explicite ;
+- plateau jusqu'à 1 048 576 cellules ;
+- rail et canons ;
 - invariants de destruction ;
-- zoom et recadrage ;
-- budget de simulation inférieur à 4 ms/frame dans son environnement de référence ;
-- économie et upgrades ;
-- achats par lots ;
-- sortie / recommencer / changer d'image ;
-- confirmation avant action destructive ;
-- sauvegarde/rechargement IndexedDB ;
-- fin d'une toile ;
-- récompense permanente ;
-- bibliothèque de couleurs ;
+- zoom ;
+- budget de simulation ;
+- upgrades et achats par lots ;
+- sortie / actions destructrices ;
+- save IndexedDB + reload ;
+- persistance des améliorations ;
+- fin de toile et récompense ;
+- progression permanente / nuancier ;
 - layouts tactiles.
 
-C'est une vraie preuve navigateur, nettement plus forte qu'une simple capture ou qu'un test DOM superficiel.
+C'est une vraie recette automatisée du vertical slice.
 
-### Déploiement
+### P0/P1 livraison — aucun test n'est exécuté par GitHub Actions
 
-GitHub Pages construit avec :
+Le workflow de déploiement exécute uniquement :
 
-1. `npm ci` ;
-2. `npm run build` ;
-3. upload de `dist/` ;
-4. déploiement Pages.
+- `npm ci` ;
+- `npm run build` ;
+- publication Pages.
 
-`npm run build` exécute `tsc --noEmit && vite build`.
+Un changement peut donc casser une règle de combat, une migration, le mode offline ou le parcours E2E et être publié tant que TypeScript compile.
 
-Le dernier workflow de la révision auditée est en succès.
-
----
-
-## P1 — les tests ne bloquent pas le déploiement
-
-Le workflow Pages ne lance ni :
-
-- `npm test` ;
-- `npm run e2e`.
-
-C'est le principal défaut de chaîne de livraison.
-
-Le projet possède précisément les tests qui permettraient de protéger ses invariants sensibles ; ne pas les brancher dans la CI réduit fortement leur valeur comme garde-fou.
-
-### Remédiation recommandée
-
-Ajouter avant le déploiement :
-
-1. `npm ci` ;
-2. `npm test` ;
-3. `npm run build` ;
-4. installation de Chromium Playwright ;
-5. `npm run e2e` ;
-6. déploiement seulement si tout est vert.
-
-Si le smoke complet est trop coûteux, séparer :
-
-- PR : tests unitaires + smoke court ;
-- `main` / nightly : smoke complet + benchmark.
+**Remédiation :** faire passer `npm test`, le build et au moins un smoke Playwright avant la publication. Le benchmark complet peut rester nightly/manuellement déclenché s'il est trop coûteux.
 
 ---
 
-## P1 — provenance et droits des 56 images de campagne à documenter
+## P1 — transaction IndexedDB à fiabiliser
 
-Le dépôt public embarque **56 images PNG de campagne**, souvent entre environ 1 et 4 Mo chacune. Elles expliquent l'essentiel des ~92 Mo du dépôt.
+Le helper générique `run()` résout sa Promise sur `request.onsuccess`, pas sur `transaction.oncomplete`.
 
-Le code décrit leur rôle et leur difficulté mesurée, mais l'audit n'a trouvé ni :
+Pour une écriture, il existe une fenêtre théorique où la requête `put()` a réussi mais où la transaction pourrait encore être annulée avant commit. La Promise ayant déjà été résolue, l'appelant pourrait croire la sauvegarde acquise.
 
-- fichier de licence global ;
-- notice de provenance pour ces images ;
-- attribution ou conditions de réutilisation associées aux assets de campagne.
+`clearEverything()` utilise déjà correctement `tx.oncomplete`.
 
-Cela ne prouve pas un problème de droits ; cela signifie simplement que la provenance n'est pas documentée dans le dépôt.
-
-Avant une diffusion plus large ou une présentation comme pack réutilisable, documenter pour chaque série d'assets si elle est :
-
-- créée par le projet ;
-- générée ;
-- sous licence compatible ;
-- ou seulement destinée à la démonstration.
-
-Si les images ne doivent pas être réutilisées, le préciser explicitement.
+**Correction recommandée :** résoudre les écritures uniquement à la complétion de la transaction.
 
 ---
 
-## P2 — poids du dépôt
+## Compatibilité
 
-Les 56 PNG rendent le dépôt très lourd par rapport au code lui-même.
+Le projet détecte explicitement :
 
-Ce n'est pas un problème fonctionnel pour GitHub Pages, mais c'est une dette de maintenance :
+- WebGL2 ;
+- Web Workers ;
+- OffscreenCanvas ;
+- `createImageBitmap` ;
+- IndexedDB.
 
-- clones plus lourds ;
-- historique Git qui grossit vite en cas de remplacement d'images ;
-- déploiements plus volumineux ;
-- cache navigateur plus coûteux si tout est chargé ou précaché.
+Les quatre premières APIs sont structurelles et l'application refuse de prétendre fonctionner sans elles. IndexedDB peut manquer au prix de la persistance.
 
-### Remédiation possible
+Labz doit donc parler de **jeu navigateur moderne**, pas de compatibilité universelle.
 
-Selon le besoin :
-
-- convertir certains assets en WebP/AVIF si la qualité le permet ;
-- conserver une résolution source hors dépôt et ne versionner que les variantes web ;
-- éviter de remplacer fréquemment les gros fichiers binaires dans Git ;
-- séparer à terme le pack de campagne du cœur du jeu si le catalogue continue de grossir.
-
-Pas de réécriture nécessaire aujourd'hui.
+Le viewport, lui, n'interdit pas le zoom navigateur.
 
 ---
 
-## P2 — quelques limites structurelles à présenter honnêtement
+## Campagne / poids / droits
 
-### WebGL2 obligatoire
+Les 56 PNG de campagne expliquent l'essentiel des ~92 Mo du dépôt. Ils ne sont pas tous forcément téléchargés au premier écran, mais ils alourdissent clone, historique et artefact de déploiement.
 
-Le prototype dépend structurellement de WebGL2, Workers, `OffscreenCanvas` et `createImageBitmap`.
+### P1 — provenance des images à documenter
 
-C'est un choix assumé du code, pas un bug. Labz doit donc parler de **prototype navigateur moderne**, pas de compatibilité universelle.
+L'audit n'a trouvé ni licence globale, ni notice de provenance / attribution des 56 illustrations.
 
-### IndexedDB non garanti
+Cela ne prouve pas un problème de droits : cela signifie seulement que leur provenance n'est pas documentée dans le dépôt.
 
-Le jeu peut fonctionner sans IndexedDB, mais la persistance est alors perdue. Le code traite ce cas comme une capacité manquante plutôt qu'un crash.
+Avant de présenter la campagne comme pack durable ou réutilisable, préciser si ces images sont créées par Mathieu, générées, sous licence compatible ou uniquement destinées à la démonstration.
 
-### Benchmark dépendant de l'environnement
-
-Le smoke impose un objectif de simulation `< 4 ms/frame` dans Chromium/SwiftShader. C'est un bon invariant de non-régression dans cet environnement, mais ce n'est pas une preuve que tous les téléphones ou GPU réels tiendront ce budget.
-
-Labz peut dire que le projet possède un benchmark navigateur automatisable, pas garantir une performance uniforme sur tous les appareils.
+Si le catalogue continue à grossir, des variantes WebP/AVIF et une séparation éventuelle du pack d'assets peuvent réduire la dette de dépôt.
 
 ---
 
-## Petite dette de persistance
+## Typographie externe
 
-`SaveRepository.open()` mémorise sa promesse d'ouverture IndexedDB. Si cette première ouverture échoue ou est bloquée, la promesse rejetée reste en cache pour la durée de la page.
+`index.html` contient déjà un TODO explicite : Space Grotesk et IBM Plex Mono viennent de Google Fonts.
 
-Ce comportement est acceptable pour un prototype — un reload réinitialise l'instance — mais une version plus robuste pourrait remettre `dbPromise` à `null` après échec afin d'autoriser une nouvelle tentative sans rechargement complet.
-
-Priorité faible.
+Auto-héberger ces polices stabiliserait le premier rendu, supprimerait une dépendance tierce et simplifierait un usage hors réseau. Ce n'est pas un bloqueur du jeu.
 
 ---
 
-## Licence du code
+## Licence
 
-Aucun fichier `LICENSE` n'apparaît dans l'arbre audité.
+Aucun fichier `LICENSE` n'est présent dans l'arbre audité.
 
-Comme pour les assets, une licence explicite est recommandée si le but est d'autoriser la réutilisation, l'étude ou la contribution externe. Sinon, le dépôt public reste visible mais tous les droits restent réservés par défaut.
+Si la réutilisation ou contribution externe est souhaitée, choisir une licence explicite. Sinon le dépôt peut rester public sans promettre de droit de réutilisation.
 
 ---
 
@@ -312,45 +242,46 @@ Comme pour les assets, une licence explicite est recommandée si le but est d'au
 
 La fiche peut honnêtement dire que `million-de-pixels` :
 
-- est un idle/roguelite navigateur fondé sur un plateau logique de **1 048 576 cellules** ;
-- transforme une image importée en monde quantifié ;
-- évite un objet graphique/physique par pixel ;
-- utilise `TypedArray`, index dérivés et texture GPU ;
-- sépare calculs lourds via Web Workers ;
-- possède un système de combat autour de canons circulant sur le cadre ;
-- possède une progression par améliorations, doctrines et campagne ;
-- possède une persistance IndexedDB versionnée avec migrations ;
-- possède une vraie reprise hors-ligne supprimant des pixels réels ;
-- possède un PRNG déterministe pour les reprises ;
-- possède une suite de tests unitaires importante ;
-- possède un smoke Playwright sur le build de production ;
-- possède un déploiement GitHub Pages actuellement vert.
+- transforme une image en plateau logique 1024 × 1024, soit 1 048 576 cellules ;
+- ne crée pas un million de sprites/colliders ;
+- utilise TypedArrays et index spécialisés ;
+- utilise PixiJS/WebGL2 pour projeter le plateau ;
+- quantifie l'image dans un worker ;
+- possède un système de combat basé sur la surface réellement exposée ;
+- possède upgrades, spécialisations, doctrines, campagne, galerie et progression permanente ;
+- stocke les parties dans IndexedDB avec migrations v1→v6 ;
+- ne sauvegarde pas le fichier source importé ;
+- applique après restauration une reprise offline analytique qui détruit de vraies cellules ;
+- utilise un PRNG déterministe versionné ;
+- possède une importante suite de tests unitaires et un smoke E2E sur build de production ;
+- est déployé sur GitHub Pages, avec le dernier workflow de la révision auditée réussi.
 
-## Ce qu'il vaut mieux ne pas sur-vendre
+## À ne pas sur-vendre
 
-- « tous les tests passent à chaque déploiement » : faux actuellement, ils ne sont pas lancés par la GitHub Action Pages ;
-- « fonctionne sur tous les navigateurs » : faux, plusieurs API modernes sont structurelles ;
-- « performance garantie sur mobile » : non démontré par un panel d'appareils réels ;
-- « campagne librement réutilisable » : droits/provenance des images non documentés ;
-- « produit fini » : le dépôt et le README parlent eux-mêmes de prototype / vertical slice étendu.
+- « la simulation continue correctement quelle que soit la mise en arrière-plan » : faux actuellement ;
+- « l'offline rejoue exactement les trajectoires » : faux ;
+- « tests exécutés à chaque mise en production » : faux actuellement ;
+- « fonctionne sur tous les navigateurs » : plusieurs APIs modernes sont requises ;
+- « campagne librement redistribuable » tant que la provenance des assets n'est pas documentée.
 
 ---
 
-## Plan de remédiation court
+## Plan de remédiation
 
-1. Faire exécuter `npm test` par la CI.
-2. Faire exécuter au moins un smoke Playwright avant le déploiement Pages.
-3. Conserver le smoke complet/benchmark en nightly si nécessaire.
-4. Documenter la provenance et les droits des 56 images de campagne.
-5. Ajouter une licence explicite pour le code si la réutilisation doit être permise.
-6. Réduire progressivement le poids des assets web si le pack continue à grandir.
-7. Faire une recette réelle sur quelques appareils mobiles représentatifs.
-8. Optionnel : permettre une nouvelle tentative IndexedDB après échec sans recharger toute la page.
+1. **Corriger `hidden → visible`** avec catch-up du monde courant.
+2. Ajouter un test automatisé de ce cycle de vie.
+3. Faire passer `npm test` avant tout déploiement Pages.
+4. Faire passer un smoke E2E production avant déploiement ou sur chaque PR/main.
+5. Résoudre les écritures IndexedDB sur `transaction.oncomplete`.
+6. Documenter la provenance/licence des 56 images de campagne.
+7. Ajouter une licence au dépôt si la réutilisation doit être permise.
+8. Auto-héberger les polices.
+9. Faire une recette réelle sur quelques appareils mobiles représentatifs.
 
 ## Décision finale
 
-**`million-de-pixels` reste dans Labz et peut conserver un statut public/testable.**
+**Conserver dans Labz avec un statut public/testable.**
 
-Il n'a pas besoin d'une réécriture pour être défendable : ses choix d'architecture sont cohérents avec le problème, les systèmes centraux sont réellement implémentés, la reprise hors-ligne est particulièrement bien testée et le smoke E2E couvre un parcours inhabituellement large pour un prototype personnel.
+C'est l'un des projets techniquement les plus démonstratifs du portefeuille : il part d'une idée volontairement extrême — jouer avec un million de cellules — et la rend raisonnable par des choix de représentation, d'indexation, de rendu et de simulation cohérents.
 
-La priorité est désormais de **faire correspondre la chaîne de livraison au niveau de qualité déjà présent dans le dépôt** : les tests existent, il faut les rendre obligatoires avant publication. En parallèle, la campagne doit gagner une vraie documentation de provenance/licence pour que la partie artistique soit aussi proprement cadrée que la partie technique.
+La priorité n'est pas de le réécrire. Elle est de **fermer le trou de cycle idle et de brancher la qualité existante sur la CI**, afin que la présentation Labz puisse s'appuyer non seulement sur un code fort, mais sur une chaîne de livraison qui prouve en permanence que le vertical slice reste jouable.
