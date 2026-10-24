@@ -6,49 +6,55 @@ const esc = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<'
 const profiles = {
   sensoria: {
     type: 'product',
-    kicker: 'EXPÉRIENCE INTERACTIVE',
-    headline: 'Un terrain de jeu visuel où le geste devient matière.',
-    narrative: 'Sensoria rassemble 22 tableaux interactifs construits autour d’une idée simple : ne pas expliquer une image, mais laisser le visiteur la provoquer. Chaque scène répond différemment au mouvement, à la souris, au stylet ou au tactile.',
+    kicker: 'GALERIE INTERACTIVE · 22 TABLEAUX',
+    headline: 'Touchez l’image. Regardez-la vous répondre.',
+    narrative: 'Sensoria est une collection de 22 mondes interactifs à explorer avec les gestes. Ici, pas de score à battre ni de bonne façon de jouer : une surface se trouble, une matière se tend, des encres dérivent, des particules s’organisent. On ne regarde pas simplement l’image — on la provoque.',
     features: [
-      ['22 tableaux', 'Des scènes réellement distinctes, du lac nocturne aux encres flottantes, avec leurs propres réactions et gestes.'],
-      ['Interaction directe', 'Le mouvement du visiteur devient l’entrée principale : dessiner, déplacer, perturber, observer puis recommencer.'],
-      ['Confort intégré', 'Aides par scène, réglages communs, effets réduits et maintien d’un parcours compatible quand WebGL2 manque.'],
+      ['Une galerie vraiment vivante', 'Mosaïque infinie, Lac nocturne, Ferrofluide, Argile vivante, Encres flottantes ou Échos du geste : chaque tableau possède sa propre ambiance, ses propres réactions et sa propre manière d’être découvert.'],
+      ['Le geste comme langage', 'Dessiner, pousser, attirer, maintenir, perturber ou simplement effleurer : la souris, le stylet et le tactile ne servent pas à naviguer autour de l’œuvre, ils font partie de l’œuvre.'],
+      ['Explorer sans objectif imposé', 'Certaines scènes se comprennent immédiatement, d’autres demandent quelques essais. On peut y rester dix secondes ou plusieurs minutes, puis passer à la suivante et construire son propre parcours dans la collection.'],
     ],
-    tech: [['Surface', 'Navigateur · tactile / souris / stylet'], ['Rendu', 'Canvas + WebGL selon les scènes'], ['Contenu', '22 tableaux interactifs'], ['État', 'Public · testable']],
-    status: 'Le projet est déjà une expérience cohérente et montrable. Le prochain enjeu n’est pas d’ajouter des scènes à tout prix, mais de consolider les validations navigateur et de recueillir des retours sur les tableaux qui marquent vraiment les visiteurs.'
+    tech: [['Surface', 'Navigateur · PWA installable'], ['Interaction', 'Pointer Events · souris / stylet / multi-touch'], ['Rendu', 'Canvas 2D + Three.js / WebGL2 selon les scènes'], ['Contenu', '22 tableaux jouables']],
+    status: 'Sensoria est déjà public et pleinement exploratoire : les 22 tableaux sont présents, le passage d’une scène à l’autre libère correctement les ressources et plusieurs scripts Playwright vérifient les interactions desktop/mobile. Le prochain enjeu n’est pas de grossir la collection à tout prix, mais d’identifier les tableaux dont les visiteurs se souviennent vraiment et de faire entrer ces validations navigateur dans la CI de publication.'
   },
   'million-de-pixels': {
-    type: 'product', kicker: 'IDLE / ROGUELITE NAVIGATEUR', headline: 'Une image entière transformée en terrain de jeu de 1 048 576 cellules.',
-    narrative: 'Million de Pixels part d’une image importée et la transforme en une structure réellement simulée. Le joueur pose des canons, exploite les couleurs accessibles depuis les bords et réinvestit les fragments gagnés pour faire disparaître progressivement la toile.',
+    type: 'product',
+    kicker: 'IDLE / ROGUELITE · 1 048 576 CELLULES',
+    headline: 'Importez une image. Puis regardez un million de pixels devenir un terrain de conquête.',
+    narrative: 'Million de Pixels transforme n’importe quelle image en un monde 1024 × 1024 réellement simulé. Installez vos canons sur le rail, attaquez les couleurs accessibles depuis les bords, récupérez leurs fragments et construisez peu à peu une machine capable de dévorer toute la toile.',
     features: [
-      ['Un vrai million de cellules', 'La grille n’est pas un décor : TypedArrays, index spécialisés et logique de couleurs pilotent réellement les 1 048 576 cellules.'],
-      ['Progression persistante', 'Économie, améliorations et progression permanente sont sauvegardées dans IndexedDB avec une chaîne de migrations.'],
-      ['Performance pensée dès le moteur', 'Traitement d’image dans un worker, rendu GPU et smoke test de production avec budget de simulation mesuré.'],
+      ['Un million, pour de vrai', 'Les 1 048 576 cellules existent réellement dans la simulation. Une couleur enterrée derrière une autre peut être inaccessible, une façade évolue à mesure qu’elle est détruite et chaque tir modifie le monde plutôt qu’une simple barre de progression.'],
+      ['Transformer une image en économie', 'Les couleurs deviennent des ressources, les canons se spécialisent et les fragments servent à améliorer la cadence, l’automatisation et la façon d’attaquer la toile. La progression continue ensuite avec doctrines, capacités et bonus permanents.'],
+      ['Toujours une nouvelle toile à avaler', 'Import libre, campagne de 56 illustrations générées pour le jeu, galerie et progression permanente donnent une raison de recommencer avec une autre image plutôt que de s’arrêter au premier million détruit.'],
     ],
-    tech: [['Surface', 'Navigateur'], ['Données', 'TypedArrays + IndexedDB'], ['Traitement', 'Worker image + rendu GPU'], ['État', 'Public · testable']],
-    status: 'Le cœur technique est solide et largement testé. Le défaut connu le plus concret reste la reprise après un simple passage en arrière-plan : une restauration ou un rechargement fonctionne, mais le retour direct depuis l’arrière-plan mérite encore une correction.'
+    tech: [['Monde', '1024 × 1024 · TypedArrays et index spécialisés'], ['Rendu', 'PixiJS / WebGL2 · simulation séparée du visuel'], ['Traitement', 'Workers pour image et reprise hors-ligne'], ['Sauvegarde', 'IndexedDB · migrations v1 → v6']],
+    status: 'C’est l’un des projets les plus solides du portfolio : tests unitaires nombreux, smoke E2E sur le build de production, migrations de sauvegarde et vrai modèle de reprise après restauration. Il reste toutefois un défaut important pour un idle : si la page reste simplement ouverte en arrière-plan, le retour au premier plan n’applique pas encore le rattrapage hors-ligne. La prochaine passe doit fermer ce trou puis brancher les tests existants sur la CI avant chaque déploiement.'
   },
   lootchest: {
-    type: 'product', kicker: 'RPG / LOOTER', headline: 'Un coffre, un build, puis toujours une raison d’aller un peu plus loin.',
-    narrative: 'Lootchest est devenu un terrain d’expérimentation de game design beaucoup plus large que son point de départ. On y ouvre des coffres, construit un équipement, explore le donjon, plonge dans une boucle roguelite et développe progressivement un village et ses systèmes.',
+    type: 'product',
+    kicker: 'RPG / LOOTER · NAVIGATEUR',
+    headline: 'Ouvrez un coffre. Équipez ce qui tombe. Descendez toujours un peu plus bas.',
+    narrative: 'Lootchest part du plaisir le plus simple du looter : ouvrir quelque chose et espérer mieux. Puis la boucle s’étend. L’équipement construit votre héros, le donjon pousse à progresser, la Plongée change les règles et le village finit par produire pendant que vous préparez le prochain palier.',
     features: [
-      ['Loot procédural', 'Objets, affixes et équipement donnent une boucle de découverte et de construction de personnage.'],
-      ['Plusieurs couches de progression', 'Donjon, plongée roguelite, village idle, forge, talents et prestige s’imbriquent dans la même sauvegarde.'],
-      ['Prototype jouable dense', 'La richesse vient du nombre de systèmes déjà reliés entre eux, plus que d’une finition de production.'],
+      ['Le loot est le moteur', 'Objets générés, affixes, raretés, équipements, coffres et mimics alimentent la construction du personnage. Chaque amélioration sert une idée très lisible : être prêt pour ce qu’il y a derrière la prochaine porte.'],
+      ['Plus d’une façon de progresser', 'Donjon, biomes, boss et combat au tour par tour côtoient une Plongée roguelite avec sa propre boucle. Talents, factions, reliques et prestige ajoutent ensuite des couches de progression plus longues.'],
+      ['Quand l’aventure construit son village', 'Bâtiments, ouvriers, forge et production passive ajoutent une couche idle au RPG. Les ressources continuent à s’accumuler selon le temps réellement écoulé, avec un rattrapage plafonné à huit heures.'],
     ],
-    tech: [['Surface', 'Navigateur'], ['Stack', 'JavaScript vanilla'], ['Sauvegarde', 'Locale + export JSON'], ['État', 'Public · testable']],
-    status: 'La priorité n’est pas d’ajouter encore un système : il faut surtout observer la compréhension de la progression et fiabiliser les interactions existantes. L’absence de batterie de tests automatisés reste la principale faiblesse technique du projet.'
+    tech: [['Surface', 'Navigateur · mobile et desktop'], ['Stack', 'JavaScript / HTML / CSS sans framework ni bundler'], ['Sauvegarde', 'Locale · migrations · export / import JSON'], ['État', 'Jeu public · prototype riche']],
+    status: 'Lootchest est déjà un vrai jeu jouable, surtout remarquable par la quantité de systèmes reliés dans un projet vanilla JS. Cette richesse est aussi sa dette principale : aucune suite de tests automatisés ne protège encore les combats, le loot, le village ou les sauvegardes. Pour les essais publics, les exports personnels sont adaptés au backup ; l’import de fichiers de sauvegarde externes n’est pas encore suffisamment durci pour être considéré comme une fonction de partage sûre.'
   },
   'afk-farm': {
-    type: 'product', kicker: 'IDLE / PROTOTYPE', headline: 'Le jeu idle que je cherchais et que je ne trouvais pas ailleurs.',
-    narrative: 'AFK Farm est né d’une envie très personnelle : construire une boucle idle où l’activité immédiate, la progression longue et les projets temporisés se répondent. Le prototype a fini par accumuler biomes, prestige et un arbre de compétences massif.',
+    type: 'product',
+    kicker: 'IDLE / INCRÉMENTAL · PROTOTYPE AVANCÉ',
+    headline: 'Récoltez à la main. Automatisez. Changez de biome. Recommencez plus fort.',
+    narrative: 'AFK Farm est né d’un réflexe très personnel : ne pas trouver exactement l’idle que j’avais envie de jouer, alors construire le mien. Au départ, un champ magnétique et quelques grains. Puis arrivent l’énergie, les combos, les drones, les projets, les biomes, le prestige et un arbre de progression à sept branches.',
     features: [
-      ['Actif + AFK', 'Les premières ressources se gagnent activement avant que les systèmes automatisés ne prennent progressivement le relais.'],
-      ['Biomes et prestige', 'Plusieurs règles de progression coexistent et donnent des objectifs de moyen et long terme.'],
-      ['Pensé mobile', 'PWA mobile-first, interactions tactiles et rendu Canvas optimisé pour une consultation régulière.'],
+      ['Du geste à l’automatisation', 'Les premières récoltes se font directement dans le champ magnétique, avec énergie, stockage, chaînes de captures et Surge. Les drones et améliorations prennent ensuite progressivement une partie du travail à votre place.'],
+      ['Une progression en couches', 'Projets temporisés, six biomes de base, progression procédurale au-delà, prestige, perks, succès et arbre déterministe donnent plusieurs horizons de progression au lieu d’une simple courbe de chiffres.'],
+      ['Un idle pensé pour revenir souvent', 'Interface touch-first, PWA, sauvegarde locale et rendu Canvas optimisé en font un prototype pensé dès le départ pour le téléphone et les petites sessions régulières.'],
     ],
-    tech: [['Surface', 'Navigateur · PWA'], ['Orientation', 'Mobile-first'], ['Boucles', 'Biomes · prestige · projets temporisés'], ['État', 'Prototype jouable']],
-    status: 'Le prototype est volontairement présenté avec ses défauts : certaines liaisons de l’arbre et l’économie des Cores demandent une vraie passe d’équilibrage, et la reprise AFK après arrière-plan reste imparfaite. Les retours servent à décider s’il mérite cette nouvelle passe.'
+    tech: [['Surface', 'Navigateur · PWA mobile-first'], ['Moteur', 'Canvas · tableaux typés · densité adaptée à l’écran'], ['Progression', 'Biomes · projets · prestige · arbre à 7 branches'], ['État', 'Prototype jouable ouvert aux retours']],
+    status: 'AFK Farm est précisément le type de projet que Labz peut aider à décider de reprendre. La boucle existe et le contenu est déjà conséquent, mais deux incohérences touchent encore le cœur du jeu : le retour après mise en arrière-plan peut perdre une partie de la progression AFK, et les Cores servent à la fois de multiplicateur et de monnaie dépensable, ce qui peut rendre certains achats contre-productifs. La fiche assume donc un prototype avancé, pas un idle équilibré et terminé.'
   },
   diagnostic: {
     type: 'product', kicker: 'OUTIL DE MÉDIATION', headline: 'Comprendre un groupe avant de construire l’atelier pour lui.',
@@ -73,15 +79,17 @@ const profiles = {
     status: 'L’alpha est réellement essayable, mais elle n’est pas signée. La chaîne de confiance autour du binaire PresentMon et la distribution Windows doivent être renforcées avant une diffusion plus large.'
   },
   pipboy: {
-    type: 'product', kicker: 'COMPAGNON JDR', headline: 'Préparer côté MJ, révéler seulement ce que le joueur doit réellement voir.',
-    narrative: 'Pip-Boy JDR est un compagnon de campagne mobile-first construit pour une table Fallout personnelle. La démonstration locale permet d’explorer le principe sans compte ; le mode connecté ajoute ensuite une vraie séparation MJ/joueur avec projection filtrée côté serveur.',
+    type: 'product',
+    kicker: 'COMPAGNON JDR · DÉMO NAVIGATEUR',
+    headline: 'Le MJ prépare le monde. Le joueur ne découvre que ce qu’on lui révèle.',
+    narrative: 'Pip-Boy JDR transforme une campagne Fallout personnelle en compagnon numérique de table. Le MJ prépare cartes, personnages, quêtes, documents et secrets ; le joueur reçoit progressivement ce que son personnage a réellement découvert. La démo publique permet de tester cette relation immédiatement, sans compte ni backend.',
     features: [
-      ['Démo locale', 'Carte, fiches, quêtes, terminaux et échanges MJ/joueur peuvent être découverts dans le navigateur sans backend.'],
-      ['Séparation des secrets', 'Dans le mode connecté, la projection joueur est produite côté SQL : les données masquées ne sont pas simplement cachées dans l’interface.'],
-      ['Pensé pour la table', 'Cartes, brouillard, tokens, terminaux, holobandes et préparation de scénario sont réunis dans un même compagnon.'],
+      ['Un Pip-Boy pour la campagne', 'Carte interactive, journal, quêtes, personnes, faune, objets, holobandes, terminaux, table de jeu, brouillard et scénarios vivent dans une même interface mobile-first pensée pour accompagner la partie plutôt que la remplacer.'],
+      ['Les secrets restent vraiment côté MJ', 'Dans une vraie session connectée, les contenus masqués ne sont pas envoyés au joueur puis cachés avec du CSS : PostgreSQL fabrique une projection filtrée avant la réponse, et les tests de sécurité vérifient la séparation propriétaire / joueur / tiers.'],
+      ['Une démo immédiate, un mode campagne séparé', 'La version Labz fonctionne localement dans un seul navigateur : ouvrez la Console MJ, envoyez une fiche secrète puis revenez côté joueur pour la voir apparaître. Le mode Supabase ajoute ensuite la synchronisation réelle entre appareils.'],
     ],
-    tech: [['Surface', 'Navigateur · mobile-first'], ['Stack', 'React + TypeScript + Vite'], ['Session réelle', 'Supabase + PostgreSQL + Realtime'], ['État', 'Démo publique + mode connecté']],
-    status: 'La démo locale est le parcours public de Labz. Le mode authentifié reste une couche distincte : sa logique, ses RPC et ses contrôles de sécurité ne sont pas modifiés par cette refonte de vitrine.'
+    tech: [['Surface', 'Navigateur · mobile-first'], ['Stack', 'React + TypeScript + Vite'], ['Démo', 'LocalStorage · aucun compte requis'], ['Mode connecté', 'Supabase · PostgreSQL · Realtime']],
+    status: 'La démo publique est aujourd’hui le parcours recommandé : elle est autonome et utilise les assets originaux ou générés pour le projet, la carte officielle Fallout précédemment présente ayant été retirée du dépôt. Le mode authentifié possède déjà une architecture serveur solide et des tests SQL / navigateur poussés ; il reste néanmoins à refaire une recette complète sur deux appareils réels avant de le présenter comme parcours principal public.'
   },
   constella: {
     type: 'suite', kicker: 'SUITE PRODUIT', headline: 'Deux façons d’explorer : ce que tu aimes, et ce qui change autour de toi.',
@@ -145,7 +153,7 @@ function heading(profile) {
 }
 
 function product(profile) {
-  return `${heading(profile)}<div class="rich-feature-grid">${profile.features.map(([title,body]) => `<article><h3>${esc(title)}</h3><p>${esc(body)}</p></article>`).join('')}</div><div class="rich-project-columns"><section class="rich-tech"><span class="eyebrow">FICHE TECHNIQUE</span><dl>${profile.tech.map(([key,value]) => `<div><dt>${esc(key)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl></section><section class="rich-status"><span class="eyebrow">OÙ EN EST LE PROJET ?</span><p>${esc(profile.status)}</p></section></div>`;
+  return `${heading(profile)}<div class="rich-feature-grid">${profile.features.map(([title,body]) => `<article><h3>${esc(title)}</h3><p>${esc(body)}</p></article>`).join('')}</div><div class="rich-project-columns"><section class="rich-tech"><span class="eyebrow">SOUS LE CAPOT</span><dl>${profile.tech.map(([key,value]) => `<div><dt>${esc(key)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl></section><section class="rich-status"><span class="eyebrow">ÉTAT DU PROJET</span><p>${esc(profile.status)}</p></section></div>`;
 }
 
 function suite(profile) {
