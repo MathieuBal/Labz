@@ -1,4 +1,4 @@
-import {createInbox,escapeText as esc,filterFeedback,statuses} from './admin-client.js';
+import {createInbox,escapeText as esc,feedbackCapacity,filterFeedback,getCapacityState,statuses} from './admin-client.js';
 import {adminConfig} from './admin-config.js';
 
 export function mountAdmin(root,projects) {
@@ -21,10 +21,18 @@ export function mountAdmin(root,projects) {
     form.elements.password.value='';void client.login(email,password);
    });return;
   }
+  const capacity=getCapacityState(state.rows.length);
+  const capacityNote=capacity.level==='full'?
+   'Capacité atteinte : traite le cycle de vie avant d’accepter davantage de retours. Le statut « Traité » ne libère pas de place.':
+   capacity.level==='warning'?
+    `Capacité à surveiller : ${capacity.remaining} place(s) restante(s) sur ${feedbackCapacity.maxStored}. Le statut « Traité » ne libère pas de place.`:
+    `${capacity.remaining} place(s) restante(s) sur ${feedbackCapacity.maxStored}. Le statut « Traité » organise la boîte mais ne libère pas de capacité.`;
   root.innerHTML=title+`<section class="admin-inbox"><div class="admin-toolbar"><p class="muted">Messages privés · aucune publication automatique</p><div class="admin-actions">
    <button class="button secondary" id="admin-refresh" ${state.busy?'disabled':''}>Actualiser</button>
    <button class="button secondary" id="admin-logout">Se déconnecter</button></div></div>
-   <div class="admin-counts">${Object.entries(statuses).map(([id,label])=>`<div><strong>${state.rows.filter(r=>r.status===id).length}</strong><span>${label}</span></div>`).join('')}</div>
+   <div class="admin-counts">${Object.entries(statuses).map(([id,label])=>`<div><strong>${state.rows.filter(r=>r.status===id).length}</strong><span>${label}</span></div>`).join('')}
+   <div><strong>${capacity.stored}/${feedbackCapacity.maxStored}</strong><span>Capacité · ${capacity.percent}%</span></div></div>
+   <p class="muted">${esc(capacityNote)} Limite d’admission : ${feedbackCapacity.dailyAdmissions} nouveaux envois par jour UTC.</p>
    <div class="admin-filters"><label class="field">Rechercher<input id="admin-query" type="search" placeholder="Titre, message ou pseudo" value="${esc(filters.query)}"></label>
    <label class="field">Projet<select id="admin-project"><option value="">Tous les projets</option>${projects.map(p=>`<option value="${esc(p.id)}" ${filters.project===p.id?'selected':''}>${esc(p.name)}</option>`).join('')}</select></label>
    <label class="field">Statut<select id="admin-status"><option value="">Tous les statuts</option>${Object.entries(statuses).map(([id,label])=>`<option value="${id}" ${filters.status===id?'selected':''}>${label}</option>`).join('')}</select></label></div>

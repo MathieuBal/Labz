@@ -1,5 +1,12 @@
 // Access tokens and messages live in memory only; reloading requires login.
 export const statuses = Object.freeze({new:'Nouveau',in_progress:'En cours',done:'Traité'});
+export const feedbackCapacity = Object.freeze({maxStored:500,warningAt:400,dailyAdmissions:100});
+export function getCapacityState(count) {
+ const stored=Number.isFinite(count)?Math.max(0,Math.floor(count)):0;
+ const remaining=Math.max(0,feedbackCapacity.maxStored-stored);
+ const level=stored>=feedbackCapacity.maxStored?'full':stored>=feedbackCapacity.warningAt?'warning':'ok';
+ return {stored,remaining,level,percent:Math.min(100,Math.round(stored/feedbackCapacity.maxStored*100))};
+}
 export function escapeText(value) {
  return String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
