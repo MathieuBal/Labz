@@ -14,6 +14,12 @@ const profiles = {
       ['Le geste comme langage', 'Dessiner, pousser, attirer, maintenir, perturber ou simplement effleurer : la souris, le stylet et le tactile ne servent pas à naviguer autour de l’œuvre, ils font partie de l’œuvre.'],
       ['Explorer sans objectif imposé', 'Certaines scènes se comprennent immédiatement, d’autres demandent quelques essais. On peut y rester dix secondes ou plusieurs minutes, puis passer à la suivante et construire son propre parcours dans la collection.'],
     ],
+    aboutLabel: 'L’EXPÉRIENCE',
+    aboutTitle: 'Une collection qui n’attend pas d’être comprise avant d’être touchée.',
+    about: [
+      'Chaque tableau part d’un comportement différent : fluidité, attraction, tension, équilibre, dispersion, lumière ou mémoire du geste. Le but n’est pas de reproduire fidèlement une matière physique, mais de trouver une réaction assez crédible et surprenante pour donner envie d’essayer encore une fois.',
+      'Le vrai moment Sensoria arrive quand on cesse de chercher “ce qu’il faut faire” et qu’on commence simplement à tester la scène. Une interaction déclenche une autre idée, un geste révèle une propriété inattendue, puis on passe à un nouveau tableau avec la curiosité de voir comment celui-ci va répondre.'
+    ],
     tech: [['Surface', 'Navigateur · PWA installable'], ['Interaction', 'Pointer Events · souris / stylet / multi-touch'], ['Rendu', 'Canvas 2D + Three.js / WebGL2 selon les scènes'], ['Contenu', '22 tableaux jouables']],
     status: 'Sensoria est déjà public et pleinement exploratoire : les 22 tableaux sont présents, le passage d’une scène à l’autre libère correctement les ressources et plusieurs scripts Playwright vérifient les interactions desktop/mobile. Le prochain enjeu n’est pas de grossir la collection à tout prix, mais d’identifier les tableaux dont les visiteurs se souviennent vraiment et de faire entrer ces validations navigateur dans la CI de publication.'
   },
@@ -26,6 +32,12 @@ const profiles = {
       ['Un million, pour de vrai', 'Les 1 048 576 cellules existent réellement dans la simulation. Une couleur enterrée derrière une autre peut être inaccessible, une façade évolue à mesure qu’elle est détruite et chaque tir modifie le monde plutôt qu’une simple barre de progression.'],
       ['Transformer une image en économie', 'Les couleurs deviennent des ressources, les canons se spécialisent et les fragments servent à améliorer la cadence, l’automatisation et la façon d’attaquer la toile. La progression continue ensuite avec doctrines, capacités et bonus permanents.'],
       ['Toujours une nouvelle toile à avaler', 'Import libre, campagne de 56 illustrations générées pour le jeu, galerie et progression permanente donnent une raison de recommencer avec une autre image plutôt que de s’arrêter au premier million détruit.'],
+    ],
+    aboutLabel: 'LA BOUCLE DE JEU',
+    aboutTitle: 'Une image n’est pas une barre de vie : c’est le niveau entier.',
+    about: [
+      'Le plaisir vient de la transformation progressive de la toile. Au départ, l’image est intacte et les canons ne peuvent atteindre que ce que ses bords leur exposent. À mesure que des cellules disparaissent, de nouvelles couleurs deviennent accessibles et la géographie du niveau change réellement.',
+      'Cette contrainte donne une raison à l’optimisation : améliorer un canon n’accélère pas seulement un compteur, cela change la vitesse à laquelle une couleur cède, la façon dont la surface s’ouvre et le moment où l’on peut réinvestir ailleurs. Le jeu cherche ainsi à faire cohabiter la satisfaction d’un idle avec une structure de monde qui reste concrète.'
     ],
     tech: [['Monde', '1024 × 1024 · TypedArrays et index spécialisés'], ['Rendu', 'PixiJS / WebGL2 · simulation séparée du visuel'], ['Traitement', 'Workers pour image et reprise hors-ligne'], ['Sauvegarde', 'IndexedDB · migrations v1 → v6']],
     status: 'C’est l’un des projets les plus solides du portfolio : tests unitaires nombreux, smoke E2E sur le build de production, migrations de sauvegarde et vrai modèle de reprise après restauration. Il reste toutefois un défaut important pour un idle : si la page reste simplement ouverte en arrière-plan, le retour au premier plan n’applique pas encore le rattrapage hors-ligne. La prochaine passe doit fermer ce trou puis brancher les tests existants sur la CI avant chaque déploiement.'
@@ -40,6 +52,12 @@ const profiles = {
       ['Plus d’une façon de progresser', 'Donjon, biomes, boss et combat au tour par tour côtoient une Plongée roguelite avec sa propre boucle. Talents, factions, reliques et prestige ajoutent ensuite des couches de progression plus longues.'],
       ['Quand l’aventure construit son village', 'Bâtiments, ouvriers, forge et production passive ajoutent une couche idle au RPG. Les ressources continuent à s’accumuler selon le temps réellement écoulé, avec un rattrapage plafonné à huit heures.'],
     ],
+    aboutLabel: 'À PROPOS DU JEU',
+    aboutTitle: 'Le prochain coffre doit toujours donner une raison de continuer.',
+    about: [
+      'Lootchest s’est développé autour d’une question très simple : combien de systèmes peut-on accrocher à une boucle de loot sans perdre le plaisir immédiat d’ouvrir, comparer et équiper ? Le donjon fournit la pression, l’équipement apporte la réponse, puis le village et la forge commencent à préparer les runs suivants.',
+      'La Plongée permet de casser cette routine avec une boucle plus roguelite, tandis que le prestige, les reliques, les factions et les talents donnent des objectifs au-delà de l’objet obtenu dans l’instant. Le projet est moins une recherche de minimalisme qu’un laboratoire de progression où chaque nouvelle couche doit nourrir les précédentes.'
+    ],
     tech: [['Surface', 'Navigateur · mobile et desktop'], ['Stack', 'JavaScript / HTML / CSS sans framework ni bundler'], ['Sauvegarde', 'Locale · migrations · export / import JSON'], ['État', 'Jeu public · prototype riche']],
     status: 'Lootchest est déjà un vrai jeu jouable, surtout remarquable par la quantité de systèmes reliés dans un projet vanilla JS. Cette richesse est aussi sa dette principale : aucune suite de tests automatisés ne protège encore les combats, le loot, le village ou les sauvegardes. Pour les essais publics, les exports personnels sont adaptés au backup ; l’import de fichiers de sauvegarde externes n’est pas encore suffisamment durci pour être considéré comme une fonction de partage sûre.'
   },
@@ -52,6 +70,12 @@ const profiles = {
       ['Du geste à l’automatisation', 'Les premières récoltes se font directement dans le champ magnétique, avec énergie, stockage, chaînes de captures et Surge. Les drones et améliorations prennent ensuite progressivement une partie du travail à votre place.'],
       ['Une progression en couches', 'Projets temporisés, six biomes de base, progression procédurale au-delà, prestige, perks, succès et arbre déterministe donnent plusieurs horizons de progression au lieu d’une simple courbe de chiffres.'],
       ['Un idle pensé pour revenir souvent', 'Interface touch-first, PWA, sauvegarde locale et rendu Canvas optimisé en font un prototype pensé dès le départ pour le téléphone et les petites sessions régulières.'],
+    ],
+    aboutLabel: 'POURQUOI IL EXISTE',
+    aboutTitle: 'Quand le jeu que l’on veut n’existe pas, on peut essayer de le fabriquer.',
+    about: [
+      'AFK Farm appartient à une famille de projets nés sans cahier des charges extérieur : l’envie de jouer à quelque chose de précis, l’impression de ne pas le trouver exactement ailleurs, puis la décision d’en construire une version soi-même. Le champ magnétique fournit le geste de départ ; l’idle vient ensuite donner une raison d’y revenir.',
+      'Le projet a été poussé bien plus loin que cette première intuition. Chaque système ajouté — drones, chantiers, biomes, prestige ou arbre — cherche à déplacer progressivement le joueur de la récolte immédiate vers la construction d’une machine qui travaille pour lui. C’est cette trajectoire, plus que l’équilibrage actuel, qui donne son identité au prototype.'
     ],
     tech: [['Surface', 'Navigateur · PWA mobile-first'], ['Moteur', 'Canvas · tableaux typés · densité adaptée à l’écran'], ['Progression', 'Biomes · projets · prestige · arbre à 7 branches'], ['État', 'Prototype jouable ouvert aux retours']],
     status: 'AFK Farm est précisément le type de projet que Labz peut aider à décider de reprendre. La boucle existe et le contenu est déjà conséquent, mais deux incohérences touchent encore le cœur du jeu : le retour après mise en arrière-plan peut perdre une partie de la progression AFK, et les Cores servent à la fois de multiplicateur et de monnaie dépensable, ce qui peut rendre certains achats contre-productifs. La fiche assume donc un prototype avancé, pas un idle équilibré et terminé.'
@@ -87,6 +111,12 @@ const profiles = {
       ['Un Pip-Boy pour la campagne', 'Carte interactive, journal, quêtes, personnes, faune, objets, holobandes, terminaux, table de jeu, brouillard et scénarios vivent dans une même interface mobile-first pensée pour accompagner la partie plutôt que la remplacer.'],
       ['Les secrets restent vraiment côté MJ', 'Dans une vraie session connectée, les contenus masqués ne sont pas envoyés au joueur puis cachés avec du CSS : PostgreSQL fabrique une projection filtrée avant la réponse, et les tests de sécurité vérifient la séparation propriétaire / joueur / tiers.'],
       ['Une démo immédiate, un mode campagne séparé', 'La version Labz fonctionne localement dans un seul navigateur : ouvrez la Console MJ, envoyez une fiche secrète puis revenez côté joueur pour la voir apparaître. Le mode Supabase ajoute ensuite la synchronisation réelle entre appareils.'],
+    ],
+    aboutLabel: 'À LA TABLE',
+    aboutTitle: 'Le numérique doit soutenir le rythme du JDR, pas prendre la place de la partie.',
+    about: [
+      'Le cœur de Pip-Boy JDR n’est pas l’esthétique Fallout : c’est la gestion de ce que chaque personne autour de la table sait à un instant donné. Le MJ peut préparer beaucoup d’informations à l’avance sans les dévoiler, puis faire apparaître une fiche, un lieu, un document ou un indice au moment où la fiction le justifie.',
+      'La démo condense ce principe dans un seul navigateur pour qu’il soit immédiatement testable. Le mode connecté pousse ensuite la même logique plus loin : le téléphone du joueur reçoit sa propre projection de la campagne, tandis que les secrets restent filtrés côté base de données plutôt que simplement masqués visuellement.'
     ],
     tech: [['Surface', 'Navigateur · mobile-first'], ['Stack', 'React + TypeScript + Vite'], ['Démo', 'LocalStorage · aucun compte requis'], ['Mode connecté', 'Supabase · PostgreSQL · Realtime']],
     status: 'La démo publique est aujourd’hui le parcours recommandé : elle est autonome et utilise les assets originaux ou générés pour le projet, la carte officielle Fallout précédemment présente ayant été retirée du dépôt. Le mode authentifié possède déjà une architecture serveur solide et des tests SQL / navigateur poussés ; il reste néanmoins à refaire une recette complète sur deux appareils réels avant de le présenter comme parcours principal public.'
@@ -153,7 +183,8 @@ function heading(profile) {
 }
 
 function product(profile) {
-  return `${heading(profile)}<div class="rich-feature-grid">${profile.features.map(([title,body]) => `<article><h3>${esc(title)}</h3><p>${esc(body)}</p></article>`).join('')}</div><div class="rich-project-columns"><section class="rich-tech"><span class="eyebrow">SOUS LE CAPOT</span><dl>${profile.tech.map(([key,value]) => `<div><dt>${esc(key)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl></section><section class="rich-status"><span class="eyebrow">ÉTAT DU PROJET</span><p>${esc(profile.status)}</p></section></div>`;
+  const about = profile.about?.length ? `<section class="rich-about"><span class="eyebrow">${esc(profile.aboutLabel || 'À PROPOS')}</span><h3>${esc(profile.aboutTitle || '')}</h3>${profile.about.map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}</section>` : '';
+  return `${heading(profile)}<div class="rich-feature-grid">${profile.features.map(([title,body]) => `<article><h3>${esc(title)}</h3><p>${esc(body)}</p></article>`).join('')}</div>${about}<div class="rich-project-columns"><section class="rich-tech"><span class="eyebrow">SOUS LE CAPOT</span><dl>${profile.tech.map(([key,value]) => `<div><dt>${esc(key)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl></section><section class="rich-status"><span class="eyebrow">ÉTAT DU PROJET</span><p>${esc(profile.status)}</p></section></div>`;
 }
 
 function suite(profile) {
