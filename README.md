@@ -8,13 +8,13 @@ Site : https://mathieubal.github.io/Labz/
 
 Le numéro de version et les nouveautés viennent de `release-notes.js` ; ils sont validés contre `package.json` et publiés ensemble.
 
-- Catalogue éditorial de **dix fiches**, dont **six projets ou outils directement essayables**. Constella est présenté en deux produits distincts, Explore et Watch, sur un socle technique partagé.
+- Catalogue éditorial de **douze fiches**, dont **six projets ou outils directement essayables**. Les projets non testables sont désormais distingués comme présentations, études de cas ou R&D ; Constella est présenté comme une seule suite avec Explore et Watch sur un Core commun.
 - Fiches compactes : Lancer et Déposer un avis en tête, guides et évolutions dépliables. Favoris et historique locaux ; partage natif ou copie du lien.
 - Retours privés via Supabase, sans compte visiteur. Un seul bouton d'envoi. Brouillon automatiquement sauvegardé sur l'appareil, accusé de réception conservé après rechargement quand le stockage local est disponible, et commande d’effacement explicite.
 - Administration `#/admin`, accessible en pied de page : connexion propriétaire, recherche, filtres, compteurs et statuts Nouveau / En cours / Traité. Autorisation explicite en base, aucun premier inscrit automatiquement administrateur.
 - Jetons et messages privés en mémoire ; sortie de l'admin, rechargement, expiration et déconnexion effacent l'état sensible local.
-- Activité publique GitHub de quatre dépôts autorisés : versions, ou commits clairement identifiés en leur absence. Cache mémoire de quinze minutes ; aucun token public privilégié.
-- Guides d’essai désormais disponibles pour Diagnostic numérique, Perfoptimize et Pip-Boy JDR en plus des expériences déjà lançables.
+- Activité publique GitHub de huit dépôts explicitement autorisés : versions, ou commits clairement identifiés en leur absence. Cache mémoire de quinze minutes ; aucun token public privilégié.
+- Guides d’essai pour les expériences lançables et les outils testables. Pip-Boy reste présenté sans lancement direct tant que l’ancienne carte Fallout redistribuée dans son dépôt n’a pas été remplacée.
 
 Les visuels ne sont pas tous des captures d'écran. Les projets sans démo validée restent des présentations. Un binaire public peut être distribué sans exposer automatiquement le dépôt source privé correspondant.
 
