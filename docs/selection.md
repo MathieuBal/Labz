@@ -1,5 +1,7 @@
 # Sélection éditoriale du Labz — 20 octobre 2026
 
+> **Document historique.** Il décrit la sélection décidée le 20 octobre 2026. Depuis, Perfoptimize est revenu dans le catalogue, Pip-Boy est devenu essayable et Constella est présenté en deux produits distincts. Pour l’état courant du portefeuille, utiliser [`portfolio-status.md`](portfolio-status.md).
+
 Le Labz présente une sélection de créations, pas l’inventaire complet des dépôts.
 Cette décision porte sur la visibilité dans le Labz : aucun dépôt n’est supprimé,
 archivé dans GitHub ou rendu public. Les huit fiches retenues existaient déjà.
