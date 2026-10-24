@@ -52,7 +52,7 @@ GitHub retourne **31 dépôts appartenant à Mathieu**, Labz compris. La colonne
 | `DeezerInfo` | public | 21 | hors Labz | à qualifier |
 | `discortbotsaloon` | public | 550 | hors Labz | **première génération RP réellement utilisée · conserver comme historique de l’écosystème** |
 | `EcoRide` | public | 400 | hors Labz | **projet Studi interrompu · à archiver** |
-| `gta-blackjack-assistant` | privé | 43 | hors Labz | à qualifier |
+| `gta-blackjack-assistant` | privé | 43 | hors Labz | **expérimentation personnelle GTA RP · à archiver** |
 | `HFTrain` | privé | **0** | hors Labz | **suppression recommandée · idée de simulateur/replay de marché conservée dans l’audit** |
 | `HotzDoggz-bot` | public | 599 | hors Labz | **mis en service · ~40 utilisateurs / ~15 jours · candidat fort Labz groupé** |
 | `Ilia` | privé | 1 454 | hors Labz | **ancien assistant vocal Python · à archiver** |
@@ -61,8 +61,8 @@ GitHub retourne **31 dépôts appartenant à Mathieu**, Labz compris. La colonne
 | `sudoku-solver` | public | 15 | hors Labz | à qualifier |
 | `Totalwarai` | public | 1 792 | hors Labz | à qualifier |
 | `Tricat` | public | 15 | hors Labz | à qualifier |
-| `Zepevents` | privé | 129 | hors Labz | **écosystème RP / Zep · conserver · candidat Labz groupé** |
-| `ZepRasso` | public | 327 | hors Labz | **écosystème RP / Zep · conserver · candidat Labz groupé** |
+| `Zepevents` | privé | 129 | hors Labz | **généralisation événementielle RP · conserver · candidat Labz groupé** |
+| `ZepRasso` | public | 327 | hors Labz | **origine spécialisée rasso / QR · conserver · candidat Labz groupé** |
 
 ## Premières décisions fondées sur le contexte de Mathieu
 
@@ -169,7 +169,7 @@ Motif : conserver une trace importante du parcours d’apprentissage et d’une 
 
 ### Écosystème RP — Saloon / HotzDoggz / Zep
 
-Ces dépôts ne doivent pas être lus comme une série de petits bots sans rapport. Ils racontent une même démarche : **réduire la charge administrative des organisations RP en transformant des processus manuels ou des tableurs fragiles en outils dédiés**.
+Ces dépôts ne doivent pas être lus comme une série de petits bots sans rapport. Ils racontent une même démarche : **réduire la charge administrative et technique des organisations RP pour préserver le temps réellement passé à jouer et à créer du RP**.
 
 #### `discortbotsaloon`
 
@@ -191,13 +191,27 @@ Il ne faut donc pas le présenter comme un simple prototype « presque déployé
 
 Ces projets appartiennent au même contexte GTA RP. « Zep » était le proche mis en avant publiquement dans le jeu, tandis que Mathieu travaillait davantage en coulisses sur l’organisation, les outils et les mécaniques des événements.
 
+L’origine est `ZepRasso` : un outil conçu d’abord pour les rassemblements automobiles. L’idée s’est ensuite élargie vers les événements RP de manière générale. Le principe central était de **minimiser le temps passé hors jeu** : un QR code pouvait être diffusé directement en jeu, puis les participants accédaient rapidement au site pour s’inscrire, noter un véhicule, voter ou participer à une animation avant de revenir immédiatement dans le RP.
+
+Le numérique n’était donc pas pensé comme un remplacement du jeu mais comme une **couche logistique légère au service de l’immersion**. L’outil devait absorber les inscriptions, votes, calculs, classements, loteries et autres tâches administratives afin de laisser davantage de temps aux interactions RP.
+
 Les rassemblements automobiles et loteries organisés dans ce cadre ont rencontré un fort succès. Les tirages de certaines loteries étaient même matérialisés sous forme de vidéos de courses de billes publiées sur YouTube pour rendre le résultat visible et ludique.
 
-`ZepRasso` couvre la branche rassemblement / vote / classement ; `Zepevents` généralise l’idée vers un poste de contrôle événementiel plus large incluant inscriptions, concours, caisse, loteries et résultats.
+`ZepRasso` représente la première implémentation spécialisée côté participants — accès web, QR code, vote et classement — tandis que `Zepevents` représente la **généralisation du concept** vers un poste de contrôle événementiel plus large : inscriptions, concours, caisse, loteries, résultats et organisation.
 
 **Décision : conserver les deux dépôts.** Pour Labz, privilégier une **présentation groupée de l’écosystème RP** plutôt que quatre fiches qui donneraient artificiellement l’impression de quatre produits indépendants.
 
-Angle Labz recommandé : montrer la progression **problème réel → première automatisation → usage → généralisation → outils spécialisés**, avec `HotzDoggz-bot` comme pièce technique centrale et les projets Zep comme extensions événementielles.
+Angle Labz recommandé : montrer la progression **problème réel → première automatisation → usage → interface légère côté joueurs → généralisation événementielle**, avec `HotzDoggz-bot` comme pièce de gestion d’entreprise et `ZepRasso` / `Zepevents` comme branche événementielle.
+
+### `gta-blackjack-assistant`
+
+Contexte Mathieu : petite expérimentation née pendant une période d’ennui sur GTA RP. L’objectif était d’analyser ses propres parties de blackjack et de recevoir une orientation pour maximiser ses gains, à partir de la stratégie de base et du comptage de cartes.
+
+Le dépôt contient une application Tkinter avec logique de blackjack, Hi-Lo, historique CSV et tests, mais l’idée n’a pas été poussée très loin ni transformée en outil réellement utilisé sur la durée.
+
+**Décision : archiver le dépôt et le laisser hors Labz.**
+
+Motif : expérimentation personnelle techniquement propre mais trop mineure et peu approfondie pour justifier une place dans le portfolio actif.
 
 ## Projets d’étude
 
@@ -226,7 +240,7 @@ La revue se fait **un dépôt à la fois**, avec le contexte de Mathieu avant d�
 9. `chess-vision-trainer` — contexte déjà fourni, décision presque complète ;
 10. `equiperota` / AtelierFlow — contexte déjà fourni ;
 11. écosystème RP : `discortbotsaloon` — conserver comme première génération ; `HotzDoggz-bot` — candidat fort Labz ; `ZepRasso` + `Zepevents` — conserver et regrouper dans la même histoire ;
-12. `gta-blackjack-assistant` — à qualifier ;
+12. `gta-blackjack-assistant` — décision : archiver ;
 13. petits projets et utilitaires : `ball-passing-simulation`, `botlecturevlc`, `DeezerInfo`, `sudoku-solver`, `Tricat`, `afk-farm` ;
 14. `Totalwarai` et les autres projets spécialisés restants.
 
