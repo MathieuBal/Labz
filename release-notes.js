@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.1",
+    "date": "2026-10-24",
+    "title": "Les démos racontent mieux ce qu’elles font ressentir",
+    "description": "Les cinq expériences jouables principales gagnent un discours plus proche d’une vraie page produit, sans perdre les limites révélées par leurs audits.",
+    "items": [
+      "Sensoria, Million de Pixels, Lootchest, AFK Farm et Pip-Boy disposent désormais d’une accroche, de points forts et d’un récit propres à leur expérience plutôt que d’un texte générique de portfolio.",
+      "Chaque page ajoute une section éditoriale qui explique la boucle, l’intention ou le contexte du projet avant de descendre dans la partie technique.",
+      "Les promesses restent bornées par les audits : les défauts connus, limites de validation et statuts de prototype restent explicitement visibles."
+    ]
+  },
+  {
     "version": "0.18.0",
     "date": "2026-10-24",
     "title": "Les projets gagnent leur vraie page",
