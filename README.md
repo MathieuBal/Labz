@@ -8,13 +8,15 @@ Site : https://mathieubal.github.io/Labz/
 
 Le numéro de version et les nouveautés viennent de `release-notes.js` ; ils sont validés contre `package.json` et publiés ensemble.
 
-- Catalogue éditorial de **douze fiches**, dont **six projets ou outils directement essayables**. Les projets non testables sont désormais distingués comme présentations, études de cas ou R&D ; Constella est présenté comme une seule suite avec Explore et Watch sur un Core commun.
+- Catalogue éditorial de **douze fiches**, dont **sept projets ou outils directement essayables**. Les projets non testables sont distingués comme présentations, études de cas ou R&D ; Constella est présenté comme une seule suite avec Explore et Watch sur un Core commun.
+- Pages projet enrichies : présentation produit pour les expériences et outils testables, structure de suite pour Constella, chronologies pour les études de cas et lecture R&D pour Total War AI. Les textes restent éditoriaux et peuvent évoluer fiche par fiche sans changer le socle.
 - Fiches compactes : Lancer et Déposer un avis en tête, guides et évolutions dépliables. Favoris et historique locaux ; partage natif ou copie du lien.
 - Retours privés via Supabase, sans compte visiteur. Un seul bouton d'envoi. Brouillon automatiquement sauvegardé sur l'appareil, accusé de réception conservé après rechargement quand le stockage local est disponible, et commande d’effacement explicite.
 - Administration `#/admin`, accessible en pied de page : connexion propriétaire, recherche, filtres, compteurs et statuts Nouveau / En cours / Traité. Autorisation explicite en base, aucun premier inscrit automatiquement administrateur.
 - Jetons et messages privés en mémoire ; sortie de l'admin, rechargement, expiration et déconnexion effacent l'état sensible local.
 - Activité publique GitHub de huit dépôts explicitement autorisés : versions, ou commits clairement identifiés en leur absence. Cache mémoire de quinze minutes ; aucun token public privilégié.
-- Guides d’essai pour les expériences lançables et les outils testables. Pip-Boy reste présenté sans lancement direct tant que l’ancienne carte Fallout redistribuée dans son dépôt n’a pas été remplacée.
+- Guides d’essai pour les expériences lançables et les outils testables. Pip-Boy est à nouveau essayable via sa démonstration locale ; la partie authentifiée Supabase et les sessions MJ/joueur restent une couche séparée.
+- Navigation mobile fiabilisée : quatre destinations en barre basse, retour explicite à l’accueil et ouverture des fiches en haut de page sans restauration automatique de position.
 
 Les visuels ne sont pas tous des captures d'écran. Les projets sans démo validée restent des présentations. Un binaire public peut être distribué sans exposer automatiquement le dépôt source privé correspondant.
 
@@ -35,9 +37,13 @@ Ouvrir http://127.0.0.1:4173. Le site compilé est dans `dist/`. Les chemins rel
 
 ## Structure
 
-- `catalog.js` : catalogue et guides éditoriaux.
+- `catalog.js` : catalogue et guides éditoriaux de base.
+- `catalog-runtime.js` : ajustements de diffusion qui doivent précéder le rendu, notamment la démo publique Pip-Boy.
+- `project-pages.js`, `project-pages.css` : présentations riches par famille de projet.
+- `navigation-fixes.js` : garde-fous de navigation mobile et de position de scroll.
 - `release-notes.js` : historique public et version affichée.
 - `app.js`, `model.js`, `styles.css` : navigation, rendu et état public local.
+- `project-gallery.js`, `project-gallery.css` : galeries des fiches projet.
 - `feedback-client.js`, `feedback-config.js` : envoi privé.
 - `admin-client.js`, `admin-view.js`, `admin-config.js`, `admin.css` : espace propriétaire.
 - `github-activity.js` : lecture défensive des nouveautés publiques.

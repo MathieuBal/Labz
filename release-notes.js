@@ -1,6 +1,18 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.0",
+    "date": "2026-10-24",
+    "title": "Les projets gagnent leur vraie page",
+    "description": "Les fiches deviennent de vraies pages de présentation adaptées à la nature de chaque projet, tandis que la navigation mobile est fiabilisée.",
+    "items": [
+      "Les projets jouables gagnent une présentation de type produit avec proposition de valeur, points forts, repères techniques et état réel du projet.",
+      "Constella dispose d’une présentation de suite, les études de cas gagnent une chronologie et Total War AI une lecture R&D dédiée.",
+      "Le bouton Découvrir mobile revient correctement à l’accueil et l’ouverture d’une fiche repart en haut de page ; la barre mobile est alignée sur ses quatre entrées.",
+      "Pip-Boy redevient directement essayable via sa démonstration locale, sans modification du mode authentifié Supabase ni des sessions MJ/joueur."
+    ]
+  },
+  {
     "version": "0.17.0",
     "date": "2026-10-24",
     "title": "Le catalogue passe l’audit",
