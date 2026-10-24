@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.16.0",
+    "date": "2026-10-24",
+    "title": "La boîte montre sa capacité",
+    "description": "L’administration indique maintenant combien de retours occupent la capacité disponible et signale quand la limite approche.",
+    "items": [
+      "Un compteur affiche les messages présents sur la limite de 500 et le pourcentage utilisé.",
+      "Une alerte apparaît à partir de 400 messages et devient explicite lorsque la capacité est atteinte.",
+      "L’interface rappelle que le statut « Traité » organise les retours mais ne libère pas de place, ainsi que la limite de 100 nouveaux envois par jour UTC."
+    ]
+  },
+  {
     "version": "0.15.0",
     "date": "2026-10-23",
     "title": "Pip-Boy s’ouvre, Constella se clarifie",
