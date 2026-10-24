@@ -8,14 +8,17 @@ Site : https://mathieubal.github.io/Labz/
 
 Le numéro de version et les nouveautés viennent de `release-notes.js` ; ils sont validés contre `package.json` et publiés ensemble.
 
-- Catalogue éditorial de neuf projets, dont quatre expériences ou outils directement essayables. Présentations séparées, recherche, catégories et filtres combinables.
+- Catalogue éditorial de **dix fiches**, dont **six projets ou outils directement essayables**. Constella est présenté en deux produits distincts, Explore et Watch, sur un socle technique partagé.
 - Fiches compactes : Lancer et Déposer un avis en tête, guides et évolutions dépliables. Favoris et historique locaux ; partage natif ou copie du lien.
-- Retours privés via Supabase, sans compte visiteur. Un seul bouton d'envoi. Brouillon automatiquement sauvegardé sur l'appareil ; aucun export ni publication GitHub dans ce parcours.
+- Retours privés via Supabase, sans compte visiteur. Un seul bouton d'envoi. Brouillon automatiquement sauvegardé sur l'appareil, accusé de réception conservé après rechargement quand le stockage local est disponible, et commande d’effacement explicite.
 - Administration `#/admin`, accessible en pied de page : connexion propriétaire, recherche, filtres, compteurs et statuts Nouveau / En cours / Traité. Autorisation explicite en base, aucun premier inscrit automatiquement administrateur.
-- Jetons et messages privés en mémoire ; sortie de l'admin, rechargement, expiration et déconnexion effacent l'état local.
+- Jetons et messages privés en mémoire ; sortie de l'admin, rechargement, expiration et déconnexion effacent l'état sensible local.
 - Activité publique GitHub de quatre dépôts autorisés : versions, ou commits clairement identifiés en leur absence. Cache mémoire de quinze minutes ; aucun token public privilégié.
+- Guides d’essai désormais disponibles pour Diagnostic numérique, Perfoptimize et Pip-Boy JDR en plus des expériences déjà lançables.
 
 Les visuels ne sont pas tous des captures d'écran. Les projets sans démo validée restent des présentations. Un binaire public peut être distribué sans exposer automatiquement le dépôt source privé correspondant.
+
+Vue de pilotage du portefeuille : [état des projets au 24 octobre 2026](docs/portfolio-status.md).
 
 ## Développement et validation
 
@@ -51,16 +54,19 @@ Préparer une livraison avec `npm run release` : [procédure](docs/releases.md).
 
 - Réception : 100 admissions par jour UTC, 500 messages présents. Le statut Traité ne libère pas de capacité.
 - Messages de plus de 90 jours purgés lors du prochain envoi, sans tâche périodique actuellement.
-- Brouillons persistants sans commande d'effacement ; déduplication garantie seulement pendant la session actuelle. Ce sont les prochains correctifs.
-- Récupération de mot de passe non intégrée. La consultation propriétaire est autorisée mais la recette complète de connexion/récupération sur téléphone reste à terminer.
+- Récupération de mot de passe propriétaire non intégrée.
+- La recette complète de connexion/récupération sur téléphone réel reste à terminer.
+- Les retours sont encore organisés message par message : la transformation en sujets, décisions et états de portefeuille reste un chantier distinct.
 - Les nouveautés Labz sont rédigées dans le dépôt ; leur diffusion est automatisée, leur rédaction n'est pas encore gérée depuis l'administration.
+- Les statuts publics de projet ne sont pas encore structurés : l’activité GitHub ne doit pas être interprétée comme un état produit.
 
 ## Documents de continuité
 
+- [État actuel du portefeuille](docs/portfolio-status.md)
 - [Plan de développement et validations](docs/development-plan.md)
 - [Évolution des retours et des décisions](docs/feedback-roadmap.md)
 - [Administration : état et protections](docs/admin-handoff.md)
 - [Réception privée : architecture et limites](docs/private-feedback.md)
-- [Choix éditoriaux](docs/selection.md)
+- [Choix éditoriaux historiques](docs/selection.md)
 
 Ne jamais embarquer de clé GitHub, de clé secrète Supabase ou de mot de passe dans le client. Réutiliser le projet Supabase existant ; aucun nouveau projet requis.
