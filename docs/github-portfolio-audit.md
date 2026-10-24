@@ -53,10 +53,10 @@ GitHub retourne **31 dépôts appartenant à Mathieu**, Labz compris. La colonne
 | `discortbotsaloon` | public | 550 | hors Labz | à qualifier |
 | `EcoRide` | public | 400 | hors Labz | projet de formation connu · à qualifier pour archivage |
 | `gta-blackjack-assistant` | privé | 43 | hors Labz | à qualifier |
-| `HFTrain` | privé | **0** | hors Labz | **dépôt vide · candidat prioritaire à suppression** |
+| `HFTrain` | privé | **0** | hors Labz | **suppression recommandée · idée de simulateur/replay de marché conservée dans l’audit** |
 | `HotzDoggz-bot` | public | 599 | hors Labz | à qualifier |
 | `Ilia` | privé | 1 454 | hors Labz | à qualifier |
-| `OpenclassroomProject2` | public | 40 851 | hors Labz | projet d’étude probable · à qualifier |
+| `OpenclassroomProject2` | public | 40 851 | hors Labz | **décision : archiver · exercice OpenClassrooms terminé** |
 | `STUDI_Projet_fil_rouge` | public | 299 | hors Labz | projet d’étude probable · à qualifier |
 | `sudoku-solver` | public | 15 | hors Labz | à qualifier |
 | `Totalwarai` | public | 1 792 | hors Labz | à qualifier |
@@ -88,6 +88,22 @@ Contexte Mathieu : le projet vient d’une réflexion autour de la pertinence de
 - reconsidérer sa présence dans le catalogue Labz : il a davantage sa place dans une future rubrique `Explorations` que parmi les projets auxquels on promet une évolution ;
 - ne pas le supprimer tant que la réflexion métier reste intéressante.
 
+### HFTrain
+
+Contexte Mathieu : idée ancienne autour du trading haute fréquence, soit comme outil automatisé, soit comme simulateur/replay de marché permettant de s’entraîner sans argent réel.
+
+Le dépôt GitHub est vide. Le concept le plus réutilisable n’est pas le HFT automatisé mais éventuellement un **simulateur ou replay de marché** sans risque financier.
+
+**Décision : suppression recommandée du dépôt**, sous réserve d’un feu vert explicite de Mathieu avant action destructive. L’idée résiduelle est conservée ici ; si elle revient, repartir sur un nouveau projet propre.
+
+### OpenclassroomProject2
+
+Contexte Mathieu : exercice OpenClassrooms réalisé pour valider une étape de formation. Le dépôt contient le livrable technique autour du scraping de Books to Scrape ; il n’a jamais été destiné à devenir un produit.
+
+**Décision : archiver le dépôt GitHub et le laisser hors Labz.**
+
+Motif : conserver une trace d’apprentissage et un exercice technique complet, sans entretenir l’illusion d’un projet actif.
+
 ### Projets d’étude
 
 Mathieu indique que certains dépôts ont été créés uniquement pour des études, parfois sans véritable code poussé.
@@ -98,21 +114,22 @@ Règle proposée :
 - exercice terminé avec code montrant une étape d’apprentissage → archivage plutôt que Labz ;
 - projet d’étude ayant donné naissance à une vraie idée ou à une brique réutilisée ailleurs → conserver avec cette filiation documentée.
 
-Les candidats évidents à examiner dans cette famille sont `OpenclassroomProject2`, `STUDI_Projet_fil_rouge`, `EcoRide` et tout autre dépôt que Mathieu identifiera comme scolaire.
+Les candidats évidents à examiner dans cette famille sont `STUDI_Projet_fil_rouge`, `EcoRide` et tout autre dépôt que Mathieu identifiera comme scolaire.
 
 ## Ordre de revue proposé
 
 La revue se fait **un dépôt à la fois**, avec le contexte de Mathieu avant décision définitive.
 
-1. `HFTrain` — dépôt vide ;
-2. `chess-vision-trainer` — contexte déjà fourni, décision presque complète ;
-3. `equiperota` / AtelierFlow — contexte déjà fourni ;
-4. `OpenclassroomProject2`, `STUDI_Projet_fil_rouge`, `EcoRide` — bloc formation ;
-5. `ClicReflex` + `Clicreflexe` — vérifier le doublon ;
-6. projets privés inconnus : `Antsimu`, `Crimson-s-Blade`, `Ilia` ;
-7. outils / bots RP : `discortbotsaloon`, `HotzDoggz-bot`, `ZepRasso`, `Zepevents`, `gta-blackjack-assistant` ;
-8. petits projets et utilitaires : `ball-passing-simulation`, `botlecturevlc`, `DeezerInfo`, `sudoku-solver`, `Tricat`, `afk-farm` ;
-9. `Totalwarai` et les autres projets spécialisés restants.
+1. `HFTrain` — décision : suppression recommandée, en attente de feu vert explicite ;
+2. `OpenclassroomProject2` — décision : archiver ;
+3. `chess-vision-trainer` — contexte déjà fourni, décision presque complète ;
+4. `equiperota` / AtelierFlow — contexte déjà fourni ;
+5. `STUDI_Projet_fil_rouge`, `EcoRide` — bloc formation restant ;
+6. `ClicReflex` + `Clicreflexe` — vérifier le doublon ;
+7. projets privés inconnus : `Antsimu`, `Crimson-s-Blade`, `Ilia` ;
+8. outils / bots RP : `discortbotsaloon`, `HotzDoggz-bot`, `ZepRasso`, `Zepevents`, `gta-blackjack-assistant` ;
+9. petits projets et utilitaires : `ball-passing-simulation`, `botlecturevlc`, `DeezerInfo`, `sudoku-solver`, `Tricat`, `afk-farm` ;
+10. `Totalwarai` et les autres projets spécialisés restants.
 
 ## Fiche de revue utilisée pour chaque dépôt
 
