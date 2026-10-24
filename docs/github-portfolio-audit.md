@@ -50,19 +50,19 @@ GitHub retourne **31 dépôts appartenant à Mathieu**, Labz compris. La colonne
 | `Clicreflexe` | public | 11 | hors Labz | **activité pédagogique web · candidat Labz** |
 | `Crimson-s-Blade` | privé | 12 238 | hors Labz | **projet réellement utilisé · candidat fort Labz** |
 | `DeezerInfo` | public | 21 | hors Labz | à qualifier |
-| `discortbotsaloon` | public | 550 | hors Labz | à qualifier |
+| `discortbotsaloon` | public | 550 | hors Labz | **première génération RP réellement utilisée · conserver comme historique de l’écosystème** |
 | `EcoRide` | public | 400 | hors Labz | **projet Studi interrompu · à archiver** |
 | `gta-blackjack-assistant` | privé | 43 | hors Labz | à qualifier |
 | `HFTrain` | privé | **0** | hors Labz | **suppression recommandée · idée de simulateur/replay de marché conservée dans l’audit** |
-| `HotzDoggz-bot` | public | 599 | hors Labz | à qualifier |
+| `HotzDoggz-bot` | public | 599 | hors Labz | **mis en service · ~40 utilisateurs / ~15 jours · candidat fort Labz groupé** |
 | `Ilia` | privé | 1 454 | hors Labz | **ancien assistant vocal Python · à archiver** |
 | `OpenclassroomProject2` | public | 40 851 | hors Labz | **décision : archiver · exercice OpenClassrooms terminé** |
 | `STUDI_Projet_fil_rouge` | public | 299 | hors Labz | **formation Studi interrompue · à archiver** |
 | `sudoku-solver` | public | 15 | hors Labz | à qualifier |
 | `Totalwarai` | public | 1 792 | hors Labz | à qualifier |
 | `Tricat` | public | 15 | hors Labz | à qualifier |
-| `Zepevents` | privé | 129 | hors Labz | à qualifier |
-| `ZepRasso` | public | 327 | hors Labz | à qualifier |
+| `Zepevents` | privé | 129 | hors Labz | **écosystème RP / Zep · conserver · candidat Labz groupé** |
+| `ZepRasso` | public | 327 | hors Labz | **écosystème RP / Zep · conserver · candidat Labz groupé** |
 
 ## Premières décisions fondées sur le contexte de Mathieu
 
@@ -167,6 +167,38 @@ Le dépôt GitHub ne représente qu’une partie du projet, l’essentiel ayant 
 
 Motif : conserver une trace importante du parcours d’apprentissage et d’une idée ancienne d’assistant conversationnel, sans présenter cette version incomplète et obsolète comme un projet actuel. Si l’idée devait renaître, repartir sur un nouveau projet plutôt que restaurer cette base.
 
+### Écosystème RP — Saloon / HotzDoggz / Zep
+
+Ces dépôts ne doivent pas être lus comme une série de petits bots sans rapport. Ils racontent une même démarche : **réduire la charge administrative des organisations RP en transformant des processus manuels ou des tableurs fragiles en outils dédiés**.
+
+#### `discortbotsaloon`
+
+Première génération développée pour un saloon sur Red Dead RP. Le bot était lancé localement mais a réellement servi à la gestion de l’entreprise : caisse, tickets, stocks, salaires, commissions et comptabilité. Le problème initial était concret : les entreprises RP étaient souvent gérées dans des tableurs qui demandaient tellement d’attention qu’ils pouvaient prendre le pas sur le jeu lui-même.
+
+**Décision : conserver comme première génération / historique fonctionnel.** Il a de la valeur dans la chronologie, mais ne mérite probablement pas une fiche Labz séparée si une présentation consolidée de l’écosystème est créée.
+
+#### `HotzDoggz-bot`
+
+Nouvelle génération pour une entreprise GTA RP, beaucoup plus structurée techniquement et fonctionnellement.
+
+Point important : le bot a **réellement été mis en service**. Mathieu a laissé son PC allumé pour l’héberger et le rendre accessible pendant environ **15 jours**, y compris lorsqu’il était au travail. Il a été utilisé par **environ 40 personnes**. Un proche impliqué dans le projet était prêt à financer un hébergement permanent ; la continuité a finalement été interrompue notamment par la panne du PC de Mathieu.
+
+Il ne faut donc pas le présenter comme un simple prototype « presque déployé », mais comme un **outil auto-hébergé ayant connu un usage réel**, dont la prochaine étape prévue était un hébergement permanent.
+
+**Décision : conserver et considérer comme candidat fort Labz.**
+
+#### `ZepRasso` et `Zepevents`
+
+Ces projets appartiennent au même contexte GTA RP. « Zep » était le proche mis en avant publiquement dans le jeu, tandis que Mathieu travaillait davantage en coulisses sur l’organisation, les outils et les mécaniques des événements.
+
+Les rassemblements automobiles et loteries organisés dans ce cadre ont rencontré un fort succès. Les tirages de certaines loteries étaient même matérialisés sous forme de vidéos de courses de billes publiées sur YouTube pour rendre le résultat visible et ludique.
+
+`ZepRasso` couvre la branche rassemblement / vote / classement ; `Zepevents` généralise l’idée vers un poste de contrôle événementiel plus large incluant inscriptions, concours, caisse, loteries et résultats.
+
+**Décision : conserver les deux dépôts.** Pour Labz, privilégier une **présentation groupée de l’écosystème RP** plutôt que quatre fiches qui donneraient artificiellement l’impression de quatre produits indépendants.
+
+Angle Labz recommandé : montrer la progression **problème réel → première automatisation → usage → généralisation → outils spécialisés**, avec `HotzDoggz-bot` comme pièce technique centrale et les projets Zep comme extensions événementielles.
+
 ## Projets d’étude
 
 Mathieu indique que certains dépôts ont été créés uniquement pour des études, parfois sans véritable code poussé.
@@ -193,9 +225,10 @@ La revue se fait **un dépôt à la fois**, avec le contexte de Mathieu avant d�
 8. `Ilia` — décision : archiver comme ancien projet Python incomplet ;
 9. `chess-vision-trainer` — contexte déjà fourni, décision presque complète ;
 10. `equiperota` / AtelierFlow — contexte déjà fourni ;
-11. outils / bots RP : `discortbotsaloon`, `HotzDoggz-bot`, `ZepRasso`, `Zepevents`, `gta-blackjack-assistant` ;
-12. petits projets et utilitaires : `ball-passing-simulation`, `botlecturevlc`, `DeezerInfo`, `sudoku-solver`, `Tricat`, `afk-farm` ;
-13. `Totalwarai` et les autres projets spécialisés restants.
+11. écosystème RP : `discortbotsaloon` — conserver comme première génération ; `HotzDoggz-bot` — candidat fort Labz ; `ZepRasso` + `Zepevents` — conserver et regrouper dans la même histoire ;
+12. `gta-blackjack-assistant` — à qualifier ;
+13. petits projets et utilitaires : `ball-passing-simulation`, `botlecturevlc`, `DeezerInfo`, `sudoku-solver`, `Tricat`, `afk-farm` ;
+14. `Totalwarai` et les autres projets spécialisés restants.
 
 ## Fiche de revue utilisée pour chaque dépôt
 
