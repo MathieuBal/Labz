@@ -55,7 +55,7 @@ GitHub retourne **31 dépôts appartenant à Mathieu**, Labz compris. La colonne
 | `gta-blackjack-assistant` | privé | 43 | hors Labz | à qualifier |
 | `HFTrain` | privé | **0** | hors Labz | **suppression recommandée · idée de simulateur/replay de marché conservée dans l’audit** |
 | `HotzDoggz-bot` | public | 599 | hors Labz | à qualifier |
-| `Ilia` | privé | 1 454 | hors Labz | à qualifier |
+| `Ilia` | privé | 1 454 | hors Labz | **ancien assistant vocal Python · à archiver** |
 | `OpenclassroomProject2` | public | 40 851 | hors Labz | **décision : archiver · exercice OpenClassrooms terminé** |
 | `STUDI_Projet_fil_rouge` | public | 299 | hors Labz | **formation Studi interrompue · à archiver** |
 | `sudoku-solver` | public | 15 | hors Labz | à qualifier |
@@ -157,6 +157,16 @@ Angle de présentation recommandé : ne pas le réduire à « un site pour un je
 
 Le dépôt peut rester privé : Labz peut présenter le problème traité, les choix de conception, les fonctionnalités et le fait qu'il a été utilisé en production sans nécessairement publier le code source.
 
+### Ilia
+
+Contexte Mathieu : l’un de ses premiers projets Python. L’idée était de construire une forme d’assistant vocal personnel capable d’écouter et de répondre à la voix, avec l’ambition d’y intégrer progressivement des outils d’accompagnement et une dimension thérapeutique.
+
+Le dépôt GitHub ne représente qu’une partie du projet, l’essentiel ayant été développé localement. L’implémentation présente sur GitHub est aujourd’hui largement dépassée techniquement et ne constitue pas une base réaliste à reprendre.
+
+**Décision : archiver le dépôt GitHub et le laisser hors Labz.**
+
+Motif : conserver une trace importante du parcours d’apprentissage et d’une idée ancienne d’assistant conversationnel, sans présenter cette version incomplète et obsolète comme un projet actuel. Si l’idée devait renaître, repartir sur un nouveau projet plutôt que restaurer cette base.
+
 ## Projets d’étude
 
 Mathieu indique que certains dépôts ont été créés uniquement pour des études, parfois sans véritable code poussé.
@@ -180,9 +190,9 @@ La revue se fait **un dépôt à la fois**, avec le contexte de Mathieu avant d�
 5. `ClicReflex` — décision : archiver ; `Clicreflexe` — conserver, candidat Labz ;
 6. `Antsimu` — décision : GitHub seulement, privé, conserver comme expérimentation dérivée ;
 7. `Crimson-s-Blade` — décision : conserver, candidat fort Labz ;
-8. `chess-vision-trainer` — contexte déjà fourni, décision presque complète ;
-9. `equiperota` / AtelierFlow — contexte déjà fourni ;
-10. projet privé restant : `Ilia` ;
+8. `Ilia` — décision : archiver comme ancien projet Python incomplet ;
+9. `chess-vision-trainer` — contexte déjà fourni, décision presque complète ;
+10. `equiperota` / AtelierFlow — contexte déjà fourni ;
 11. outils / bots RP : `discortbotsaloon`, `HotzDoggz-bot`, `ZepRasso`, `Zepevents`, `gta-blackjack-assistant` ;
 12. petits projets et utilitaires : `ball-passing-simulation`, `botlecturevlc`, `DeezerInfo`, `sudoku-solver`, `Tricat`, `afk-farm` ;
 13. `Totalwarai` et les autres projets spécialisés restants.
