@@ -3,7 +3,11 @@ export const activityRepositories = Object.freeze({
   sensoria: 'MathieuBal/Sensoria',
   'million-de-pixels': 'MathieuBal/million-de-pixels',
   lootchest: 'MathieuBal/Lootchest',
+  'afk-farm': 'MathieuBal/afk-farm',
   diagnostic: 'MathieuBal/diagnostic-numerique',
+  perfoptimize: 'MathieuBal/Perfoptimize',
+  pipboy: 'MathieuBal/Pipboy',
+  totalwarai: 'MathieuBal/Totalwarai',
 });
 const TTL = 15 * 60 * 1000;
 const cache = new Map();
