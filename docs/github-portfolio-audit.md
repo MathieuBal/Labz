@@ -48,7 +48,7 @@ GitHub retourne **31 dépôts appartenant à Mathieu**, Labz compris. La colonne
 | `botlecturevlc` | public | 12 | hors Labz | à qualifier |
 | `ClicReflex` | public | 7 | hors Labz | **prototype Python antérieur · à archiver** |
 | `Clicreflexe` | public | 11 | hors Labz | **activité pédagogique web · candidat Labz** |
-| `Crimson-s-Blade` | privé | 12 238 | hors Labz | à qualifier |
+| `Crimson-s-Blade` | privé | 12 238 | hors Labz | **projet réellement utilisé · candidat fort Labz** |
 | `DeezerInfo` | public | 21 | hors Labz | à qualifier |
 | `discortbotsaloon` | public | 550 | hors Labz | à qualifier |
 | `EcoRide` | public | 400 | hors Labz | **projet Studi interrompu · à archiver** |
@@ -145,6 +145,18 @@ Motifs :
 - si une idée issue d’Antsimu mérite un vrai projet personnel à l’avenir, repartir dans un dépôt neuf avec une architecture et une identité propres ;
 - toute éventuelle publication du code dérivé devra respecter la licence et les obligations d’attribution du projet d’origine.
 
+### Crimson's Blade
+
+Contexte Mathieu : application web développée pour gérer une guilde sur *Throne and Liberty*. Le besoin était opérationnel : constituer plus vite des équipes et des raids à partir des classes, du niveau de puissance et des besoins de loot des joueurs, puis gérer notamment la distribution du loot.
+
+Le projet a été **mis en ligne et réellement utilisé pendant une longue période**, y compris après que Mathieu a cessé de jouer au jeu. Le dépôt contient une application Node/Express structurée avec authentification, sessions, protections web, migrations et persistance de données.
+
+**Décision : conserver et considérer comme candidat fort à intégrer à Labz.**
+
+Angle de présentation recommandé : ne pas le réduire à « un site pour un jeu », mais le présenter comme un **outil opérationnel de coordination communautaire** ayant automatisé et simplifié l'organisation d'équipes, la planification de raids et la distribution de ressources selon des contraintes réelles.
+
+Le dépôt peut rester privé : Labz peut présenter le problème traité, les choix de conception, les fonctionnalités et le fait qu'il a été utilisé en production sans nécessairement publier le code source.
+
 ## Projets d’étude
 
 Mathieu indique que certains dépôts ont été créés uniquement pour des études, parfois sans véritable code poussé.
@@ -167,12 +179,13 @@ La revue se fait **un dépôt à la fois**, avec le contexte de Mathieu avant d�
 4. `EcoRide` — décision : archiver ;
 5. `ClicReflex` — décision : archiver ; `Clicreflexe` — conserver, candidat Labz ;
 6. `Antsimu` — décision : GitHub seulement, privé, conserver comme expérimentation dérivée ;
-7. `chess-vision-trainer` — contexte déjà fourni, décision presque complète ;
-8. `equiperota` / AtelierFlow — contexte déjà fourni ;
-9. projets privés inconnus : `Crimson-s-Blade`, `Ilia` ;
-10. outils / bots RP : `discortbotsaloon`, `HotzDoggz-bot`, `ZepRasso`, `Zepevents`, `gta-blackjack-assistant` ;
-11. petits projets et utilitaires : `ball-passing-simulation`, `botlecturevlc`, `DeezerInfo`, `sudoku-solver`, `Tricat`, `afk-farm` ;
-12. `Totalwarai` et les autres projets spécialisés restants.
+7. `Crimson-s-Blade` — décision : conserver, candidat fort Labz ;
+8. `chess-vision-trainer` — contexte déjà fourni, décision presque complète ;
+9. `equiperota` / AtelierFlow — contexte déjà fourni ;
+10. projet privé restant : `Ilia` ;
+11. outils / bots RP : `discortbotsaloon`, `HotzDoggz-bot`, `ZepRasso`, `Zepevents`, `gta-blackjack-assistant` ;
+12. petits projets et utilitaires : `ball-passing-simulation`, `botlecturevlc`, `DeezerInfo`, `sudoku-solver`, `Tricat`, `afk-farm` ;
+13. `Totalwarai` et les autres projets spécialisés restants.
 
 ## Fiche de revue utilisée pour chaque dépôt
 
