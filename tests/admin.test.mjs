@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createInbox,escapeText,filterFeedback} from '../admin-client.js';
+import {createInbox,escapeText,feedbackCapacity,filterFeedback,getCapacityState} from '../admin-client.js';
 const row={request_id:'11111111-1111-4111-8111-111111111111',created_at:'2026-10-20T12:00:00Z',project:'sensoria',status:'new',summary:'Écran noir',message:'<img src=x onerror=alert(1)>',nickname:'<script>x</script>'};
 const response=(body,status=200)=>({ok:status<400,status,json:async()=>body});
 const defer=()=>{let resolve;const promise=new Promise(r=>resolve=r);return {promise,resolve};};
@@ -24,6 +24,14 @@ test('filters combine search, project and status without interpreting markup',()
  assert.equal(filterFeedback([row],{query:'<img'}).length,1);
  assert.equal(escapeText('<img src=x onerror="alert(1)">'), '&lt;img src=x onerror=&quot;alert(1)&quot;&gt;');
  assert.equal(escapeText(row.nickname),'&lt;script&gt;x&lt;/script&gt;');
+});
+test('capacity state exposes remaining space and warning thresholds',()=>{
+ assert.deepEqual(getCapacityState(0),{stored:0,remaining:500,level:'ok',percent:0});
+ assert.equal(getCapacityState(feedbackCapacity.warningAt-1).level,'ok');
+ assert.equal(getCapacityState(feedbackCapacity.warningAt).level,'warning');
+ assert.equal(getCapacityState(feedbackCapacity.maxStored).level,'full');
+ assert.deepEqual(getCapacityState(600),{stored:600,remaining:0,level:'full',percent:100});
+ assert.deepEqual(getCapacityState(Number.NaN),{stored:0,remaining:500,level:'ok',percent:0});
 });
 test('owner loads inbox and status is changed only after server acknowledgement',async()=>{
  const {client,calls}=setup();await client.login('owner@example.test','password');
