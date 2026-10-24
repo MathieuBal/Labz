@@ -46,18 +46,18 @@ GitHub retourne **31 dépôts appartenant à Mathieu**, Labz compris. La colonne
 | `Antsimu` | privé | 1 130 | hors Labz | à qualifier |
 | `ball-passing-simulation` | public | 8 | hors Labz | à qualifier |
 | `botlecturevlc` | public | 12 | hors Labz | à qualifier |
-| `ClicReflex` | public | 7 | hors Labz | doublon potentiel à qualifier |
-| `Clicreflexe` | public | 11 | hors Labz | doublon potentiel à qualifier |
+| `ClicReflex` | public | 7 | hors Labz | **prototype Python antérieur · à archiver** |
+| `Clicreflexe` | public | 11 | hors Labz | **activité pédagogique web · candidat Labz** |
 | `Crimson-s-Blade` | privé | 12 238 | hors Labz | à qualifier |
 | `DeezerInfo` | public | 21 | hors Labz | à qualifier |
 | `discortbotsaloon` | public | 550 | hors Labz | à qualifier |
-| `EcoRide` | public | 400 | hors Labz | projet de formation connu · à qualifier pour archivage |
+| `EcoRide` | public | 400 | hors Labz | **projet Studi interrompu · à archiver** |
 | `gta-blackjack-assistant` | privé | 43 | hors Labz | à qualifier |
 | `HFTrain` | privé | **0** | hors Labz | **suppression recommandée · idée de simulateur/replay de marché conservée dans l’audit** |
 | `HotzDoggz-bot` | public | 599 | hors Labz | à qualifier |
 | `Ilia` | privé | 1 454 | hors Labz | à qualifier |
 | `OpenclassroomProject2` | public | 40 851 | hors Labz | **décision : archiver · exercice OpenClassrooms terminé** |
-| `STUDI_Projet_fil_rouge` | public | 299 | hors Labz | projet d’étude probable · à qualifier |
+| `STUDI_Projet_fil_rouge` | public | 299 | hors Labz | **formation Studi interrompue · à archiver** |
 | `sudoku-solver` | public | 15 | hors Labz | à qualifier |
 | `Totalwarai` | public | 1 792 | hors Labz | à qualifier |
 | `Tricat` | public | 15 | hors Labz | à qualifier |
@@ -104,7 +104,34 @@ Contexte Mathieu : exercice OpenClassrooms réalisé pour valider une étape de 
 
 Motif : conserver une trace d’apprentissage et un exercice technique complet, sans entretenir l’illusion d’un projet actif.
 
-### Projets d’étude
+### STUDI_Projet_fil_rouge
+
+Contexte Mathieu : projet de formation Studi autour du site fictif de restaurant Quai Antique. La formation n’a finalement pas pu être suivie jusqu’au bout.
+
+**Décision : archiver le dépôt GitHub et le laisser hors Labz.**
+
+Motif : le dépôt garde une valeur comme trace de conception et d’apprentissage, mais il ne correspond pas à un produit personnel à maintenir.
+
+### EcoRide
+
+Contexte Mathieu : autre projet Studi, construit dans le cadre de la formation et non comme initiative produit personnelle.
+
+**Décision : archiver le dépôt GitHub et le laisser hors Labz.**
+
+### ClicReflex / Clicreflexe
+
+Contexte Mathieu : une première version Python/Pygame a probablement servi de test. Pour rendre l’activité réellement accessible aux membres des ateliers, la même idée a ensuite été portée en version web.
+
+La finalité n’est pas simplement de mesurer la vitesse de clic : il s’agit d’un **support d’animation pédagogique ludique**, utilisé ou utilisable dans des ateliers autour de la mémoire et du développement des compétences.
+
+**Décision :**
+
+- `ClicReflex` Python : archiver comme prototype technique antérieur ;
+- `Clicreflexe` web : conserver comme version de référence ;
+- considérer `Clicreflexe` comme **candidat à intégrer au Labz**, avec une présentation centrée sur son contexte d’usage en médiation/atelier et non comme simple mini-jeu ;
+- si intégré, expliquer clairement que l’objectif est de proposer une activité ludique complémentaire aux exercices classiques d’atelier.
+
+## Projets d’étude
 
 Mathieu indique que certains dépôts ont été créés uniquement pour des études, parfois sans véritable code poussé.
 
@@ -114,7 +141,7 @@ Règle proposée :
 - exercice terminé avec code montrant une étape d’apprentissage → archivage plutôt que Labz ;
 - projet d’étude ayant donné naissance à une vraie idée ou à une brique réutilisée ailleurs → conserver avec cette filiation documentée.
 
-Les candidats évidents à examiner dans cette famille sont `STUDI_Projet_fil_rouge`, `EcoRide` et tout autre dépôt que Mathieu identifiera comme scolaire.
+Les projets désormais identifiés comme scolaires sont `OpenclassroomProject2`, `STUDI_Projet_fil_rouge` et `EcoRide`.
 
 ## Ordre de revue proposé
 
@@ -122,14 +149,15 @@ La revue se fait **un dépôt à la fois**, avec le contexte de Mathieu avant d�
 
 1. `HFTrain` — décision : suppression recommandée, en attente de feu vert explicite ;
 2. `OpenclassroomProject2` — décision : archiver ;
-3. `chess-vision-trainer` — contexte déjà fourni, décision presque complète ;
-4. `equiperota` / AtelierFlow — contexte déjà fourni ;
-5. `STUDI_Projet_fil_rouge`, `EcoRide` — bloc formation restant ;
-6. `ClicReflex` + `Clicreflexe` — vérifier le doublon ;
-7. projets privés inconnus : `Antsimu`, `Crimson-s-Blade`, `Ilia` ;
-8. outils / bots RP : `discortbotsaloon`, `HotzDoggz-bot`, `ZepRasso`, `Zepevents`, `gta-blackjack-assistant` ;
-9. petits projets et utilitaires : `ball-passing-simulation`, `botlecturevlc`, `DeezerInfo`, `sudoku-solver`, `Tricat`, `afk-farm` ;
-10. `Totalwarai` et les autres projets spécialisés restants.
+3. `STUDI_Projet_fil_rouge` — décision : archiver ;
+4. `EcoRide` — décision : archiver ;
+5. `ClicReflex` — décision : archiver ; `Clicreflexe` — conserver, candidat Labz ;
+6. `chess-vision-trainer` — contexte déjà fourni, décision presque complète ;
+7. `equiperota` / AtelierFlow — contexte déjà fourni ;
+8. projets privés inconnus : `Antsimu`, `Crimson-s-Blade`, `Ilia` ;
+9. outils / bots RP : `discortbotsaloon`, `HotzDoggz-bot`, `ZepRasso`, `Zepevents`, `gta-blackjack-assistant` ;
+10. petits projets et utilitaires : `ball-passing-simulation`, `botlecturevlc`, `DeezerInfo`, `sudoku-solver`, `Tricat`, `afk-farm` ;
+11. `Totalwarai` et les autres projets spécialisés restants.
 
 ## Fiche de revue utilisée pour chaque dépôt
 
