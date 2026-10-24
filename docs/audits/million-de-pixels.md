@@ -23,20 +23,9 @@ Avant de présenter le projet comme totalement fiabilisé, il faut corriger ce c
 
 ### Un million de cellules, sans un million d'objets
 
-`PixelWorld` impose des buffers de taille exacte `PIXEL_COUNT` et stocke notamment :
+`PixelWorld` impose des buffers de taille exacte `PIXEL_COUNT` et stocke notamment `baseColorId`, `colorId`, `hp` et `flags`.
 
-- `baseColorId` ;
-- `colorId` ;
-- `hp` ;
-- `flags`.
-
-Les structures plus coûteuses sont des index dérivés :
-
-- `ColorIndex` pour retrouver / retirer des pixels d'une couleur sans scanner le plateau ;
-- `SurfaceIndex` pour savoir quelle cellule fait face à un canon sur une voie ;
-- `MacroTileIndex` pour les statistiques et zones.
-
-Une destruction met à jour ces index de façon cohérente et rend l'opération idempotente.
+Les structures plus coûteuses sont des index dérivés : `ColorIndex`, `SurfaceIndex` et `MacroTileIndex`. Une destruction met à jour ces index de façon cohérente et rend l'opération idempotente.
 
 La formulation README « le million de pixels est un tableau de données, jamais un million d'objets graphiques ou physiques » est donc bien soutenue par le code.
 
@@ -54,18 +43,9 @@ Une couleur enterrée derrière une autre peut donc être réellement inaccessib
 
 ### Progression
 
-Le dépôt contient des modules distincts pour :
+Le dépôt contient des modules distincts pour améliorations de niveau, capacités et automatisation, progression permanente, doctrines, galerie, campagne, bibliothèque de couleurs et milestones.
 
-- améliorations de niveau ;
-- capacités et automatisation ;
-- progression permanente ;
-- doctrines ;
-- galerie ;
-- campagne ;
-- bibliothèque de couleurs ;
-- milestones.
-
-La campagne actuelle embarque **56 images**.
+La campagne actuelle embarque **56 images générées par IA**, créées spécifiquement pour constituer le contenu de campagne du jeu.
 
 ---
 
@@ -93,16 +73,7 @@ La sauvegarde contient les buffers quantifiés et la palette, pas le fichier ima
 
 ### Ce qui fonctionne
 
-Lors de la restauration d'une save :
-
-1. le temps écoulé depuis `lastSimulatedAtEpochMs` est calculé ;
-2. la production observée par couleur est utilisée ;
-3. l'absence est intégrée analytiquement dans un worker ;
-4. les fractions de hit sont conservées ;
-5. un PRNG `XorShift32` versionné choisit les pixels ;
-6. de vraies cellules du buffer sont marquées mortes ;
-7. le monde est reconstruit avec le résultat ;
-8. la save est réécrite après le catch-up.
+Lors de la restauration d'une save, le temps écoulé depuis `lastSimulatedAtEpochMs` est calculé, la production observée par couleur est utilisée, l'absence est intégrée analytiquement dans un worker, les fractions de hit sont conservées, un PRNG `XorShift32` versionné choisit les pixels et de vraies cellules du buffer sont marquées mortes.
 
 Le modèle plafonne également le temps hors-ligne et limite la production par le stock porté par les canons sauvegardés.
 
@@ -112,12 +83,7 @@ Le modèle plafonne également le temps hors-ligne et limite la production par l
 
 Il n'existe pas de branche `visible` qui compare le temps écoulé et lance `runOfflineCatchUp()`.
 
-Dans une page/PWA conservée ouverte :
-
-- le navigateur suspend ou bride généralement `requestAnimationFrame` en arrière-plan ;
-- la sauvegarde pose un timestamp au moment du passage caché ;
-- au retour, la session reprend directement sans restaurer la save ;
-- l'absence n'est donc pas compensée par le modèle hors-ligne.
+Dans une page/PWA conservée ouverte, l'absence n'est donc pas compensée par le modèle hors-ligne lors du simple retour au premier plan.
 
 **Impact :** le comportement idle dépend de la manière dont le joueur revient : fermer/recharger peut progresser, laisser l'application ouverte en arrière-plan peut perdre cette progression.
 
@@ -135,40 +101,13 @@ C'est un compromis raisonnable pour plusieurs heures d'absence, mais la présent
 
 ## Tests : très bon niveau, mais hors CI
 
-### Tests unitaires
-
 Le dépôt contient des tests Vitest pour le monde, la surface, le combat, les canons, la quantification, le PRNG, le modèle offline, les migrations/persistance, les upgrades, les doctrines, la campagne, la progression permanente, le viewport et les effets spéciaux. Le README annonce 101 tests unitaires.
 
-### E2E sur build de production
-
-`tests/e2e/smoke.mjs` démarre `vite preview`, donc exerce bien le `dist/` construit.
-
-Il couvre notamment :
-
-- import et quantification ;
-- démarrage explicite ;
-- plateau jusqu'à 1 048 576 cellules ;
-- rail et canons ;
-- invariants de destruction ;
-- zoom ;
-- budget de simulation ;
-- upgrades et achats par lots ;
-- sortie / actions destructrices ;
-- save IndexedDB + reload ;
-- persistance des améliorations ;
-- fin de toile et récompense ;
-- progression permanente / nuancier ;
-- layouts tactiles.
-
-C'est une vraie recette automatisée du vertical slice.
+`tests/e2e/smoke.mjs` démarre `vite preview`, donc exerce bien le `dist/` construit. Il couvre import et quantification, démarrage, plateau jusqu'à 1 048 576 cellules, rail et canons, invariants de destruction, zoom, budget de simulation, upgrades, save/reload IndexedDB, fin de toile, progression permanente et layouts tactiles.
 
 ### P0/P1 livraison — aucun test n'est exécuté par GitHub Actions
 
-Le workflow de déploiement exécute uniquement :
-
-- `npm ci` ;
-- `npm run build` ;
-- publication Pages.
+Le workflow de déploiement exécute uniquement `npm ci`, `npm run build` puis la publication Pages.
 
 Un changement peut donc casser une règle de combat, une migration, le mode offline ou le parcours E2E et être publié tant que TypeScript compile.
 
@@ -180,9 +119,7 @@ Un changement peut donc casser une règle de combat, une migration, le mode offl
 
 Le helper générique `run()` résout sa Promise sur `request.onsuccess`, pas sur `transaction.oncomplete`.
 
-Pour une écriture, il existe une fenêtre théorique où la requête `put()` a réussi mais où la transaction pourrait encore être annulée avant commit. La Promise ayant déjà été résolue, l'appelant pourrait croire la sauvegarde acquise.
-
-`clearEverything()` utilise déjà correctement `tx.oncomplete`.
+Pour une écriture, il existe une fenêtre théorique où la requête `put()` a réussi mais où la transaction pourrait encore être annulée avant commit. `clearEverything()` utilise déjà correctement `tx.oncomplete`.
 
 **Correction recommandée :** résoudre les écritures uniquement à la complétion de la transaction.
 
@@ -190,33 +127,27 @@ Pour une écriture, il existe une fenêtre théorique où la requête `put()` a 
 
 ## Compatibilité
 
-Le projet détecte explicitement :
-
-- WebGL2 ;
-- Web Workers ;
-- OffscreenCanvas ;
-- `createImageBitmap` ;
-- IndexedDB.
+Le projet détecte explicitement WebGL2, Web Workers, OffscreenCanvas, `createImageBitmap` et IndexedDB.
 
 Les quatre premières APIs sont structurelles et l'application refuse de prétendre fonctionner sans elles. IndexedDB peut manquer au prix de la persistance.
 
 Labz doit donc parler de **jeu navigateur moderne**, pas de compatibilité universelle.
 
-Le viewport, lui, n'interdit pas le zoom navigateur.
-
 ---
 
-## Campagne / poids / droits
+## Campagne / poids / provenance
 
-Les 56 PNG de campagne expliquent l'essentiel des ~92 Mo du dépôt. Ils ne sont pas tous forcément téléchargés au premier écran, mais ils alourdissent clone, historique et artefact de déploiement.
+Les 56 PNG de campagne expliquent l'essentiel des ~92 Mo du dépôt.
 
-### P1 — provenance des images à documenter
+### Provenance clarifiée
 
-L'audit n'a trouvé ni licence globale, ni notice de provenance / attribution des 56 illustrations.
+Les **56 illustrations de campagne ont été générées par IA** pour le projet. La provenance n'est donc plus inconnue.
 
-Cela ne prouve pas un problème de droits : cela signifie seulement que leur provenance n'est pas documentée dans le dépôt.
+Pour une présentation Labz propre et transparente, il est recommandé de l'indiquer explicitement dans le dépôt ou la documentation de la campagne, par exemple : « Illustrations de campagne générées par IA pour ce prototype ».
 
-Avant de présenter la campagne comme pack durable ou réutilisable, préciser si ces images sont créées par Mathieu, générées, sous licence compatible ou uniquement destinées à la démonstration.
+Si une réutilisation externe des assets est proposée, préciser également les conditions de réutilisation retenues et, si pertinent, le service/modèle ayant servi à leur génération selon les informations disponibles.
+
+Cette clarification remplace le précédent risque « origine inconnue ». Le point restant est essentiellement **documentaire et de transparence**, pas un doute sur l'origine des fichiers.
 
 Si le catalogue continue à grossir, des variantes WebP/AVIF et une séparation éventuelle du pack d'assets peuvent réduire la dette de dépôt.
 
@@ -224,9 +155,7 @@ Si le catalogue continue à grossir, des variantes WebP/AVIF et une séparation 
 
 ## Typographie externe
 
-`index.html` contient déjà un TODO explicite : Space Grotesk et IBM Plex Mono viennent de Google Fonts.
-
-Auto-héberger ces polices stabiliserait le premier rendu, supprimerait une dépendance tierce et simplifierait un usage hors réseau. Ce n'est pas un bloqueur du jeu.
+`index.html` utilise des Google Fonts. Les auto-héberger stabiliserait le premier rendu, supprimerait une dépendance tierce et simplifierait un usage hors réseau. Ce n'est pas un bloqueur du jeu.
 
 ---
 
@@ -254,7 +183,8 @@ La fiche peut honnêtement dire que `million-de-pixels` :
 - applique après restauration une reprise offline analytique qui détruit de vraies cellules ;
 - utilise un PRNG déterministe versionné ;
 - possède une importante suite de tests unitaires et un smoke E2E sur build de production ;
-- est déployé sur GitHub Pages, avec le dernier workflow de la révision auditée réussi.
+- embarque 56 illustrations de campagne générées par IA ;
+- est déployé sur GitHub Pages.
 
 ## À ne pas sur-vendre
 
@@ -262,7 +192,7 @@ La fiche peut honnêtement dire que `million-de-pixels` :
 - « l'offline rejoue exactement les trajectoires » : faux ;
 - « tests exécutés à chaque mise en production » : faux actuellement ;
 - « fonctionne sur tous les navigateurs » : plusieurs APIs modernes sont requises ;
-- « campagne librement redistribuable » tant que la provenance des assets n'est pas documentée.
+- « assets de campagne illustrés manuellement » : faux, ils sont générés par IA.
 
 ---
 
@@ -273,7 +203,7 @@ La fiche peut honnêtement dire que `million-de-pixels` :
 3. Faire passer `npm test` avant tout déploiement Pages.
 4. Faire passer un smoke E2E production avant déploiement ou sur chaque PR/main.
 5. Résoudre les écritures IndexedDB sur `transaction.oncomplete`.
-6. Documenter la provenance/licence des 56 images de campagne.
+6. Documenter explicitement que les 56 illustrations de campagne sont générées par IA et préciser leurs conditions de réutilisation si nécessaire.
 7. Ajouter une licence au dépôt si la réutilisation doit être permise.
 8. Auto-héberger les polices.
 9. Faire une recette réelle sur quelques appareils mobiles représentatifs.
