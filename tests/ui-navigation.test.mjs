@@ -33,3 +33,13 @@ test('les pages riches sont chargées seulement sur une route projet', async () 
   assert.match(loader, /searchParams\.get\('v'\)/);
   assert.match(loader, /searchParams\.set\('v', revision\)/);
 });
+
+test('le partage projet utilise une URL statique sans abandonner les routes SPA', async () => {
+  const [loader, build, html] = await Promise.all([read('project-features.js'), read('scripts/build.mjs'), read('index.html')]);
+  assert.match(loader, /new URL\(`projets\/\$\{encodeURIComponent\(id\)\}\//);
+  assert.match(loader, /navigator\.share\(\{title: document\.title, url\}\)/);
+  assert.match(build, /dist\/projets\/\$\{project\.id\}/);
+  assert.match(build, /sitemap\.xml/);
+  assert.match(build, /robots\.txt/);
+  assert.match(html, /rel="canonical" href="https:\/\/mathieubal\.github\.io\/Labz\/"/);
+});

@@ -11,6 +11,18 @@ function moduleUrl(path) {
   return url.href;
 }
 
+function publicProjectUrl(id) {
+  return new URL(`projets/${encodeURIComponent(id)}/`, document.baseURI).href;
+}
+
+function notify(message) {
+  const toast = document.querySelector('#toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.hidden = false;
+  setTimeout(() => { if (toast.textContent === message) toast.hidden = true; }, 4500);
+}
+
 async function loadProjectFeatures() {
   if (!isProjectRoute()) return;
 
@@ -37,6 +49,23 @@ async function loadProjectFeatures() {
     console.error('Impossible de charger les modules de la fiche projet.', error);
   }
 }
+
+document.addEventListener('click', async event => {
+  const share = event.target.closest('[data-share]');
+  if (!share?.dataset.share) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  const url = publicProjectUrl(share.dataset.share);
+  try {
+    if (navigator.share) await navigator.share({title: document.title, url});
+    else {
+      await navigator.clipboard.writeText(url);
+      notify('Lien public du projet copié.');
+    }
+  } catch (error) {
+    if (error.name !== 'AbortError') notify('Copie l’adresse publique du projet depuis sa page.');
+  }
+}, true);
 
 window.addEventListener('hashchange', () => { void loadProjectFeatures(); });
 void loadProjectFeatures();
