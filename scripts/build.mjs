@@ -35,7 +35,8 @@ function projectPage(template,project) {
   const title=`${project.name} | Mathieu / Labs`;
   const description=project.description;
   const destination=project.live||project.repo||siteRoot;
-  const fallback=`<section class="page-intro"><span class="eyebrow">${esc(categories[project.category])} · ${esc(project.mode)}</span><h1>${esc(project.name)}</h1><p>${esc(project.description)}</p><p>${esc(project.detail||project.takeaway||'Découvre le projet dans Labz.')}</p><p><a class="button primary" href="${esc(destination)}">${project.live?'Essayer le projet':'Voir la source disponible'} →</a></p></section>`;
+  const destinationLabel=project.live?'Essayer le projet':project.repo?'Voir le code disponible':'Retour au Labz';
+  const fallback=`<section class="page-intro"><span class="eyebrow">${esc(categories[project.category])} · ${esc(project.mode)}</span><h1>${esc(project.name)}</h1><p>${esc(project.description)}</p><p>${esc(project.detail||project.takeaway||'Découvre le projet dans Labz.')}</p><p><a class="button primary" href="${esc(destination)}">${destinationLabel} →</a></p></section>`;
   return template
     .replace('<head>','<head><base href="/Labz/">')
     .replace(/<title>[^<]*<\/title>/,`<title>${esc(title)}</title>`)
