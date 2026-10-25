@@ -44,10 +44,10 @@ export function validateFeedback(data) {
   return '';
 }
 export function feedbackText(data) {
-  return `Projet : ${data.projectName}\nType : ${feedbackKinds[data.kind]}\nPseudo : ${data.nickname || 'Anonyme'}\n\n${data.summary}\n\n${data.message}\n\nBrouillon local — non envoyé.\n`;
+  return `Projet : ${data.projectName}\nType : ${feedbackKinds[data.kind]}\nPseudo : ${data.nickname || 'Anonyme'}\n\n${data.summary}\n\n${data.message}\n\nBrouillon local, non envoyé.\n`;
 }
 export function githubFeedbackUrl(data) {
-  const title = `[${feedbackKinds[data.kind]}] ${data.projectName} — ${data.summary}`;
+  const title = `[${feedbackKinds[data.kind]}] ${data.projectName} : ${data.summary}`;
   // Bound the prefilled URL for mobile browsers; never silently truncate a user's text.
   const body = `## Projet\n${data.projectName}\n\n## Retour\n${data.message}\n\n${data.nickname ? `Pseudo : ${data.nickname}\n` : ''}\n---\nPréparé depuis Labz. Publication validée par son auteur sur GitHub.`;
   const url = new URL('https://github.com/MathieuBal/Labz/issues/new');
