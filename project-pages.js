@@ -42,21 +42,37 @@ const profiles = {
   'million-de-pixels': {
     type: 'product',
     kicker: 'IDLE / ROGUELITE · 1 048 576 CELLULES',
-    headline: 'Importez une image. Puis regardez un million de pixels devenir un terrain de conquête.',
-    narrative: 'Million de Pixels transforme n’importe quelle image en un monde 1024 × 1024 réellement simulé. Installez vos canons sur le rail, attaquez les couleurs accessibles depuis les bords, récupérez leurs fragments et construisez peu à peu une machine capable de dévorer toute la toile.',
+    headline: 'Et si n’importe quelle photo pouvait devenir un niveau de jeu ?',
+    narrative: 'Million de Pixels transforme une image en un monde 1024 × 1024 réellement simulé. Chaque pixel devient une cellule du niveau, les couleurs deviennent des ressources et les canons grignotent progressivement la toile jusqu’à ouvrir de nouvelles zones. Une photo personnelle, une illustration de campagne ou une image importée peut ainsi devenir la matière première d’une nouvelle partie.',
+    origin: {
+      label: 'POURQUOI JE L’AI CRÉÉ',
+      title: 'Une pub de jeu mobile m’a donné une idée beaucoup plus grande.',
+      paragraphs: [
+        'Je jouais sur mon téléphone quand une publicité pour un jeu est apparue. Le principe m’a accroché : détruire progressivement une petite planche composée de quelques pixels. Le jeu montré était beaucoup plus simple et très cadré, mais il m’a laissé une question en tête : et si je pouvais prendre n’importe quelle photo et en faire directement un niveau de jeu ?',
+        'C’est à partir de cette idée que j’ai développé ma propre version. J’ai gardé le plaisir visuel de voir une image se faire grignoter, puis j’ai changé l’échelle et construit autour : un vrai monde de 1 048 576 cellules, une économie par couleurs, des canons spécialisés, de l’automatisation, des capacités, des doctrines et une progression permanente.'
+      ],
+    },
     features: [
       ['Un million, pour de vrai', 'Les 1 048 576 cellules existent réellement dans la simulation. Une couleur enterrée derrière une autre peut être inaccessible, une façade évolue à mesure qu’elle est détruite et chaque tir modifie le monde plutôt qu’une simple barre de progression.'],
-      ['Transformer une image en économie', 'Les couleurs deviennent des ressources, les canons se spécialisent et les fragments servent à améliorer la cadence, l’automatisation et la façon d’attaquer la toile. La progression continue ensuite avec doctrines, capacités et bonus permanents.'],
-      ['Toujours une nouvelle toile à avaler', 'Import libre, campagne de 56 illustrations générées pour le jeu, galerie et progression permanente donnent une raison de recommencer avec une autre image plutôt que de s’arrêter au premier million détruit.'],
+      ['N’importe quelle image peut devenir le terrain', 'L’import transforme une image en niveau sans lui imposer une carte prédéfinie. Sa palette, ses formes et l’ordre dans lequel ses couleurs deviennent accessibles changent directement la partie.'],
+      ['Transformer la destruction en progression', 'Les couleurs deviennent des ressources, les canons se spécialisent et les fragments servent à améliorer cadence, automatisation et manière d’attaquer la toile. Doctrines, capacités et bonus permanents prolongent ensuite la boucle au-delà d’une seule image.'],
+    ],
+    flowLabel: 'COMMENT UNE IMAGE DEVIENT UN NIVEAU',
+    flowTitle: 'Importer, ouvrir la surface, exploiter les couleurs, recommencer.',
+    flow: [
+      ['J’importe une image', 'Le jeu la transforme en un monde logique de 1024 × 1024 cellules. La photo n’est pas seulement affichée en fond : elle devient la structure du niveau.'],
+      ['Les bords définissent le départ', 'Les canons ne peuvent attaquer que les couleurs réellement exposées. Une couleur cachée derrière une autre reste inaccessible tant que la surface ne s’est pas ouverte.'],
+      ['La destruction produit des ressources', 'Les fragments récupérés par couleur servent à renforcer les canons, débloquer de l’automatisation et accélérer la conquête de la toile.'],
+      ['Une nouvelle image change la partie', 'Import libre, campagne de 56 illustrations générées pour le jeu et progression permanente donnent une raison de repartir sur une autre géographie plutôt que de répéter exactement le même niveau.'],
     ],
     aboutLabel: 'LA BOUCLE DE JEU',
-    aboutTitle: 'Une image n’est pas une barre de vie : c’est le niveau entier.',
+    aboutTitle: 'L’image n’est pas une barre de vie : c’est le niveau entier.',
     about: [
       'Le plaisir vient de la transformation progressive de la toile. Au départ, l’image est intacte et les canons ne peuvent atteindre que ce que ses bords leur exposent. À mesure que des cellules disparaissent, de nouvelles couleurs deviennent accessibles et la géographie du niveau change réellement.',
-      'Cette contrainte donne une raison à l’optimisation : améliorer un canon n’accélère pas seulement un compteur, cela change la vitesse à laquelle une couleur cède, la façon dont la surface s’ouvre et le moment où l’on peut réinvestir ailleurs. Le jeu cherche ainsi à faire cohabiter la satisfaction d’un idle avec une structure de monde qui reste concrète.'
+      'Cette contrainte donne une raison à l’optimisation : améliorer un canon n’accélère pas seulement un compteur, cela change la vitesse à laquelle une couleur cède, la façon dont la surface s’ouvre et le moment où l’on peut réinvestir ailleurs. C’est là que l’idée très simple aperçue au départ devient un système beaucoup plus large.'
     ],
-    tech: [['Monde', '1024 × 1024 · TypedArrays et index spécialisés'], ['Rendu', 'PixiJS / WebGL2 · simulation séparée du visuel'], ['Traitement', 'Workers pour image et reprise hors-ligne'], ['Sauvegarde', 'IndexedDB · migrations v1 → v6']],
-    status: 'C’est l’un des projets les plus solides du portfolio : tests unitaires nombreux, smoke E2E sur le build de production, migrations de sauvegarde et vrai modèle de reprise après restauration. Il reste toutefois un défaut important pour un idle : si la page reste simplement ouverte en arrière-plan, le retour au premier plan n’applique pas encore le rattrapage hors-ligne. La prochaine passe doit fermer ce trou puis brancher les tests existants sur la CI avant chaque déploiement.'
+    tech: [['Monde', '1024 × 1024 · TypedArrays et index spécialisés'], ['Rendu', 'PixiJS / WebGL2 · simulation séparée du visuel'], ['Traitement', 'Workers pour image et reprise hors-ligne'], ['Sauvegarde', 'IndexedDB · migrations v1 → v6'], ['Contenu', 'Import libre + campagne de 56 illustrations générées pour le jeu']],
+    status: 'Million de Pixels est l’un des projets les plus solides du portfolio : tests unitaires nombreux, smoke E2E sur le build de production, migrations de sauvegarde et vrai modèle de reprise après restauration. Il reste toutefois un défaut important pour un idle : si la page reste simplement ouverte en arrière-plan, le retour au premier plan n’applique pas encore le rattrapage hors-ligne. La prochaine passe doit fermer ce trou puis brancher les tests existants sur la CI avant chaque déploiement.'
   },
   lootchest: {
     type: 'product',
