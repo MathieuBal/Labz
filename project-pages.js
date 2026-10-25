@@ -6,79 +6,127 @@ const esc = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<'
 const profiles = {
   sensoria: {
     type: 'product',
-    kicker: 'GALERIE INTERACTIVE · 22 TABLEAUX',
-    headline: 'Touchez l’image. Regardez-la vous répondre.',
-    narrative: 'Sensoria est une collection de 22 mondes interactifs à explorer avec les gestes. Ici, pas de score à battre ni de bonne façon de jouer : une surface se trouble, une matière se tend, des encres dérivent, des particules s’organisent. On ne regarde pas simplement l’image. On la provoque.',
+    kicker: 'LABORATOIRE WEB · 22 EXPÉRIENCES',
+    headline: 'Jusqu’où peut-on pousser un navigateur ?',
+    narrative: 'Sensoria est mon laboratoire d’expérimentation web. J’y décline 22 expériences interactives pour tester jusqu’où un navigateur peut aller en simulation, animation 2D et 3D, matière, particules et interactions gestuelles, sans passer par un moteur de jeu dédié. Chaque tableau transforme une question technique en quelque chose que l’on peut toucher, perturber et observer.',
+    origin: {
+      label: 'POURQUOI JE L’AI CRÉÉ',
+      title: 'Je voulais voir jusqu’où le navigateur pouvait aller.',
+      paragraphs: [
+        'Le point de départ était simple : explorer les limites pratiques du web. Jusqu’où peut-on simuler une matière, faire vivre une scène 3D, gérer plusieurs points de contact ou construire une réaction crédible tout en restant dans une page web ?',
+        'Plutôt qu’un benchmark ou une seule démonstration, j’ai choisi d’en faire une collection. Chaque expérience isole un comportement différent et me donne un nouveau terrain pour tester une idée, une technique ou une contrainte. C’est aussi très proche de l’esprit que j’ai ensuite donné à Labz : expérimenter, montrer le résultat et apprendre de ce qui résiste.'
+      ],
+    },
     features: [
-      ['Une galerie vraiment vivante', 'Mosaïque infinie, Lac nocturne, Ferrofluide, Argile vivante, Encres flottantes ou Échos du geste : chaque tableau possède sa propre ambiance, ses propres réactions et sa propre manière d’être découvert.'],
-      ['Le geste comme langage', 'Dessiner, pousser, attirer, maintenir, perturber ou simplement effleurer : la souris, le stylet et le tactile ne servent pas à naviguer autour de l’œuvre, ils font partie de l’œuvre.'],
-      ['Explorer sans objectif imposé', 'Certaines scènes se comprennent immédiatement, d’autres demandent quelques essais. On peut y rester dix secondes ou plusieurs minutes, puis passer à la suivante et construire son propre parcours dans la collection.'],
+      ['22 terrains d’essai distincts', 'Mosaïque infinie, Lac nocturne, Ferrofluide, Argile vivante, Encres flottantes ou Échos du geste ne cherchent pas à reproduire la même recette. Chaque tableau explore un comportement, une sensation ou une contrainte différente.'],
+      ['Du Canvas à la 3D', 'Certaines scènes reposent sur Canvas 2D, d’autres utilisent Three.js et WebGL2. L’intérêt est justement de changer d’approche selon l’expérience plutôt que d’imposer le même moteur à toute la collection.'],
+      ['Le geste fait partie du test', 'Souris, stylet, tactile et multi-touch servent à dessiner, pousser, attirer, maintenir ou perturber. L’interaction n’est pas ajoutée après le rendu : elle fait partie de ce que chaque expérience cherche à éprouver.'],
     ],
-    aboutLabel: 'L’EXPÉRIENCE',
-    aboutTitle: 'Une collection qui n’attend pas d’être comprise avant d’être touchée.',
+    flowLabel: 'COMMENT NAÎT UNE EXPÉRIENCE',
+    flowTitle: 'Une question technique devient quelque chose que l’on peut toucher.',
+    flow: [
+      ['Je pars d’un comportement', 'Fluidité, tension, attraction, dispersion, lumière, mémoire du geste ou interaction 3D deviennent le point de départ d’un nouveau tableau.'],
+      ['Je prototype directement dans le web', 'Je cherche la combinaison la plus adaptée entre Canvas, WebGL, Three.js, calculs locaux et APIs du navigateur sans introduire un moteur de jeu dédié.'],
+      ['Je mets l’interaction au centre', 'Le test ne vaut que si le visiteur peut provoquer le système, observer sa réponse et découvrir intuitivement ce qui tient ou ce qui casse.'],
+      ['J’observe la limite', 'Performance, stabilité, tactile, densité d’objets et cycle de vie de la scène me donnent ensuite les contraintes à corriger ou à contourner.'],
+    ],
+    aboutLabel: 'CE QUE SENSORIA TESTE VRAIMENT',
+    aboutTitle: 'Pas un benchmark, un laboratoire perceptible.',
     about: [
-      'Chaque tableau part d’un comportement différent : fluidité, attraction, tension, équilibre, dispersion, lumière ou mémoire du geste. Le but n’est pas de reproduire fidèlement une matière physique, mais de trouver une réaction assez crédible et surprenante pour donner envie d’essayer encore une fois.',
-      'Le vrai moment Sensoria arrive quand on cesse de chercher “ce qu’il faut faire” et qu’on commence simplement à tester la scène. Une interaction déclenche une autre idée, un geste révèle une propriété inattendue, puis on passe à un nouveau tableau avec la curiosité de voir comment celui-ci va répondre.'
+      'Le but n’est pas d’afficher le plus de particules possible pour obtenir un chiffre. Je cherche plutôt le point où une simulation reste suffisamment fluide, lisible et réactive pour donner une sensation crédible dans un navigateur ordinaire.',
+      'À l’échelle de 22 expériences, le défi devient aussi architectural : un InputManager commun gère les pointeurs, le RenderLoop borne le temps entre les images, le SceneManager démonte les scènes quand on les quitte et certaines expériences 3D sont chargées à la demande. Un moniteur de performance peut aussi réduire la qualité, même si toutes les scènes ne l’exploitent pas encore de la même manière.'
     ],
-    tech: [['Surface', 'Navigateur · PWA installable'], ['Interaction', 'Pointer Events · souris / stylet / multi-touch'], ['Rendu', 'Canvas 2D + Three.js / WebGL2 selon les scènes'], ['Contenu', '22 tableaux jouables']],
-    status: 'Sensoria est déjà public et pleinement exploratoire : les 22 tableaux sont présents, le passage d’une scène à l’autre libère correctement les ressources et plusieurs scripts Playwright vérifient les interactions desktop/mobile. Le prochain enjeu n’est pas de grossir la collection à tout prix, mais d’identifier les tableaux dont les visiteurs se souviennent vraiment et de faire entrer ces validations navigateur dans la CI de publication.'
+    tech: [['Surface', 'Navigateur · PWA installable'], ['Interaction', 'Pointer Events · souris / stylet / multi-touch'], ['Rendu', 'Canvas 2D + Three.js / WebGL2'], ['Architecture', 'RenderLoop · SceneManager · chargement dynamique'], ['Validation', 'Playwright desktop + mobile émulé']],
+    status: 'Sensoria est public et les 22 expériences sont jouables. J’ai déjà plusieurs scripts Playwright qui vérifient les scènes et les interactions, mais ils ne bloquent pas encore la publication dans la CI et le facteur de qualité dynamique n’est pas utilisé uniformément partout. La prochaine étape est moins d’ajouter encore des tableaux que d’identifier ceux qui marquent vraiment, de consolider leur comportement et de les valider davantage sur de vrais appareils.'
   },
   'million-de-pixels': {
     type: 'product',
     kicker: 'IDLE / ROGUELITE · 1 048 576 CELLULES',
-    headline: 'Importez une image. Puis regardez un million de pixels devenir un terrain de conquête.',
-    narrative: 'Million de Pixels transforme n’importe quelle image en un monde 1024 × 1024 réellement simulé. Installez vos canons sur le rail, attaquez les couleurs accessibles depuis les bords, récupérez leurs fragments et construisez peu à peu une machine capable de dévorer toute la toile.',
+    headline: 'Et si n’importe quelle photo pouvait devenir un niveau de jeu ?',
+    narrative: 'Million de Pixels transforme une image en un monde 1024 × 1024 réellement simulé. Chaque pixel devient une cellule du niveau, les couleurs deviennent des ressources et les canons grignotent progressivement la toile jusqu’à ouvrir de nouvelles zones. Une photo personnelle, une illustration de campagne ou une image importée peut ainsi devenir la matière première d’une nouvelle partie.',
+    origin: {
+      label: 'POURQUOI JE L’AI CRÉÉ',
+      title: 'Une pub de jeu mobile m’a donné une idée beaucoup plus grande.',
+      paragraphs: [
+        'Je jouais sur mon téléphone quand une publicité pour un jeu est apparue. Le principe m’a accroché : détruire progressivement une petite planche composée de quelques pixels. Le jeu montré était beaucoup plus simple et très cadré, mais il m’a laissé une question en tête : et si je pouvais prendre n’importe quelle photo et en faire directement un niveau de jeu ?',
+        'C’est à partir de cette idée que j’ai développé ma propre version. J’ai gardé le plaisir visuel de voir une image se faire grignoter, puis j’ai changé l’échelle et construit autour : un vrai monde de 1 048 576 cellules, une économie par couleurs, des canons spécialisés, de l’automatisation, des capacités, des doctrines et une progression permanente.'
+      ],
+    },
     features: [
       ['Un million, pour de vrai', 'Les 1 048 576 cellules existent réellement dans la simulation. Une couleur enterrée derrière une autre peut être inaccessible, une façade évolue à mesure qu’elle est détruite et chaque tir modifie le monde plutôt qu’une simple barre de progression.'],
-      ['Transformer une image en économie', 'Les couleurs deviennent des ressources, les canons se spécialisent et les fragments servent à améliorer la cadence, l’automatisation et la façon d’attaquer la toile. La progression continue ensuite avec doctrines, capacités et bonus permanents.'],
-      ['Toujours une nouvelle toile à avaler', 'Import libre, campagne de 56 illustrations générées pour le jeu, galerie et progression permanente donnent une raison de recommencer avec une autre image plutôt que de s’arrêter au premier million détruit.'],
+      ['N’importe quelle image peut devenir le terrain', 'L’import transforme une image en niveau sans lui imposer une carte prédéfinie. Sa palette, ses formes et l’ordre dans lequel ses couleurs deviennent accessibles changent directement la partie.'],
+      ['Transformer la destruction en progression', 'Les couleurs deviennent des ressources, les canons se spécialisent et les fragments servent à améliorer cadence, automatisation et manière d’attaquer la toile. Doctrines, capacités et bonus permanents prolongent ensuite la boucle au-delà d’une seule image.'],
+    ],
+    flowLabel: 'COMMENT UNE IMAGE DEVIENT UN NIVEAU',
+    flowTitle: 'Importer, ouvrir la surface, exploiter les couleurs, recommencer.',
+    flow: [
+      ['J’importe une image', 'Le jeu la transforme en un monde logique de 1024 × 1024 cellules. La photo n’est pas seulement affichée en fond : elle devient la structure du niveau.'],
+      ['Les bords définissent le départ', 'Les canons ne peuvent attaquer que les couleurs réellement exposées. Une couleur cachée derrière une autre reste inaccessible tant que la surface ne s’est pas ouverte.'],
+      ['La destruction produit des ressources', 'Les fragments récupérés par couleur servent à renforcer les canons, débloquer de l’automatisation et accélérer la conquête de la toile.'],
+      ['Une nouvelle image change la partie', 'Import libre, campagne de 56 illustrations générées pour le jeu et progression permanente donnent une raison de repartir sur une autre géographie plutôt que de répéter exactement le même niveau.'],
     ],
     aboutLabel: 'LA BOUCLE DE JEU',
-    aboutTitle: 'Une image n’est pas une barre de vie : c’est le niveau entier.',
+    aboutTitle: 'L’image n’est pas une barre de vie : c’est le niveau entier.',
     about: [
       'Le plaisir vient de la transformation progressive de la toile. Au départ, l’image est intacte et les canons ne peuvent atteindre que ce que ses bords leur exposent. À mesure que des cellules disparaissent, de nouvelles couleurs deviennent accessibles et la géographie du niveau change réellement.',
-      'Cette contrainte donne une raison à l’optimisation : améliorer un canon n’accélère pas seulement un compteur, cela change la vitesse à laquelle une couleur cède, la façon dont la surface s’ouvre et le moment où l’on peut réinvestir ailleurs. Le jeu cherche ainsi à faire cohabiter la satisfaction d’un idle avec une structure de monde qui reste concrète.'
+      'Cette contrainte donne une raison à l’optimisation : améliorer un canon n’accélère pas seulement un compteur, cela change la vitesse à laquelle une couleur cède, la façon dont la surface s’ouvre et le moment où l’on peut réinvestir ailleurs. C’est là que l’idée très simple aperçue au départ devient un système beaucoup plus large.'
     ],
-    tech: [['Monde', '1024 × 1024 · TypedArrays et index spécialisés'], ['Rendu', 'PixiJS / WebGL2 · simulation séparée du visuel'], ['Traitement', 'Workers pour image et reprise hors-ligne'], ['Sauvegarde', 'IndexedDB · migrations v1 → v6']],
-    status: 'C’est l’un des projets les plus solides du portfolio : tests unitaires nombreux, smoke E2E sur le build de production, migrations de sauvegarde et vrai modèle de reprise après restauration. Il reste toutefois un défaut important pour un idle : si la page reste simplement ouverte en arrière-plan, le retour au premier plan n’applique pas encore le rattrapage hors-ligne. La prochaine passe doit fermer ce trou puis brancher les tests existants sur la CI avant chaque déploiement.'
+    tech: [['Monde', '1024 × 1024 · TypedArrays et index spécialisés'], ['Rendu', 'PixiJS / WebGL2 · simulation séparée du visuel'], ['Traitement', 'Workers pour image et reprise hors-ligne'], ['Sauvegarde', 'IndexedDB · migrations v1 → v6'], ['Contenu', 'Import libre + campagne de 56 illustrations générées pour le jeu']],
+    status: 'Million de Pixels est l’un des projets les plus solides du portfolio : tests unitaires nombreux, smoke E2E sur le build de production, migrations de sauvegarde et vrai modèle de reprise après restauration. Il reste toutefois un défaut important pour un idle : si la page reste simplement ouverte en arrière-plan, le retour au premier plan n’applique pas encore le rattrapage hors-ligne. La prochaine passe doit fermer ce trou puis brancher les tests existants sur la CI avant chaque déploiement.'
   },
   lootchest: {
     type: 'product',
-    kicker: 'RPG / LOOTER · NAVIGATEUR',
-    headline: 'Ouvrez un coffre. Équipez ce qui tombe. Descendez toujours un peu plus bas.',
-    narrative: 'Lootchest part du plaisir le plus simple du looter : ouvrir quelque chose et espérer mieux. Puis la boucle s’étend. L’équipement construit votre héros, le donjon pousse à progresser, la Plongée change les règles et le village finit par produire pendant que vous préparez le prochain palier.',
+    kicker: 'RPG / LOOTER · BUILDS ET CRAFT',
+    headline: 'Looter. Construire un build. Puis essayer de rendre chaque pièce meilleure.',
+    narrative: 'Lootchest est le jeu que j’avais envie de lancer pour une boucle très précise : récupérer du stuff, équiper un personnage en pensant aux synergies, comparer les gains réels d’un objet puis pousser l’optimisation avec une forge profonde. Autour de ce noyau, le jeu a ensuite grandi en donjons, boss, progression, Plongée roguelite et village.',
+    origin: {
+      label: 'POURQUOI JE L’AI CRÉÉ',
+      title: 'Je voulais retrouver le plaisir du loot et de l’optimisation dans mon propre système.',
+      paragraphs: [
+        'Au départ, mon envie est très précise : looter de l’équipement, construire un personnage autour de synergies, chercher les meilleures combinaisons et continuer à travailler une bonne pièce au lieu de simplement attendre qu’un objet supérieur tombe. La profondeur de craft de Path of Exile, que je trouve incroyable, est une référence importante dans cette envie.',
+        'Puis j’ai commencé à partager le lien à plusieurs personnes. Les retours ont nourri les itérations et le projet s’est mis à grossir bien au-delà de sa boucle initiale. L’historique du dépôt le montre bien : la forge s’est enrichie, les sets et le prestige sont arrivés, puis les monnaies de craft inspirées de Path of Exile, les contrats, l’onboarding, la Plongée, le village et d’autres couches de progression.'
+      ],
+    },
     features: [
-      ['Le loot est le moteur', 'Objets générés, affixes, raretés, équipements, coffres et mimics alimentent la construction du personnage. Chaque amélioration sert une idée très lisible : être prêt pour ce qu’il y a derrière la prochaine porte.'],
-      ['Plus d’une façon de progresser', 'Donjon, biomes, boss et combat au tour par tour côtoient une Plongée roguelite avec sa propre boucle. Talents, factions, reliques et prestige ajoutent ensuite des couches de progression plus longues.'],
-      ['Quand l’aventure construit son village', 'Bâtiments, ouvriers, forge et production passive ajoutent une couche idle au RPG. Les ressources continuent à s’accumuler selon le temps réellement écoulé, avec un rattrapage plafonné à huit heures.'],
+      ['Le stuff doit donner envie de réfléchir', 'Raretés, affixes, préfixes, suffixes, sets, uniques et pièces procédurales ne servent pas seulement à faire monter un score. L’intérêt est de regarder ce qu’un objet change réellement dans le build et de décider s’il mérite d’être équipé, recyclé ou travaillé.'],
+      ['Une forge inspirée par ce que j’aime dans Path of Exile', 'Le craft utilise notamment des monnaies dédiées pour transformer la rareté, ajouter ou relancer des affixes, modifier leurs valeurs ou cibler certaines améliorations. L’objectif est de laisser une marge de décision entre accepter le hasard et investir dans une pièce prometteuse.'],
+      ['Le jeu a grandi autour de son noyau', 'Donjon, biomes, boss, talents, factions, prestige, contrats, Plongée roguelite et village sont venus ajouter de nouveaux objectifs sans remplacer la boucle centrale : trouver, comparer, équiper et optimiser.'],
     ],
-    aboutLabel: 'À PROPOS DU JEU',
-    aboutTitle: 'Le prochain coffre doit toujours donner une raison de continuer.',
+    flowLabel: 'LA BOUCLE QUE JE VOULAIS JOUER',
+    flowTitle: 'Trouver une pièce, comprendre sa valeur, la travailler, puis aller chercher mieux.',
+    flow: [
+      ['Je loot', 'Coffres et donjons génèrent des objets avec raretés, statistiques, affixes et identités différentes. Le premier plaisir reste celui de voir tomber quelque chose qui mérite d’être regardé.'],
+      ['Je construis mon personnage', 'Je compare les objets avec ce qui est déjà équipé et je cherche des synergies entre statistiques, sets, talents et autres couches du build plutôt qu’un simple chiffre de puissance.'],
+      ['Je travaille les bonnes pièces', 'La forge permet de modifier une pièce avec différentes monnaies et opérations. Un bon objet peut devenir un projet d’optimisation plutôt qu’un drop immédiatement jetable.'],
+      ['Je repars plus loin', 'Le build sert ensuite à pousser le donjon, affronter des boss, explorer la Plongée et alimenter les systèmes de progression plus longs, dont le village et le prestige.'],
+    ],
+    aboutLabel: 'COMMENT LE PROJET A GROSSI',
+    aboutTitle: 'Un prototype personnel devenu un terrain d’itération avec des joueurs.',
     about: [
-      'Lootchest s’est développé autour d’une question très simple : combien de systèmes peut-on accrocher à une boucle de loot sans perdre le plaisir immédiat d’ouvrir, comparer et équiper ? Le donjon fournit la pression, l’équipement apporte la réponse, puis le village et la forge commencent à préparer les runs suivants.',
-      'La Plongée permet de casser cette routine avec une boucle plus roguelite, tandis que le prestige, les reliques, les factions et les talents donnent des objectifs au-delà de l’objet obtenu dans l’instant. Le projet est moins une recherche de minimalisme qu’un laboratoire de progression où chaque nouvelle couche doit nourrir les précédentes.'
+      'Lootchest n’a pas été conçu d’un seul bloc avec tous ses systèmes prévus dès le départ. J’ai d’abord construit la boucle que je voulais jouer, puis les retours de plusieurs personnes à qui j’avais partagé le lien ont fait apparaître de nouvelles envies, des problèmes d’ergonomie, des besoins d’objectifs et des pistes d’équilibrage.',
+      'Cette croissance se voit directement dans les commits : premières fonctions de forge, sets et prestige, remplacement de la forge initiale par un système de monnaies inspiré de Path of Exile, contrats pour donner une direction aux sessions, refonte de l’onboarding, puis ajout d’une vraie couche de village avec production, bâtiments et progression liée au donjon. La richesse actuelle vient de cette accumulation d’itérations, avec le risque inverse de devoir maintenant mieux protéger et équilibrer tout ce qui s’est empilé.'
     ],
-    tech: [['Surface', 'Navigateur · mobile et desktop'], ['Stack', 'JavaScript / HTML / CSS sans framework ni bundler'], ['Sauvegarde', 'Locale · migrations · export / import JSON'], ['État', 'Jeu public · prototype riche']],
-    status: 'Lootchest est déjà un vrai jeu jouable, surtout remarquable par la quantité de systèmes reliés dans un projet vanilla JS. Cette richesse est aussi sa dette principale : aucune suite de tests automatisés ne protège encore les combats, le loot, le village ou les sauvegardes. Pour les essais publics, les exports personnels sont adaptés au backup ; l’import de fichiers de sauvegarde externes n’est pas encore suffisamment durci pour être considéré comme une fonction de partage sûre.'
+    tech: [['Surface', 'Navigateur · mobile et desktop'], ['Stack', 'JavaScript / HTML / CSS sans framework ni bundler'], ['Loot', 'Affixes · sets · uniques · génération procédurale'], ['Craft', 'Monnaies dédiées · préfixes / suffixes · forge ciblée'], ['Sauvegarde', 'Locale · migrations · export / import JSON']],
+    status: 'Lootchest est aujourd’hui un prototype public très riche, avec une vraie boucle de loot, de build et de craft entourée de nombreux systèmes de progression. Cette richesse est aussi sa dette principale : aucune suite de tests automatisés ne protège encore l’ensemble des combats, du loot, de la forge, du village ou des sauvegardes. Les exports personnels conviennent au backup ; l’import d’une sauvegarde externe n’est pas encore suffisamment durci pour être présenté comme une fonction de partage sûre.'
   },
   'afk-farm': {
     type: 'product',
     kicker: 'IDLE / INCRÉMENTAL · PROTOTYPE AVANCÉ',
     headline: 'Récoltez à la main. Automatisez. Changez de biome. Recommencez plus fort.',
-    narrative: 'AFK Farm est né du tableau Champ magnétique de Sensoria. J’aimais suffisamment son feeling pour vouloir en faire une vraie mécanique de jeu. L’idle s’est imposé naturellement comme format web accessible à prototyper, puis le geste magnétique a grandi autour d’une progression complète : énergie, combos, drones, chantiers, biomes, prestige et arbre à sept branches.',
+    narrative: 'AFK Farm est né d’un réflexe très personnel : ne pas trouver exactement l’idle que j’avais envie de jouer, alors construire le mien. Au départ, un champ magnétique et quelques grains. Puis arrivent l’énergie, les combos, les drones, les projets, les biomes, le prestige et un arbre de progression à sept branches.',
     features: [
       ['Du geste à l’automatisation', 'Les premières récoltes se font directement dans le champ magnétique, avec énergie, stockage, chaînes de captures et Surge. Les drones et améliorations prennent ensuite progressivement une partie du travail à votre place.'],
       ['Une progression en couches', 'Projets temporisés, six biomes de base, progression procédurale au-delà, prestige, perks, succès et arbre déterministe donnent plusieurs horizons de progression au lieu d’une simple courbe de chiffres.'],
-      ['Un prototype pensé pour le web', 'Interface touch-first, PWA, sauvegarde locale et rendu Canvas permettent de construire un vrai gameplay incrémental sans partir sur la lourdeur d’un jeu 3D. Le format reste simple à lancer, mais n’empêche pas une boucle de jeu dense.'],
+      ['Un idle pensé pour revenir souvent', 'Interface touch-first, PWA, sauvegarde locale et rendu Canvas optimisé en font un prototype pensé dès le départ pour le téléphone et les petites sessions régulières.'],
     ],
-    aboutLabel: 'LE POINT DE DÉPART',
-    aboutTitle: 'Un tableau de Sensoria avec un feeling assez fort pour devenir un jeu.',
+    aboutLabel: 'POURQUOI IL EXISTE',
+    aboutTitle: 'Quand le jeu que l’on veut n’existe pas, on peut essayer de le fabriquer.',
     about: [
-      'Le projet ne part pas d’un manque compliqué à théoriser. Le Champ magnétique de Sensoria était simplement agréable à manipuler, et j’ai eu envie de donner un objectif à ce geste. Comme j’aime les jeux idle et que ce format se prête bien au navigateur, la récolte magnétique est devenue le cœur d’une boucle de progression.',
-      'Le prototype a ensuite largement dépassé cette intuition de départ. Les drones, chantiers, biomes, perks, prestige et branches de l’arbre cherchent tous à faire évoluer le joueur d’une récolte très active vers une machine de production qu’il construit progressivement, sans supprimer complètement l’intérêt de revenir jouer à la main.'
+      'AFK Farm appartient à une famille de projets nés sans cahier des charges extérieur : l’envie de jouer à quelque chose de précis, l’impression de ne pas le trouver exactement ailleurs, puis la décision d’en construire une version soi-même. Le champ magnétique fournit le geste de départ ; l’idle vient ensuite donner une raison d’y revenir.',
+      'Le projet a été poussé bien plus loin que cette première intuition. Chaque système ajouté, des drones au prestige en passant par les biomes et l’arbre, cherche à déplacer progressivement le joueur de la récolte immédiate vers la construction d’une machine qui travaille pour lui. C’est cette trajectoire, plus que l’équilibrage actuel, qui donne son identité au prototype.'
     ],
-    tech: [['Surface', 'Navigateur · PWA mobile-first'], ['Moteur', 'Canvas · tableaux typés · densité adaptée à l’écran'], ['Progression', 'Biomes · projets · prestige · arbre à 7 branches'], ['État', 'Prototype avancé · jouable']],
-    status: 'AFK Farm est réellement jouable et la majorité de ses systèmes importants interagit déjà. Il reste pourtant un prototype avancé : le retour après simple mise en arrière-plan peut perdre une partie de la progression AFK, et les Cores servent à la fois de multiplicateur et de monnaie dépensable, ce qui peut rendre certains achats contre-productifs. La fiche assume ces limites au lieu de présenter le jeu comme équilibré ou terminé.'
+    tech: [['Surface', 'Navigateur · PWA mobile-first'], ['Moteur', 'Canvas · tableaux typés · densité adaptée à l’écran'], ['Progression', 'Biomes · projets · prestige · arbre à 7 branches'], ['État', 'Prototype jouable ouvert aux retours']],
+    status: 'AFK Farm est précisément le type de projet que Labz peut aider à décider de reprendre. La boucle existe et le contenu est déjà conséquent, mais deux incohérences touchent encore le cœur du jeu : le retour après mise en arrière-plan peut perdre une partie de la progression AFK, et les Cores servent à la fois de multiplicateur et de monnaie dépensable, ce qui peut rendre certains achats contre-productifs. La fiche assume donc un prototype avancé, pas un idle équilibré et terminé.'
   },
   diagnostic: {
     type: 'product', kicker: 'OUTIL DE MÉDIATION', headline: 'Comprendre un groupe avant de construire l’atelier pour lui.',
@@ -104,22 +152,38 @@ const profiles = {
   },
   pipboy: {
     type: 'product',
-    kicker: 'COMPAGNON JDR · DÉMO NAVIGATEUR',
-    headline: 'Le MJ prépare le monde. Le joueur ne découvre que ce qu’on lui révèle.',
-    narrative: 'Pip-Boy JDR transforme une campagne Fallout personnelle en compagnon numérique de table. Le MJ prépare cartes, personnages, quêtes, documents et secrets ; le joueur reçoit progressivement ce que son personnage a réellement découvert. La démo publique permet de tester cette relation immédiatement, sans compte ni backend.',
+    kicker: 'COMPAGNON JDR · MOBILE-FIRST · DÉMO NAVIGATEUR',
+    headline: 'Faire du Pip-Boy un véritable objet de la partie.',
+    narrative: 'Pip-Boy JDR est un compagnon numérique pour ma campagne Fallout. Côté joueur, il devient l’écran de référence pour consulter carte, journal, quêtes, personnes rencontrées, documents, terminaux et informations révélées pendant la partie. Côté MJ, une console séparée permet de préparer le contenu, de le garder secret puis de l’envoyer au bon moment.',
+    origin: {
+      label: 'POURQUOI JE L’AI CRÉÉ',
+      title: 'Je voulais que le Pip-Boy existe vraiment pendant la partie.',
+      paragraphs: [
+        'Le point de départ n’était pas de mieux ranger mes notes de MJ. En préparant ma campagne Fallout autour de Smoky Waters, je voulais rendre l’expérience plus sombre et plus immersive, avec un vrai compagnon mobile que le joueur puisse consulter comme s’il utilisait son propre Pip-Boy.',
+        'Au début, l’idée est donc surtout côté joueur : faire du téléphone un objet de la fiction. Puis le projet grandit. Pour alimenter ce Pip-Boy pendant une séance, il me faut un espace MJ capable de préparer des informations à l’avance, de les garder invisibles et de les révéler exactement quand la fiction le justifie.'
+      ],
+    },
     features: [
-      ['Un Pip-Boy pour la campagne', 'Carte interactive, journal, quêtes, personnes, faune, objets, holobandes, terminaux, table de jeu, brouillard et scénarios vivent dans une même interface mobile-first pensée pour accompagner la partie plutôt que la remplacer.'],
-      ['Les secrets restent vraiment côté MJ', 'Dans une vraie session connectée, les contenus masqués ne sont pas envoyés au joueur puis cachés avec du CSS : PostgreSQL fabrique une projection filtrée avant la réponse, et les tests de sécurité vérifient la séparation propriétaire / joueur / tiers.'],
-      ['Une démo immédiate, un mode campagne séparé', 'La version Labz fonctionne localement dans un seul navigateur : ouvrez la Console MJ, envoyez une fiche secrète puis revenez côté joueur pour la voir apparaître. Le mode Supabase ajoute ensuite la synchronisation réelle entre appareils.'],
+      ['Un objet de jeu dans la poche', 'Carte interactive, journal, quêtes, personnes, faune, objets, holobandes et terminaux donnent au joueur un écran qu’il peut réellement consulter pendant la séance plutôt qu’une simple fiche de personnage numérique.'],
+      ['Préparer sans révéler', 'La Console MJ regroupe fiches, scénarios, documents, cartes et éléments secrets. Je peux préparer beaucoup de contenu à l’avance sans le rendre visible, puis envoyer ou retirer une information quand la partie le demande.'],
+      ['Faire évoluer la table en direct', 'Position, tokens, brouillard, scènes, table de jeu et révélations permettent au compagnon de suivre ce qui se passe réellement autour de la table au lieu de rester une encyclopédie statique.'],
     ],
-    aboutLabel: 'À LA TABLE',
-    aboutTitle: 'Le numérique doit soutenir le rythme du JDR, pas prendre la place de la partie.',
+    flowLabel: 'COMMENT ÇA SE PASSE À TABLE',
+    flowTitle: 'Préparer, cacher, révéler.',
+    flow: [
+      ['Je prépare', 'Dans la Console MJ, je crée ou j’organise cartes, fiches, quêtes, documents, terminaux et éléments secrets avant ou pendant la séance.'],
+      ['Je garde caché', 'Tant qu’une information n’a pas été découverte dans la fiction, elle reste hors de la vue joueur.'],
+      ['Je révèle au bon moment', 'Quand la partie le justifie, j’envoie une fiche, un lieu, un indice ou un document. Le joueur le voit apparaître dans son Pip-Boy.'],
+      ['Le Pip-Boy suit la partie', 'Carte, tokens, brouillard, journal et contenus révélés peuvent ensuite évoluer avec ce qui se passe réellement à table.'],
+    ],
+    aboutLabel: 'CE QUI SE PASSE SOUS LE CAPOT',
+    aboutTitle: 'Cacher un secret dans l’interface ne suffisait pas.',
     about: [
-      'Le cœur de Pip-Boy JDR n’est pas l’esthétique Fallout : c’est la gestion de ce que chaque personne autour de la table sait à un instant donné. Le MJ peut préparer beaucoup d’informations à l’avance sans les dévoiler, puis faire apparaître une fiche, un lieu, un document ou un indice au moment où la fiction le justifie.',
-      'La démo condense ce principe dans un seul navigateur pour qu’il soit immédiatement testable. Le mode connecté pousse ensuite la même logique plus loin : le téléphone du joueur reçoit sa propre projection de la campagne, tandis que les secrets restent filtrés côté base de données plutôt que simplement masqués visuellement.'
+      'La démo Labz condense volontairement le principe dans un seul navigateur grâce au stockage local. On peut passer de la Console MJ à la vue joueur, envoyer une fiche secrète puis vérifier immédiatement comment la révélation fonctionne, sans compte ni backend.',
+      'Le mode connecté va plus loin : les secrets ne sont pas tous envoyés au téléphone du joueur puis masqués avec l’interface. PostgreSQL construit une projection filtrée de la campagne avant la réponse. Les tests SQL vérifient notamment la séparation propriétaire, joueur et tiers, ainsi que les révélations, retraits et conflits de révision.'
     ],
-    tech: [['Surface', 'Navigateur · mobile-first'], ['Stack', 'React + TypeScript + Vite'], ['Démo', 'LocalStorage · aucun compte requis'], ['Mode connecté', 'Supabase · PostgreSQL · Realtime']],
-    status: 'La démo publique est aujourd’hui le parcours recommandé : elle est autonome et utilise les assets originaux ou générés pour le projet, la carte officielle Fallout précédemment présente ayant été retirée du dépôt. Le mode authentifié possède déjà une architecture serveur solide et des tests SQL / navigateur poussés ; il reste néanmoins à refaire une recette complète sur deux appareils réels avant de le présenter comme parcours principal public.'
+    tech: [['Surface', 'Navigateur · mobile-first'], ['Stack', 'React + TypeScript + Vite'], ['Démo', 'LocalStorage · aucun compte requis'], ['Mode connecté', 'Supabase · PostgreSQL · Realtime'], ['Validation', 'PGlite + smoke tests Chromium / WebKit']],
+    status: 'La démo locale est aujourd’hui le meilleur parcours public pour découvrir le concept. Elle utilise les assets originaux ou générés pour le projet, l’ancienne carte officielle Fallout ayant été retirée du dépôt. Le mode connecté possède déjà une architecture serveur solide et des tests poussés, mais je veux encore refaire une recette complète sur deux appareils réels avant de le présenter comme parcours principal.'
   },
   constella: {
     type: 'suite', kicker: 'SUITE PRODUIT', headline: 'Deux façons d’explorer : ce que tu aimes, et ce qui change autour de toi.',
@@ -165,23 +229,16 @@ const profiles = {
     status: 'Les quatre dépôts restent présentés comme une évolution et non comme quatre produits indépendants. HotzDoggz est la pièce centrale car il a rencontré un usage réel et a évolué au contact de ses utilisateurs.'
   },
   totalwarai: {
-    type: 'research',
-    kicker: 'R&D · EXPÉRIMENTATION ARRÊTÉE',
-    headline: 'Construire un agent tactique avec une vision incomplète de la bataille.',
-    narrative: 'Total War AI était une expérimentation visant à mesurer jusqu’où un agent autonome pouvait aller avec les API de bataille de Total War: WARHAMMER III. Le pont Lua/Python, l’observation du champ de bataille et les ordres de déplacement ont réellement fonctionné. Les essais ont ensuite révélé une limite structurelle : l’agent externe ne voyait qu’une partie des informations dont dispose l’IA interne du moteur.',
-    question: 'Jusqu’où peut aller un agent tactique autonome quand l’API ne lui donne pas toute l’information dont dispose l’IA native du jeu ?',
+    type: 'research', kicker: 'R&D EXPÉRIMENTALE', headline: 'Construire un général autonome, puis comprendre pourquoi la vraie bataille refuse le scénario prévu.',
+    narrative: 'Total War AI cherchait à permettre d’observer les batailles plutôt que de les jouer soi-même. Le projet a construit beaucoup de briques sérieuses : pont Lua/Python, télémétrie, règles, mémoire, simulateur et tests. Malgré cela, l’objectif final n’a pas été atteint en vraie bataille.',
+    question: 'Peut-on piloter une armée de Total War: WARHAMMER III avec un agent tactique à règles suffisamment autonome pour gagner une vraie bataille ?',
     experiments: [
-      ['Observer et agir', 'Le pont Lua/Python transforme l’état accessible de la bataille en données exploitables, puis renvoie des décisions et des ordres de déplacement au jeu.'],
-      ['Simuler puis comparer', 'Des scénarios et simulations servent à ajuster les règles avant de les confronter au vrai moteur. Plusieurs corrections utiles en simulation ont pourtant produit un comportement moins bon en bataille réelle.'],
-      ['Chercher l’information manquante', 'Le développement devient progressivement empirique : identifier ce que l’agent ne sait pas, inférer ou reconstruire ce qui manque, tester, mesurer puis recommencer avec des armées et situations différentes.'],
+      ['Instrumentation', 'Pont Lua/Python et télémétrie pour transformer l’état du champ de bataille en données exploitables.'],
+      ['Planification', 'Règles tactiques, doctrines adaptatives, mémoire et simulateur pour tester les décisions hors du jeu.'],
+      ['Confrontation au réel', 'Les comportements validés dans le simulateur ont révélé des écarts importants une fois confrontés aux contraintes de la vraie bataille.'],
     ],
-    learnings: [
-      'L’agent externe ne dispose pas directement de plusieurs informations importantes comme le moral, la fatigue, la largeur de front ou une représentation complète des obstacles, forêts et lignes de vue.',
-      'L’IA interne bénéficie du moteur, du terrain, du pathfinding, des formations et d’informations auxquelles le script externe n’accède pas de la même manière.',
-      'Une simulation peut sécuriser une idée sans prédire correctement son comportement dans le vrai jeu. Le projet a donc demandé des allers-retours constants entre modèle et terrain.',
-      'Continuer aurait nécessité de reconstruire ou d’inférer progressivement une grande partie de ce contexte, pour un coût devenu disproportionné par rapport à l’objectif initial.',
-    ],
-    status: 'Le projet a été arrêté après des essais réels sans victoire. Il ne s’agit pas d’une IA capable de bien jouer à Total War, mais d’une expérimentation technique qui a validé une partie de l’architecture puis mis en évidence une limite fondamentale d’information. Cette limite, et la méthode empirique utilisée pour la comprendre, constituent le résultat le plus intéressant du projet.'
+    learnings: ['Le simulateur ne reproduit pas toutes les contraintes du moteur réel.', 'Une batterie de tests peut sécuriser l’architecture sans prouver l’efficacité tactique finale.', 'Le prochain critère de succès doit être une victoire reproductible en vraie bataille, pas seulement un scénario simulé.'],
+    status: 'L’agent n’a jamais gagné une vraie bataille. C’est précisément pourquoi le projet est présenté comme R&D : les échecs, les hypothèses invalidées et l’écart simulation/réalité sont ici une partie centrale du résultat.'
   }
 };
 
@@ -190,8 +247,10 @@ function heading(profile) {
 }
 
 function product(profile) {
+  const origin = profile.origin?.paragraphs?.length ? `<section class="rich-about rich-origin"><span class="eyebrow">${esc(profile.origin.label || 'POURQUOI JE L’AI CRÉÉ')}</span><h3>${esc(profile.origin.title || '')}</h3>${profile.origin.paragraphs.map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}</section>` : '';
+  const flow = profile.flow?.length ? `<section class="rich-about rich-product-flow"><span class="eyebrow">${esc(profile.flowLabel || 'COMMENT ÇA FONCTIONNE')}</span><h3>${esc(profile.flowTitle || '')}</h3><ol class="project-timeline">${profile.flow.map(([title,body],index) => `<li><span class="timeline-index">${String(index + 1).padStart(2,'0')}</span><div><h3>${esc(title)}</h3><p>${esc(body)}</p></div></li>`).join('')}</ol></section>` : '';
   const about = profile.about?.length ? `<section class="rich-about"><span class="eyebrow">${esc(profile.aboutLabel || 'À PROPOS')}</span><h3>${esc(profile.aboutTitle || '')}</h3>${profile.about.map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}</section>` : '';
-  return `${heading(profile)}<div class="rich-feature-grid">${profile.features.map(([title,body]) => `<article><h3>${esc(title)}</h3><p>${esc(body)}</p></article>`).join('')}</div>${about}<div class="rich-project-columns"><section class="rich-tech"><span class="eyebrow">SOUS LE CAPOT</span><dl>${profile.tech.map(([key,value]) => `<div><dt>${esc(key)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl></section><section class="rich-status"><span class="eyebrow">ÉTAT DU PROJET</span><p>${esc(profile.status)}</p></section></div>`;
+  return `${heading(profile)}${origin}<div class="rich-feature-grid">${profile.features.map(([title,body]) => `<article><h3>${esc(title)}</h3><p>${esc(body)}</p></article>`).join('')}</div>${flow}${about}<div class="rich-project-columns"><section class="rich-tech"><span class="eyebrow">SOUS LE CAPOT</span><dl>${profile.tech.map(([key,value]) => `<div><dt>${esc(key)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl></section><section class="rich-status"><span class="eyebrow">ÉTAT DU PROJET</span><p>${esc(profile.status)}</p></section></div>`;
 }
 
 function suite(profile) {
