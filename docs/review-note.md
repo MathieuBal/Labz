@@ -1,0 +1,1 @@
+La PR 0.19.0 doit être revue comme une refonte éditoriale globale, pas comme une succession de micro-corrections. Le critère principal est la compréhension de l’histoire de chaque projet par un visiteur extérieur.
