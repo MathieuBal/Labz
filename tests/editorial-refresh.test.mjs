@@ -20,14 +20,15 @@ test('Total War AI est présenté comme une expérimentation arrêtée sur une i
   assert.match(source, /coût devenu disproportionné/);
 });
 
-test('le catalogue harmonise les statuts et publie la révision éditoriale dans les nouveautés', async () => {
-  const source = await read('catalog-runtime.js');
+test('le catalogue harmonise les statuts et la v0.18.7 publie la révision éditoriale', async () => {
+  const [runtime, releases] = await Promise.all([read('catalog-runtime.js'), read('release-notes.js')]);
   for (const label of [
     'Public · expérience jouable',
     'Prototype avancé · jouable',
     'Étude de cas · usage réel',
     'R&D · expérimentation arrêtée',
-  ]) assert.match(source, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-  assert.match(source, /Labz · révision éditoriale/);
-  assert.match(source, /Les fiches racontent désormais le vrai état des projets/);
+  ]) assert.match(runtime, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.match(releases, /"version": "0\.18\.7"/);
+  assert.match(releases, /Les fiches retrouvent leur vrai statut/);
+  assert.match(releases, /Champ magnétique de Sensoria/);
 });
