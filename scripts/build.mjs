@@ -38,7 +38,7 @@ function projectPage(template,project) {
   const destinationLabel=project.live?'Essayer le projet':project.repo?'Voir le code disponible':'Retour au Labz';
   const fallback=`<section class="page-intro"><span class="eyebrow">${esc(categories[project.category])} · ${esc(project.mode)}</span><h1>${esc(project.name)}</h1><p>${esc(project.description)}</p><p>${esc(project.detail||project.takeaway||'Découvre le projet dans Labz.')}</p><p><a class="button primary" href="${esc(destination)}">${destinationLabel} →</a></p></section>`;
   return template
-    .replace('<head>','<head><base href="/Labz/">')
+    .replace('<head>','<head><base href="../../">')
     .replace(/<title>[^<]*<\/title>/,`<title>${esc(title)}</title>`)
     .replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${esc(description)}">`)
     .replace(/<meta property="og:title" content="[^"]*">/,`<meta property="og:title" content="${esc(title)}">`)
