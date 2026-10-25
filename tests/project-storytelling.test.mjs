@@ -38,3 +38,13 @@ test('la fiche Million de Pixels raconte le déclic mobile puis la transformatio
   assert.match(source, /1 048 576 cellules/);
   assert.match(source, /COMMENT UNE IMAGE DEVIENT UN NIVEAU/);
 });
+
+test('la fiche Lootchest raconte la boucle de build, la forge inspirée de Path of Exile et les retours joueurs', async () => {
+  const source = await read('project-pages.js');
+  assert.match(source, /RPG \/ LOOTER · BUILDS ET CRAFT/);
+  assert.match(source, /Je voulais retrouver le plaisir du loot et de l’optimisation dans mon propre système/);
+  assert.match(source, /Path of Exile/);
+  assert.match(source, /j’ai commencé à partager le lien à plusieurs personnes/);
+  assert.match(source, /LA BOUCLE QUE JE VOULAIS JOUER/);
+  assert.match(source, /Un prototype personnel devenu un terrain d’itération avec des joueurs/);
+});
