@@ -1,0 +1,1 @@
+La PR doit être intitulée « Labz 0.19.0 : raconter réellement les projets » et décrire la reprise des douze fiches, l’intégration des contextes réels, l’honnêteté sur les limites et la consolidation des Nouveautés.
