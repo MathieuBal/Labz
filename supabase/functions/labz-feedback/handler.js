@@ -1,10 +1,10 @@
-const projects = new Set(['sensoria','million-de-pixels','lootchest','diagnostic','constella','chess','pipboy','atelierflow']);
 const kinds = new Set(['idea','bug','opinion']);
+const projectPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const MAX_BYTES = 16000;
 export function validateSubmission(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
   const {project,kind,summary,message,nickname='',website='',requestId} = value;
-  if (!projects.has(project) || !kinds.has(kind) || typeof website !== 'string' || website.trim()) return null;
+  if (typeof project!=='string' || project.length>64 || !projectPattern.test(project) || !kinds.has(kind) || typeof website !== 'string' || website.trim()) return null;
   if (![summary,message,nickname].every(x=>typeof x==='string')) return null;
   if (summary.trim().length<3 || summary.length>120 || message.trim().length<5 || message.length>3000 || nickname.length>50) return null;
   if (typeof requestId!=='string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(requestId)) return null;
