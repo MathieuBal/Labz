@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.4",
+    "date": "2026-10-25",
+    "title": "La fiche RP devient vraiment lisible sur téléphone",
+    "description": "La timeline conserve son rôle narratif, mais le contenu cesse d’être comprimé sur mobile et les blocs gagnent une hiérarchie plus claire.",
+    "items": [
+      "Le sélecteur de timeline ne s’applique plus aux listes internes, ce qui supprime les colonnes et lignes parasites visibles dans les cartes.",
+      "Sur mobile, chaque étape utilise presque toute la largeur disponible et empile fonctions, flux, preuves et données techniques dans un ordre lisible.",
+      "La timeline, les métriques et les cartes sont allégées sur petit écran afin de privilégier le contenu plutôt que le décor."
+    ]
+  },
+  {
     "version": "0.18.3",
     "date": "2026-10-25",
     "title": "Les textes gagnent un ton plus naturel",
