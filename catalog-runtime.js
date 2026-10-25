@@ -1,5 +1,4 @@
 import { projects } from './catalog.js';
-import { updates } from './release-notes.js';
 
 const pipboy = projects.find(project => project.id === 'pipboy');
 if (pipboy) Object.assign(pipboy, {
@@ -51,16 +50,4 @@ if (totalWar) Object.assign(totalWar, {
   description: 'Une expérimentation pour mesurer jusqu’où un agent tactique autonome peut aller quand les API du jeu ne lui donnent qu’une vision partielle de la bataille.',
   detail: 'Pont Lua/Python, télémétrie, règles, simulateur et essais réels ont permis d’explorer le contrôle autonome avant de révéler une limite structurelle d’information face à l’IA interne du moteur.',
   hint: 'Expérimentation arrêtée. Le projet n’a jamais gagné une vraie bataille ; sa valeur tient surtout à la démarche empirique et aux limites identifiées.',
-});
-
-updates.unshift({
-  date: '2026-10-25',
-  title: 'Les fiches racontent désormais le vrai état des projets',
-  description: 'Le tour éditorial des douze fiches est consolidé : les projets jouables, prototypes, études de cas et expérimentations sont présentés selon leur maturité réelle, sans les forcer dans le même moule.',
-  items: [
-    'AFK Farm repart de son vrai point de départ : le Champ magnétique de Sensoria, transformé en mécanique d’un idle web devenu beaucoup plus ambitieux.',
-    'Total War AI est présenté comme une expérimentation arrêtée sur la décision avec information incomplète, et non comme une IA tactique presque aboutie.',
-    'Les statuts du catalogue sont harmonisés pour distinguer clairement public, prototype, démo, alpha, étude de cas, projet en pause et R&D arrêtée.'
-  ],
-  project: 'Labz · révision éditoriale',
 });
