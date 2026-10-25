@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.9",
+    "date": "2026-10-25",
+    "title": "Labz rembourse sa dette de synchronisation",
+    "description": "Le feedback retrouve les douze projets actifs et le catalogue redevient la source canonique des statuts, accès et guides essentiels.",
+    "items": [
+      "La réception privée n’utilise plus une ancienne liste figée de projets : tous les slugs propres et bornés sont validés côté Edge Function et base.",
+      "Les statuts et corrections AFK Farm, Pip-Boy et Total War AI sont intégrés directement au catalogue au lieu d’être appliqués après coup par une couche runtime séparée.",
+      "La CI gagne un contrat explicite entre catalogue et feedback afin qu’une future évolution de la sélection ne puisse plus casser silencieusement les envois."
+    ]
+  },
+  {
     "version": "0.18.8",
     "date": "2026-10-25",
     "title": "Les douze fiches retrouvent leur récit complet",

@@ -20,10 +20,12 @@ test('les routes accueil et projet forcent un retour en haut sans restauration n
   assert.match(source, /window\.scrollTo\(\{top:0,left:0,behavior:'auto'\}\)/);
 });
 
-test('les modules de pages riches et le runtime Pip-Boy sont publiés', async () => {
+test('les modules de pages riches sont publiés sans couche de catalogue runtime', async () => {
   const [html, build] = await Promise.all([read('index.html'), read('scripts/build.mjs')]);
-  for (const name of ['catalog-runtime.js','project-pages.js','navigation-fixes.js','project-pages.css']) {
+  for (const name of ['project-pages.js','navigation-fixes.js','project-pages.css']) {
     assert.match(html, new RegExp(name.replace('.', '\\.')));
     assert.match(build, new RegExp(name.replace('.', '\\.')));
   }
+  assert.doesNotMatch(html, /catalog-runtime\.js/);
+  assert.doesNotMatch(build, /catalog-runtime\.js/);
 });

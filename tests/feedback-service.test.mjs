@@ -7,7 +7,7 @@ const request=(body=data,origin='https://mathieubal.github.io')=>new Request('ht
 test('server accepts only validated messages and acknowledges stored data',async()=>{
  let saved;const handler=createHandler({store:async x=>{saved=x;return 'accepted'}});
  assert.equal((await handler(request())).status,201);assert.equal(saved.p_project,'sensoria');assert.equal(saved.p_message,data.message);
- for(const change of [{project:'unknown'},{message:' '},{summary:'a'.repeat(121)},{nickname:42},{website:'spam'},{requestId:'invalid'}])assert.equal((await handler(request({...data,...change}))).status,400);
+ for(const change of [{project:'Invalid Project!'},{message:' '},{summary:'a'.repeat(121)},{nickname:42},{website:'spam'},{requestId:'invalid'}])assert.equal((await handler(request({...data,...change}))).status,400);
 });
 test('foreign origins, unsupported methods and oversized bodies never reach storage',async()=>{
  let calls=0;const handler=createHandler({store:async()=>{calls++;return 'accepted'}});

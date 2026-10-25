@@ -99,7 +99,7 @@ const visitorGuides = {
     takeaway: 'Un analyseur local qui distingue mesures, connaissances communautaires et estimations au lieu de promettre un « boost » universel.',
   },
   'afk-farm': {
-    invitation: 'Un idle magnétique construit pour jouer au jeu que je ne trouvais pas ailleurs.',
+    invitation: 'Le Champ magnétique de Sensoria devenu un idle web, puis un prototype de progression beaucoup plus vaste.',
     firstTry: 'Observe la boucle courte avant de laisser tourner',
     steps: [
       'Lance le prototype et récolte activement les premiers grains.',
@@ -120,37 +120,46 @@ const visitorGuides = {
     ],
     invitation: 'Un compagnon JDR qui sépare ce que prépare le MJ de ce que le joueur a réellement le droit de voir.',
     takeaway: 'Carte, fiches, quêtes, terminaux, table de jeu et synchronisation pensée avec une projection joueur contrôlée côté SQL.',
+    firstTry: 'Ton premier test : envoyer une fiche du MJ vers le joueur',
+    steps: [
+      'Ouvre la démo puis passe dans la Console MJ.',
+      'Choisis une fiche secrète du catalogue et envoie-la au joueur.',
+      'Reviens à la vue joueur : la fiche révélée apparaît dans son module.',
+    ],
+    controls: 'Navigation mobile-first. La démonstration locale permet de passer entre les vues MJ et joueur dans le même navigateur.',
+    saveNote: 'En démo, les données restent dans le stockage local de ce navigateur. Une vraie session multi-appareils utilise séparément Supabase.',
+    comfort: 'La démo ne nécessite ni compte ni backend. Elle ne modifie pas la logique d’authentification ou de synchronisation du mode connecté.',
   },
 };
 
 export const projects = [
   project('sensoria', 'Sensoria', 'experiences', 'Explore 22 tableaux interactifs où le geste transforme l’image.', {
-    art: 'ink', mode: 'Navigateur', live: 'https://mathieubal.github.io/Sensoria/', repo: 'https://github.com/MathieuBal/Sensoria', action: 'Lancer l’expérience',
+    art: 'ink', mode: 'Public · expérience jouable', live: 'https://mathieubal.github.io/Sensoria/', repo: 'https://github.com/MathieuBal/Sensoria', action: 'Lancer l’expérience',
     detail: 'Une galerie sensorielle Canvas/WebGL pensée pour souris, stylet et tactile, avec un socle commun de scènes et de réglages.',
     hint: 'Projet public et réellement testable. Les validations navigateur existent mais ne bloquent pas encore chaque déploiement.',
   }),
   project('million-de-pixels', 'Million de pixels', 'jeux', 'Transforme une image en un plateau de 1 048 576 cellules à détruire.', {
-    art: 'pixels', mode: 'Navigateur', live: 'https://mathieubal.github.io/million-de-pixels/', repo: 'https://github.com/MathieuBal/million-de-pixels', action: 'Jouer',
+    art: 'pixels', mode: 'Public · jeu jouable', live: 'https://mathieubal.github.io/million-de-pixels/', repo: 'https://github.com/MathieuBal/million-de-pixels', action: 'Jouer',
     detail: 'Un idle/roguelite navigateur qui traite réellement un million de cellules avec TypedArrays, index spécialisés, workers et rendu GPU.',
     hint: 'Projet techniquement solide. La reprise après simple retour d’arrière-plan reste un défaut connu à corriger.',
   }),
   project('lootchest', 'Lootchest', 'jeux', 'Ouvre des coffres, construis ton équipement et pousse toujours plus loin ta progression.', {
-    art: 'chest', mode: 'Navigateur', live: 'https://mathieubal.github.io/Lootchest/', repo: 'https://github.com/MathieuBal/Lootchest', action: 'Jouer',
+    art: 'chest', mode: 'Public · prototype riche', live: 'https://mathieubal.github.io/Lootchest/', repo: 'https://github.com/MathieuBal/Lootchest', action: 'Jouer',
     detail: 'RPG-looter vanilla JS avec donjon, affixes, plongée roguelite, village idle, forge, talents, prestige et loot procédural.',
     hint: 'Très riche en systèmes jouables, mais moins industrialisé : pas encore de batterie de tests/CI versionnée.',
   }),
-  project('afk-farm', 'AFK Farm', 'jeux', 'Un idle magnétique personnel devenu un prototype beaucoup plus profond que prévu.', {
-    art: 'orbit', mode: 'Prototype jouable', live: 'https://mathieubal.github.io/afk-farm/', repo: 'https://github.com/MathieuBal/afk-farm', action: 'Essayer le prototype',
-    detail: 'Progression active et AFK, biomes, prestige, projets temporisés et grand arbre de compétences dans une PWA mobile-first.',
-    hint: 'À essayer avec un regard de testeur : plusieurs défauts d’économie et de reprise AFK sont déjà identifiés par l’audit.',
+  project('afk-farm', 'AFK Farm', 'jeux', 'Le champ magnétique de Sensoria transformé en idle web, puis poussé jusqu’aux drones, biomes, chantiers, prestige et arbre de progression.', {
+    art: 'orbit', mode: 'Prototype avancé · jouable', live: 'https://mathieubal.github.io/afk-farm/', repo: 'https://github.com/MathieuBal/afk-farm', action: 'Essayer le prototype',
+    detail: 'Un prototype mobile-first né du feeling du Champ magnétique : récolte active, automatisation, progression AFK, biomes, projets temporisés et arbre à sept branches.',
+    hint: 'Prototype réellement jouable. L’économie des Cores et la reprise après simple mise en arrière-plan restent deux limites connues et assumées.',
   }),
   project('diagnostic', 'Diagnostic numérique', 'outils', 'Prépare des ateliers de médiation avec questions, mini-jeux et manipulations.', {
-    art: 'tools', mode: 'Démo guidée', live: 'https://mathieubal.github.io/diagnostic-numerique/', repo: 'https://github.com/MathieuBal/diagnostic-numerique', action: 'Ouvrir la démonstration', launchLabel: 'Ouvrir la démonstration',
+    art: 'tools', mode: 'Outil de médiation · démo', live: 'https://mathieubal.github.io/diagnostic-numerique/', repo: 'https://github.com/MathieuBal/diagnostic-numerique', action: 'Ouvrir la démonstration', launchLabel: 'Ouvrir la démonstration',
     detail: 'Parcours participant, mode fichiers autonome, tableau de bord animateur, analyses par domaines et proposition de 12 ateliers.',
     hint: 'La démonstration locale est testable. La collecte Supabase réelle doit encore être revalidée de bout en bout.',
   }),
   project('perfoptimize', 'Perfoptimize', 'outils', 'Analyse les performances d’un PC en jeu et transforme les mesures en recommandations explicables.', {
-    art: 'tools', mode: 'Alpha Windows', live: 'https://mathieubal.github.io/Perfoptimize/Perfoptimize-alpha-win-x64.zip', action: 'Télécharger pour Windows', launchLabel: 'Télécharger pour Windows',
+    art: 'tools', mode: 'Alpha Windows · testable', live: 'https://mathieubal.github.io/Perfoptimize/Perfoptimize-alpha-win-x64.zip', action: 'Télécharger pour Windows', launchLabel: 'Télécharger pour Windows',
     detail: 'Moteur .NET partagé CLI/UI, télémétrie locale, frametimes, diagnostics, recommandations, backups et restauration de configurations.',
     hint: 'Windows x64. Alpha non signée ; la signature du binaire et la chaîne de confiance PresentMon restent des chantiers avant diffusion grand public.',
   }),
@@ -160,9 +169,9 @@ export const projects = [
     hint: 'La bêta cloud n’est pas encore déployée et la synchronisation complète du workspace reste dans une PR non mergée. Le projet est volontairement gelé avant ce dernier kilomètre.',
   }),
   project('pipboy', 'Pip-Boy JDR', 'outils', 'Un compagnon de campagne mobile-first avec séparation réelle entre données MJ et données joueur.', {
-    art: 'tools', mode: 'Présentation · démo suspendue', repo: 'https://github.com/MathieuBal/Pipboy',
+    art: 'tools', mode: 'Démo publique · mode connecté séparé', live: 'https://mathieubal.github.io/Pipboy/', repo: 'https://github.com/MathieuBal/Pipboy', action: 'Ouvrir la démo', launchLabel: 'Ouvrir la démo',
     detail: 'React/TypeScript, cartes, fiches, brouillard, table de jeu et terminaux, avec projection joueur filtrée côté PostgreSQL et tests de sécurité PGlite.',
-    hint: 'Le lancement direct est retiré de Labz tant qu’une ancienne carte officielle Fallout redistribuée dans le projet n’a pas été remplacée par un asset original.',
+    hint: 'La démo publique fonctionne localement dans le navigateur. La partie authentifiée Supabase, les sessions MJ/joueur et leurs contrôles de sécurité restent une couche distincte.',
   }),
   project('ateliers-memoire', 'Outils d’ateliers mémoire', 'cas', 'Trois petites activités conçues pour rendre des ateliers mémoire plus interactifs.', {
     art: 'tools', mode: 'Étude de cas · usage terrain',
@@ -179,10 +188,10 @@ export const projects = [
     detail: 'Saloon et HotzDoggz répondent au même besoin métier à plusieurs années d’intervalle. ZepRasso, le détour par Zepevents puis le retour vers ZepRasso racontent ensuite un arbitrage entre web participatif, QR code et poste local.',
     hint: 'HotzDoggz a réellement tourné environ quinze jours et servi une quarantaine de personnes. ZepRasso est devenu la direction événementielle la plus large ; Zepevents reste une alternative locale. Une éventuelle convergence des fonctions est une piste, pas un développement planifié.',
   }),
-  project('totalwarai', 'Total War AI', 'recherche', 'Une tentative de construire un général autonome pour observer les batailles au lieu de les jouer soi-même.', {
-    art: 'orbit', mode: 'R&D expérimentale', repo: 'https://github.com/MathieuBal/Totalwarai',
-    detail: 'Agent adaptatif à règles, pont Python/Lua, télémétrie, simulateur, mémoire et tests en vraie bataille sur Total War: WARHAMMER III.',
-    hint: 'Expérience techniquement ambitieuse mais objectif non atteint : l’agent n’a jamais gagné une vraie bataille. Le projet est présenté pour ce qu’il a permis d’apprendre, pas comme une IA performante.',
+  project('totalwarai', 'Total War AI', 'recherche', 'Une expérimentation pour mesurer jusqu’où un agent tactique autonome peut aller quand les API du jeu ne lui donnent qu’une vision partielle de la bataille.', {
+    art: 'orbit', mode: 'R&D · expérimentation arrêtée', repo: 'https://github.com/MathieuBal/Totalwarai',
+    detail: 'Pont Lua/Python, télémétrie, règles, simulateur et essais réels ont permis d’explorer le contrôle autonome avant de révéler une limite structurelle d’information face à l’IA interne du moteur.',
+    hint: 'Expérimentation arrêtée. Le projet n’a jamais gagné une vraie bataille ; sa valeur tient surtout à la démarche empirique et aux limites identifiées.',
   }),
 ].map(p => ({...p, ...visitorGuides[p.id]}));
 
