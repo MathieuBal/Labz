@@ -12,7 +12,7 @@ Cette passe ne crée pas de nouveaux projets. Elle consolide la manière dont le
 - une expérimentation arrêtée peut rester dans Labz si ce qu’elle a permis d’apprendre est intéressant ;
 - les limites connues restent visibles dans les fiches.
 
-## Ajustements de cette passe
+## Ajustements effectivement livrés dans la v0.18.7
 
 ### AFK Farm
 
@@ -38,4 +38,15 @@ Le catalogue distingue maintenant explicitement :
 - étude de cas avec usage terrain ou réel ;
 - R&D et expérimentation arrêtée.
 
-La page Nouveautés reçoit une entrée dédiée à cette révision éditoriale sans créer artificiellement une nouvelle version de Labz pour un changement de contenu.
+## Travail éditorial restant à intégrer
+
+La v0.18.7 ne contient pas encore l’ensemble des récits préparés pendant la revue orale des douze projets. Les fiches suivantes doivent encore être reprises pour intégrer pleinement leur histoire, leur origine, leur évolution organique, les choix de conception et les apprentissages racontés pendant cette revue :
+
+- Perfoptimize ;
+- Constella ;
+- Crimson’s Blade ;
+- Diagnostic numérique ;
+- Outils d’ateliers mémoire ;
+- ainsi que toute fiche dont la version actuelle n’emploie encore qu’un résumé générique alors qu’un récit plus complet a été préparé.
+
+La cible éditoriale reste la même que pour la fiche RP : expliquer d’abord ce qu’est le projet, puis pourquoi il a été créé, comment il a évolué, ce qu’il fait concrètement, ce qu’il a appris à son auteur et dans quel état il se trouve aujourd’hui.
