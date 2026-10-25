@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.7",
+    "date": "2026-10-25",
+    "title": "Les fiches retrouvent leur vrai statut",
+    "description": "La revue éditoriale des douze fiches est consolidée : AFK Farm et Total War AI sont recadrés à partir du code et les statuts du catalogue distinguent mieux ce qui est public, jouable, en pause ou expérimental.",
+    "items": [
+      "AFK Farm repart de son vrai point de départ : le Champ magnétique de Sensoria, transformé en mécanique d’un idle web devenu beaucoup plus ambitieux.",
+      "Total War AI est présenté comme une expérimentation arrêtée face à une information de bataille incomplète, avec sa démarche empirique et ses limites structurelles.",
+      "Les statuts du catalogue sont harmonisés entre projets publics, prototypes jouables, démos, alpha, études de cas, projet en pause et R&D arrêtée."
+    ]
+  },
+  {
     "version": "0.18.6",
     "date": "2026-10-25",
     "title": "La fiche RP parle enfin avec ma voix",
