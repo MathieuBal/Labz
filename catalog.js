@@ -174,10 +174,10 @@ export const projects = [
     detail: 'Application multi-utilisateur Node/PostgreSQL déployée et utilisée durablement par une guilde Throne and Liberty : disponibilités, compositions, raids et distribution de loot.',
     hint: 'Le dépôt reste privé et ne doit pas être redéployé tel quel : l’audit a identifié plusieurs dettes sécurité et des données historiques à conserver privées.',
   }),
-  project('ecosysteme-rp', 'Écosystème RP · Zep', 'cas', 'Une lignée d’outils conçus pour absorber la logistique et rendre du temps au jeu de rôle.', {
+  project('ecosysteme-rp', 'Écosystème RP · Zep', 'cas', 'Quatre outils nés de problèmes RP réels : gérer une entreprise, puis organiser des événements sans étouffer le jeu.', {
     art: 'tools', mode: 'Étude de cas · usage réel', repo: 'https://github.com/MathieuBal/HotzDoggz-bot',
-    detail: 'Saloon automatise une première activité RP, HotzDoggz industrialise la gestion d’entreprise, puis ZepRasso et Zepevents explorent deux façons d’organiser des événements sans casser l’immersion.',
-    hint: 'HotzDoggz a réellement tourné environ quinze jours et servi une quarantaine de personnes. Les quatre dépôts sont présentés comme une évolution, pas quatre produits indépendants.',
+    detail: 'Saloon et HotzDoggz répondent au même besoin métier à plusieurs années d’intervalle. ZepRasso, le détour par Zepevents puis le retour vers ZepRasso racontent ensuite un arbitrage entre web participatif, QR code et poste local.',
+    hint: 'HotzDoggz a réellement tourné environ quinze jours et servi une quarantaine de personnes. ZepRasso est devenu la direction événementielle la plus large ; Zepevents reste une alternative locale. Une éventuelle convergence des fonctions est une piste, pas un développement planifié.',
   }),
   project('totalwarai', 'Total War AI', 'recherche', 'Une tentative de construire un général autonome pour observer les batailles au lieu de les jouer soi-même.', {
     art: 'orbit', mode: 'R&D expérimentale', repo: 'https://github.com/MathieuBal/Totalwarai',
