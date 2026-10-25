@@ -8,7 +8,7 @@ const profiles = {
     type: 'product',
     kicker: 'GALERIE INTERACTIVE · 22 TABLEAUX',
     headline: 'Touchez l’image. Regardez-la vous répondre.',
-    narrative: 'Sensoria est une collection de 22 mondes interactifs à explorer avec les gestes. Ici, pas de score à battre ni de bonne façon de jouer : une surface se trouble, une matière se tend, des encres dérivent, des particules s’organisent. On ne regarde pas simplement l’image — on la provoque.',
+    narrative: 'Sensoria est une collection de 22 mondes interactifs à explorer avec les gestes. Ici, pas de score à battre ni de bonne façon de jouer : une surface se trouble, une matière se tend, des encres dérivent, des particules s’organisent. On ne regarde pas simplement l’image. On la provoque.',
     features: [
       ['Une galerie vraiment vivante', 'Mosaïque infinie, Lac nocturne, Ferrofluide, Argile vivante, Encres flottantes ou Échos du geste : chaque tableau possède sa propre ambiance, ses propres réactions et sa propre manière d’être découvert.'],
       ['Le geste comme langage', 'Dessiner, pousser, attirer, maintenir, perturber ou simplement effleurer : la souris, le stylet et le tactile ne servent pas à naviguer autour de l’œuvre, ils font partie de l’œuvre.'],
@@ -75,7 +75,7 @@ const profiles = {
     aboutTitle: 'Quand le jeu que l’on veut n’existe pas, on peut essayer de le fabriquer.',
     about: [
       'AFK Farm appartient à une famille de projets nés sans cahier des charges extérieur : l’envie de jouer à quelque chose de précis, l’impression de ne pas le trouver exactement ailleurs, puis la décision d’en construire une version soi-même. Le champ magnétique fournit le geste de départ ; l’idle vient ensuite donner une raison d’y revenir.',
-      'Le projet a été poussé bien plus loin que cette première intuition. Chaque système ajouté — drones, chantiers, biomes, prestige ou arbre — cherche à déplacer progressivement le joueur de la récolte immédiate vers la construction d’une machine qui travaille pour lui. C’est cette trajectoire, plus que l’équilibrage actuel, qui donne son identité au prototype.'
+      'Le projet a été poussé bien plus loin que cette première intuition. Chaque système ajouté, des drones au prestige en passant par les biomes et l’arbre, cherche à déplacer progressivement le joueur de la récolte immédiate vers la construction d’une machine qui travaille pour lui. C’est cette trajectoire, plus que l’équilibrage actuel, qui donne son identité au prototype.'
     ],
     tech: [['Surface', 'Navigateur · PWA mobile-first'], ['Moteur', 'Canvas · tableaux typés · densité adaptée à l’écran'], ['Progression', 'Biomes · projets · prestige · arbre à 7 branches'], ['État', 'Prototype jouable ouvert aux retours']],
     status: 'AFK Farm est précisément le type de projet que Labz peut aider à décider de reprendre. La boucle existe et le contenu est déjà conséquent, mais deux incohérences touchent encore le cœur du jeu : le retour après mise en arrière-plan peut perdre une partie de la progression AFK, et les Cores servent à la fois de multiplicateur et de monnaie dépensable, ce qui peut rendre certains achats contre-productifs. La fiche assume donc un prototype avancé, pas un idle équilibré et terminé.'
@@ -166,7 +166,7 @@ const profiles = {
   },
   totalwarai: {
     type: 'research', kicker: 'R&D EXPÉRIMENTALE', headline: 'Construire un général autonome, puis comprendre pourquoi la vraie bataille refuse le scénario prévu.',
-    narrative: 'Total War AI cherchait à permettre d’observer les batailles plutôt que de les jouer soi-même. Le projet a construit beaucoup de briques sérieuses — pont Lua/Python, télémétrie, règles, mémoire, simulateur et tests — mais l’objectif final n’a pas été atteint en vraie bataille.',
+    narrative: 'Total War AI cherchait à permettre d’observer les batailles plutôt que de les jouer soi-même. Le projet a construit beaucoup de briques sérieuses : pont Lua/Python, télémétrie, règles, mémoire, simulateur et tests. Malgré cela, l’objectif final n’a pas été atteint en vraie bataille.',
     question: 'Peut-on piloter une armée de Total War: WARHAMMER III avec un agent tactique à règles suffisamment autonome pour gagner une vraie bataille ?',
     experiments: [
       ['Instrumentation', 'Pont Lua/Python et télémétrie pour transformer l’état du champ de bataille en données exploitables.'],
