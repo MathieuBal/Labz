@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.6",
+    "date": "2026-10-25",
+    "title": "La fiche RP parle enfin avec ma voix",
+    "description": "Le récit du parcours passe à la première personne et les deux projets Zep sont maintenant définis clairement avant d’expliquer leurs choix de conception.",
+    "items": [
+      "Les passages autobiographiques parlent désormais en « je » au lieu de raconter mon parcours comme s’il appartenait à un tiers.",
+      "ZepRasso est présenté dès l’ouverture comme une plateforme web locale d’événements automobiles GTA RP, avec rôle joueur et administration organisateur clairement distingués.",
+      "Zepevents est défini comme une application locale côté organisateur pour gérer inscriptions, véhicules, concours, paiements, caisse, loteries et résultats sans imposer de site aux participants."
+    ]
+  },
+  {
     "version": "0.18.5",
     "date": "2026-10-25",
     "title": "La chronologie RP retrouve sa vraie logique",
