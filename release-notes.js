@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.2",
+    "date": "2026-10-25",
+    "title": "L’écosystème RP raconte enfin le travail derrière les outils",
+    "description": "La chronologie RP devient une vraie étude de cas : fonctions, flux, architecture, usage réel, compromis produit et limites sont montrés au lieu de résumer quatre projets en quelques lignes.",
+    "items": [
+      "La timeline Saloon → HotzDoggz → ZepRasso → Zepevents reste la colonne vertébrale, mais chaque génération devient un mini-dossier avec capacités, fonctionnement et enseignements.",
+      "HotzDoggz est remis au centre avec son workflow de ventes, preuves, validation, comptabilité, paies, dashboards, architecture PostgreSQL et chiffres d’exploitation documentés.",
+      "ZepRasso et Zepevents montrent deux compromis événementiels différents ; la fiche explique aussi pourquoi aucune fausse capture ni démo artificielle n’est publiée aujourd’hui."
+    ]
+  },
+  {
     "version": "0.18.1",
     "date": "2026-10-24",
     "title": "Les démos racontent mieux ce qu’elles font ressentir",
