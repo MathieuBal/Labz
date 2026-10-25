@@ -104,22 +104,38 @@ const profiles = {
   },
   pipboy: {
     type: 'product',
-    kicker: 'COMPAGNON JDR · DÉMO NAVIGATEUR',
-    headline: 'Le MJ prépare le monde. Le joueur ne découvre que ce qu’on lui révèle.',
-    narrative: 'Pip-Boy JDR transforme une campagne Fallout personnelle en compagnon numérique de table. Le MJ prépare cartes, personnages, quêtes, documents et secrets ; le joueur reçoit progressivement ce que son personnage a réellement découvert. La démo publique permet de tester cette relation immédiatement, sans compte ni backend.',
+    kicker: 'COMPAGNON JDR · MOBILE-FIRST · DÉMO NAVIGATEUR',
+    headline: 'Faire du Pip-Boy un véritable objet de la partie.',
+    narrative: 'Pip-Boy JDR est un compagnon numérique pour ma campagne Fallout. Côté joueur, il devient l’écran de référence pour consulter carte, journal, quêtes, personnes rencontrées, documents, terminaux et informations révélées pendant la partie. Côté MJ, une console séparée permet de préparer le contenu, de le garder secret puis de l’envoyer au bon moment.',
+    origin: {
+      label: 'POURQUOI JE L’AI CRÉÉ',
+      title: 'Je voulais que le Pip-Boy existe vraiment pendant la partie.',
+      paragraphs: [
+        'Le point de départ n’était pas de mieux ranger mes notes de MJ. En préparant ma campagne Fallout autour de Smoky Waters, je voulais rendre l’expérience plus sombre et plus immersive, avec un vrai compagnon mobile que le joueur puisse consulter comme s’il utilisait son propre Pip-Boy.',
+        'Au début, l’idée est donc surtout côté joueur : faire du téléphone un objet de la fiction. Puis le projet grandit. Pour alimenter ce Pip-Boy pendant une séance, il me faut un espace MJ capable de préparer des informations à l’avance, de les garder invisibles et de les révéler exactement quand la fiction le justifie.'
+      ],
+    },
     features: [
-      ['Un Pip-Boy pour la campagne', 'Carte interactive, journal, quêtes, personnes, faune, objets, holobandes, terminaux, table de jeu, brouillard et scénarios vivent dans une même interface mobile-first pensée pour accompagner la partie plutôt que la remplacer.'],
-      ['Les secrets restent vraiment côté MJ', 'Dans une vraie session connectée, les contenus masqués ne sont pas envoyés au joueur puis cachés avec du CSS : PostgreSQL fabrique une projection filtrée avant la réponse, et les tests de sécurité vérifient la séparation propriétaire / joueur / tiers.'],
-      ['Une démo immédiate, un mode campagne séparé', 'La version Labz fonctionne localement dans un seul navigateur : ouvrez la Console MJ, envoyez une fiche secrète puis revenez côté joueur pour la voir apparaître. Le mode Supabase ajoute ensuite la synchronisation réelle entre appareils.'],
+      ['Un objet de jeu dans la poche', 'Carte interactive, journal, quêtes, personnes, faune, objets, holobandes et terminaux donnent au joueur un écran qu’il peut réellement consulter pendant la séance plutôt qu’une simple fiche de personnage numérique.'],
+      ['Préparer sans révéler', 'La Console MJ regroupe fiches, scénarios, documents, cartes et éléments secrets. Je peux préparer beaucoup de contenu à l’avance sans le rendre visible, puis envoyer ou retirer une information quand la partie le demande.'],
+      ['Faire évoluer la table en direct', 'Position, tokens, brouillard, scènes, table de jeu et révélations permettent au compagnon de suivre ce qui se passe réellement autour de la table au lieu de rester une encyclopédie statique.'],
     ],
-    aboutLabel: 'À LA TABLE',
-    aboutTitle: 'Le numérique doit soutenir le rythme du JDR, pas prendre la place de la partie.',
+    flowLabel: 'COMMENT ÇA SE PASSE À TABLE',
+    flowTitle: 'Préparer, cacher, révéler.',
+    flow: [
+      ['Je prépare', 'Dans la Console MJ, je crée ou j’organise cartes, fiches, quêtes, documents, terminaux et éléments secrets avant ou pendant la séance.'],
+      ['Je garde caché', 'Tant qu’une information n’a pas été découverte dans la fiction, elle reste hors de la vue joueur.'],
+      ['Je révèle au bon moment', 'Quand la partie le justifie, j’envoie une fiche, un lieu, un indice ou un document. Le joueur le voit apparaître dans son Pip-Boy.'],
+      ['Le Pip-Boy suit la partie', 'Carte, tokens, brouillard, journal et contenus révélés peuvent ensuite évoluer avec ce qui se passe réellement à table.'],
+    ],
+    aboutLabel: 'CE QUI SE PASSE SOUS LE CAPOT',
+    aboutTitle: 'Cacher un secret dans l’interface ne suffisait pas.',
     about: [
-      'Le cœur de Pip-Boy JDR n’est pas l’esthétique Fallout : c’est la gestion de ce que chaque personne autour de la table sait à un instant donné. Le MJ peut préparer beaucoup d’informations à l’avance sans les dévoiler, puis faire apparaître une fiche, un lieu, un document ou un indice au moment où la fiction le justifie.',
-      'La démo condense ce principe dans un seul navigateur pour qu’il soit immédiatement testable. Le mode connecté pousse ensuite la même logique plus loin : le téléphone du joueur reçoit sa propre projection de la campagne, tandis que les secrets restent filtrés côté base de données plutôt que simplement masqués visuellement.'
+      'La démo Labz condense volontairement le principe dans un seul navigateur grâce au stockage local. On peut passer de la Console MJ à la vue joueur, envoyer une fiche secrète puis vérifier immédiatement comment la révélation fonctionne, sans compte ni backend.',
+      'Le mode connecté va plus loin : les secrets ne sont pas tous envoyés au téléphone du joueur puis masqués avec l’interface. PostgreSQL construit une projection filtrée de la campagne avant la réponse. Les tests SQL vérifient notamment la séparation propriétaire, joueur et tiers, ainsi que les révélations, retraits et conflits de révision.'
     ],
-    tech: [['Surface', 'Navigateur · mobile-first'], ['Stack', 'React + TypeScript + Vite'], ['Démo', 'LocalStorage · aucun compte requis'], ['Mode connecté', 'Supabase · PostgreSQL · Realtime']],
-    status: 'La démo publique est aujourd’hui le parcours recommandé : elle est autonome et utilise les assets originaux ou générés pour le projet, la carte officielle Fallout précédemment présente ayant été retirée du dépôt. Le mode authentifié possède déjà une architecture serveur solide et des tests SQL / navigateur poussés ; il reste néanmoins à refaire une recette complète sur deux appareils réels avant de le présenter comme parcours principal public.'
+    tech: [['Surface', 'Navigateur · mobile-first'], ['Stack', 'React + TypeScript + Vite'], ['Démo', 'LocalStorage · aucun compte requis'], ['Mode connecté', 'Supabase · PostgreSQL · Realtime'], ['Validation', 'PGlite + smoke tests Chromium / WebKit']],
+    status: 'La démo locale est aujourd’hui le meilleur parcours public pour découvrir le concept. Elle utilise les assets originaux ou générés pour le projet, l’ancienne carte officielle Fallout ayant été retirée du dépôt. Le mode connecté possède déjà une architecture serveur solide et des tests poussés, mais je veux encore refaire une recette complète sur deux appareils réels avant de le présenter comme parcours principal.'
   },
   constella: {
     type: 'suite', kicker: 'SUITE PRODUIT', headline: 'Deux façons d’explorer : ce que tu aimes, et ce qui change autour de toi.',
@@ -183,8 +199,10 @@ function heading(profile) {
 }
 
 function product(profile) {
+  const origin = profile.origin?.paragraphs?.length ? `<section class="rich-about rich-origin"><span class="eyebrow">${esc(profile.origin.label || 'POURQUOI JE L’AI CRÉÉ')}</span><h3>${esc(profile.origin.title || '')}</h3>${profile.origin.paragraphs.map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}</section>` : '';
+  const flow = profile.flow?.length ? `<section class="rich-about rich-product-flow"><span class="eyebrow">${esc(profile.flowLabel || 'COMMENT ÇA FONCTIONNE')}</span><h3>${esc(profile.flowTitle || '')}</h3><ol class="project-timeline">${profile.flow.map(([title,body],index) => `<li><span class="timeline-index">${String(index + 1).padStart(2,'0')}</span><div><h3>${esc(title)}</h3><p>${esc(body)}</p></div></li>`).join('')}</ol></section>` : '';
   const about = profile.about?.length ? `<section class="rich-about"><span class="eyebrow">${esc(profile.aboutLabel || 'À PROPOS')}</span><h3>${esc(profile.aboutTitle || '')}</h3>${profile.about.map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}</section>` : '';
-  return `${heading(profile)}<div class="rich-feature-grid">${profile.features.map(([title,body]) => `<article><h3>${esc(title)}</h3><p>${esc(body)}</p></article>`).join('')}</div>${about}<div class="rich-project-columns"><section class="rich-tech"><span class="eyebrow">SOUS LE CAPOT</span><dl>${profile.tech.map(([key,value]) => `<div><dt>${esc(key)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl></section><section class="rich-status"><span class="eyebrow">ÉTAT DU PROJET</span><p>${esc(profile.status)}</p></section></div>`;
+  return `${heading(profile)}${origin}<div class="rich-feature-grid">${profile.features.map(([title,body]) => `<article><h3>${esc(title)}</h3><p>${esc(body)}</p></article>`).join('')}</div>${flow}${about}<div class="rich-project-columns"><section class="rich-tech"><span class="eyebrow">SOUS LE CAPOT</span><dl>${profile.tech.map(([key,value]) => `<div><dt>${esc(key)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl></section><section class="rich-status"><span class="eyebrow">ÉTAT DU PROJET</span><p>${esc(profile.status)}</p></section></div>`;
 }
 
 function suite(profile) {
