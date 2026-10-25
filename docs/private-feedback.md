@@ -1,93 +1,95 @@
-# Retours privés — service activé
+# Retours privés Labz
 
-## État courant au 21 octobre 2026
+**État courant : 25 octobre 2026**
 
-La consultation et les changements de statut se font dans Labz `#/admin`, pour le propriétaire explicitement autorisé. Aucun utilisateur anonyme ou authentifié sans cette autorisation ne peut consulter les retours. Le rôle authentifié possède SELECT sous RLS et UPDATE sur la seule colonne `status`, sous RLS. Les export/publication GitHub du formulaire ont été retirés en v0.8.
+Labz reçoit les avis visiteurs sans compte via une Edge Function Supabase publique, puis les conserve dans une table privée. La consultation et les changements de statut se font dans `#/admin` pour un propriétaire explicitement autorisé.
 
-Les quotas et la purge décrits plus bas restent en place. Le statut Traité ne libère pas de capacité et aucune suppression intégrée n’est encore disponible. La v0.11 ajoute les identifiants persistants après rechargement et l’effacement des brouillons (voir [garanties](feedback-drafts.md)). La récupération d’accès et une purge planifiée restent à développer : [plan actif](development-plan.md).
+## Contrat actuel
 
-L’advisor du 21 octobre signale la table quota sans politique (refus volontaire) et la protection contre les mots de passe compromis désactivée (à examiner selon l’offre).
+Le navigateur envoie :
 
-## Archive technique de mise en service — 20 octobre 2026
+- un slug projet ;
+- un type parmi `idea`, `bug`, `opinion` ;
+- un titre de 3 à 120 caractères ;
+- un message de 5 à 3 000 caractères ;
+- un pseudo facultatif de 50 caractères maximum ;
+- un UUID de requête durable pour les relances du même texte.
 
-La description initiale ci-dessous précède la migration d’administration : les mentions d’absence de droits authenticated et de consultation uniquement via Supabase ne représentent plus l’état actuel. Les tests et nombres cités sont ceux de cette mise en service.
+Le slug projet n’est plus maintenu dans une whitelist parallèle au catalogue. La fonction et la base vérifient seulement un identifiant propre et borné : lettres minuscules, chiffres, tirets internes, 64 caractères maximum. Le client ne propose de formulaire que pour les projets présents dans `catalog.js`, et un test de contrat vérifie que les douze projets actifs sont acceptés par le validateur serveur.
 
-Le site reste sur GitHub Pages. Une Edge Function Supabase reçoit les messages
-sans création de compte et les enregistre dans une table privée. Aucun email
-n’est envoyé automatiquement. Le propriétaire consulte la table depuis son
-espace Supabase ; il peut y lire et supprimer les retours.
+Cette règle supprime le défaut découvert en v0.18.8 : six fiches actives pouvaient ouvrir le formulaire mais étaient rejetées par une ancienne liste serveur de huit projets.
 
-## État au 20 octobre 2026
+## Protections serveur
 
-Projet dédié : `kforawentogotkizxldl`, organisation Sagazo, région Paris.
-Fonction `labz-feedback` déployée et URL publique renseignée dans le site.
-Un message synthétique a été reçu via HTTP, retrouvé une seule fois en base
-après une relance, puis supprimé. Prévol CORS 204, envoi 201, origine étrangère
-403. Les rôles anon et authenticated ne peuvent pas lire la table ; anon ne
-peut pas appeler la fonction SQL. La fonction SQL utilise SECURITY INVOKER.
+- origine navigateur limitée à `https://mathieubal.github.io` ;
+- `POST` et prévol `OPTIONS` uniquement ;
+- `Content-Type: application/json` obligatoire ;
+- corps borné à 16 Ko ;
+- validation serveur de chaque champ ;
+- champ honeypot ;
+- aucune clé secrète dans le bundle Pages ;
+- fonction SQL `SECURITY INVOKER` appelée avec un rôle serveur ;
+- table de retours sous RLS ;
+- rôle visiteur sans accès direct aux messages ;
+- rôle authentifié limité par RLS aux administrateurs enregistrés dans `labz_admins` ;
+- l’admin ne peut modifier que la colonne `status`.
 
-Les contrôles Supabase ne signalent que deux informations RLS sans politique :
-c’est volontaire pour ces tables privées, sans droits visiteurs. Explication :
-https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy
+La clé présente dans `admin-config.js` est une clé Supabase publishable. Les clés secrètes restent dans l’environnement Edge Function.
 
-Consultation des messages par le propriétaire :
-https://supabase.com/dashboard/project/kforawentogotkizxldl/editor
-Table : `labz_feedback`. Les limites de volume ci-dessous restent en place.
+## Volume et conservation
 
-## Procédure de déploiement (déjà exécutée)
+- 100 nouveaux messages maximum par jour UTC ;
+- 500 messages présents maximum ;
+- `request_id` est la clé primaire et rend une relance identique idempotente ;
+- les messages de plus de 90 jours sont supprimés lors d’un nouvel envoi ;
+- le statut `done` organise la boîte mais ne libère pas de capacité ;
+- aucune purge périodique indépendante n’est encore planifiée.
 
-1. Connecter Supabase et choisir un projet appartenant à Mathieu. Privilégier un
-   projet dédié ; vérifier l’absence de tables `labz_feedback*` avant migration.
-2. Appliquer `supabase/migrations/20261020150000_labz_feedback.sql` une seule fois.
-3. Déployer la fonction `labz-feedback`, avec `verify_jwt = false` comme indiqué
-   dans `supabase/config.toml`. C’est un point d’entrée volontairement public.
-4. La fonction lit `SUPABASE_URL` et `SUPABASE_SECRET_KEYS.default` côté serveur.
-   À défaut, configurer `LABZ_SECRET_KEY` avec une clé secrète Supabase moderne.
-   Aucune de ces clés ne doit apparaître dans les fichiers du site.
-5. Vérifier l’origine autorisée, la réponse après stockage et l’impossibilité de
-   lire la table avec un rôle visiteur. Utiliser uniquement des données de test,
-   puis les supprimer. Vérifier les coûts/quotas du compte avant ouverture.
-6. Renseigner uniquement l’URL HTTPS de la fonction dans `feedback-config.js`,
-   republier Labz, puis vérifier l’envoi et l’échec réseau depuis le site.
+Le quota global protège principalement le coût et le stockage. Origin + honeypot ne remplacent pas une vraie protection anti-abus si Labz devait recevoir beaucoup de trafic public.
 
-## Protections et limites
+## Brouillons côté navigateur
 
-- Seuls huit identifiants de projets et trois types de retour sont acceptés.
-- Taille de requête limitée à 16 Ko, titre 120 caractères, message 3 000,
-  pseudo facultatif 50. Aucun email ni IP n’est enregistré par ce code.
-  L’hébergeur peut conserver ses journaux techniques habituels.
-- Champ piège antirobot, validation serveur et origine navigateur restreinte.
-  Le contrôle d’origine et le champ piège ne bloquent pas un robot déterminé.
-- Admission SQL atomique : 100 nouveaux messages par jour UTC, au maximum
-  500 messages présents. Ces limites protègent le volume de stockage ; un robot
-  peut saturer la boîte. Prévoir un CAPTCHA avant une diffusion importante.
-- Un identifiant de requête évite les doubles insertions lors d’une relance
-  pendant la même session. Les doublons après rechargement ne sont pas garantis.
-- Pas de lecture ou d’écriture directe pour `anon` ou `authenticated`, pas de
-  liste des messages accessible au public. La fonction n’expose que son accusé.
-- Nettoyage des messages de plus de 90 jours au prochain envoi. Sans nouveaux
-  envois, aucune purge planifiée ne s’exécute ; le propriétaire peut supprimer
-  les messages manuellement. Le texte du formulaire le précise.
-- Si la boîte est pleine, le navigateur conserve le brouillon. Un délai expiré
-  n’est jamais présenté comme un envoi confirmé. Réessayer réutilise l’identifiant.
+Les brouillons restent sur l’appareil pendant 30 jours après leur dernière modification. Le système conserve aussi l’identité d’une tentative afin qu’une réponse réseau perdue puisse être relancée sans créer automatiquement un doublon.
+
+Un texte modifié reçoit une nouvelle identité. Une réponse tardive ne peut pas ressusciter un brouillon effacé ni marquer comme reçu un texte modifié entre-temps. Si le stockage local est indisponible, le brouillon continue à fonctionner en mémoire mais Labz avertit que la persistance entre rechargements n’est plus garantie.
+
+## Administration
+
+`#/admin` fournit :
+
+- connexion par compte Supabase Auth préalablement autorisé ;
+- recherche ;
+- filtre projet ;
+- filtre statut ;
+- compteurs Nouveau / En cours / Traité ;
+- visibilité de la capacité utilisée ;
+- modification du seul statut.
+
+Les tokens et messages restent en mémoire. Recharger la page, quitter l’espace admin, expirer la session ou se déconnecter supprime l’état sensible local. Les réponses réseau tardives sont ignorées après invalidation de session.
 
 ## Vérifications
 
-`npm run check` exécute 14 tests Node, notamment validation, rejet d’origine,
-limite de taille, erreurs de stockage, réponse de quota et accusé explicite.
-Les parcours DOM passent avec le service désactivé et avec une réception simulée : accusé, identifiant réutilisé et brouillon conservé après panne.
+La CI couvre notamment :
 
-La migration a aussi été exécutée dans PostgreSQL embarqué via PGlite : contrôle
-réel des droits des rôles, insertion par le service, doublons et quota. Pour
-reproduire sans ajouter de dépendance au site :
+- validation des champs ;
+- rejet d’une origine étrangère ;
+- taille maximale ;
+- quota et erreurs de stockage ;
+- accusé explicite côté client ;
+- relance idempotente ;
+- édition pendant un envoi ;
+- stockage local indisponible ;
+- expiration et nettoyage des brouillons ;
+- droits et comportements du client admin ;
+- contrat catalogue → validateur feedback pour les douze projets actifs.
 
-```sh
-npm install --prefix /tmp/labz-sql-check @electric-sql/pglite
-LABZ_PGLITE_MODULE=/tmp/labz-sql-check/node_modules/@electric-sql/pglite/dist/index.js node scripts/check-feedback-db.mjs
-```
+La migration production `20261025225014_feedback_project_slug_constraint` a supprimé l’ancienne contrainte SQL à huit projets. L’Edge Function `labz-feedback` version 2 applique le même contrat de slug. Une vérification transactionnelle annulée a confirmé que les douze slugs actuels sont acceptés par la fonction SQL sans conserver de données de test.
 
-Le test HTTP sur le projet déployé a aussi réussi. Une recette sur iPhone réel reste nécessaire.
+## Limites restantes
 
-Références officielles consultées :
-- https://supabase.com/docs/guides/functions/secrets
-- https://supabase.com/docs/guides/functions/function-configuration
+- récupération de mot de passe propriétaire non intégrée dans Labz ;
+- protection Supabase contre les mots de passe compromis à activer si disponible pour le projet ;
+- pas de CAPTCHA ou de rate limit par source ;
+- pas de purge planifiée autonome ;
+- recette complète propriétaire sur téléphone réel encore à réaliser ;
+- les retours sont encore gérés message par message : leur transformation en sujets et décisions reste le prochain chantier produit.
