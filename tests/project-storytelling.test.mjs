@@ -25,7 +25,16 @@ test('la fiche Sensoria présente le projet comme un laboratoire des capacités 
   const source = await read('project-pages.js');
   assert.match(source, /LABORATOIRE WEB · 22 EXPÉRIENCES/);
   assert.match(source, /Jusqu’où peut-on pousser un navigateur/);
-  assert.match(source, /me confronter à mes propres limites de développement et aux limites pratiques du web/);
+  assert.match(source, /explorer les limites pratiques du web/);
   assert.match(source, /sans introduire un moteur de jeu dédié/);
   assert.match(source, /Pas un benchmark, un laboratoire perceptible/);
+});
+
+test('la fiche Million de Pixels raconte le déclic mobile puis la transformation de toute image en niveau', async () => {
+  const source = await read('project-pages.js');
+  assert.match(source, /Et si n’importe quelle photo pouvait devenir un niveau de jeu/);
+  assert.match(source, /Une pub de jeu mobile m’a donné une idée beaucoup plus grande/);
+  assert.match(source, /et si je pouvais prendre n’importe quelle photo et en faire directement un niveau de jeu/);
+  assert.match(source, /1 048 576 cellules/);
+  assert.match(source, /COMMENT UNE IMAGE DEVIENT UN NIVEAU/);
 });
