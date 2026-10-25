@@ -13,7 +13,7 @@ const profiles = {
       label: 'POURQUOI JE L’AI CRÉÉ',
       title: 'Je voulais voir jusqu’où le navigateur pouvait aller.',
       paragraphs: [
-        'Le point de départ était autant personnel que technique : me confronter à mes propres limites de développement et aux limites pratiques du web. Jusqu’où puis-je simuler une matière, faire vivre une scène 3D, gérer plusieurs points de contact ou construire une réaction crédible tout en restant dans une page web ?',
+        'Le point de départ était simple : explorer les limites pratiques du web. Jusqu’où peut-on simuler une matière, faire vivre une scène 3D, gérer plusieurs points de contact ou construire une réaction crédible tout en restant dans une page web ?',
         'Plutôt qu’un benchmark ou une seule démonstration, j’ai choisi d’en faire une collection. Chaque expérience isole un comportement différent et me donne un nouveau terrain pour tester une idée, une technique ou une contrainte. C’est aussi très proche de l’esprit que j’ai ensuite donné à Labz : expérimenter, montrer le résultat et apprendre de ce qui résiste.'
       ],
     },
