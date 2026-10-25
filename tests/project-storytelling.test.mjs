@@ -20,3 +20,12 @@ test('la fiche Pip-Boy raconte son origine réelle à la première personne', as
   assert.match(source, /Préparer, cacher, révéler/);
   assert.match(source, /PostgreSQL construit une projection filtrée de la campagne/);
 });
+
+test('la fiche Sensoria présente le projet comme un laboratoire des capacités du navigateur', async () => {
+  const source = await read('project-pages.js');
+  assert.match(source, /LABORATOIRE WEB · 22 EXPÉRIENCES/);
+  assert.match(source, /Jusqu’où peut-on pousser un navigateur/);
+  assert.match(source, /me confronter à mes propres limites de développement et aux limites pratiques du web/);
+  assert.match(source, /sans introduire un moteur de jeu dédié/);
+  assert.match(source, /Pas un benchmark, un laboratoire perceptible/);
+});
