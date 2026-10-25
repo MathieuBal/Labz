@@ -4,12 +4,13 @@ import {readFile} from 'node:fs/promises';
 
 const read = path => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 
-test('la fiche RP enrichie est chargée et publiée', async () => {
-  const [html, build] = await Promise.all([read('index.html'), read('scripts/build.mjs')]);
-  for (const name of ['rp-case-study.js','rp-case-study.css']) {
-    assert.match(html, new RegExp(name.replace('.', '\\.')));
-    assert.match(build, new RegExp(name.replace('.', '\\.')));
-  }
+test('la fiche RP enrichie est publiée et chargée uniquement depuis son routeur projet', async () => {
+  const [html, build, loader] = await Promise.all([read('index.html'), read('scripts/build.mjs'), read('project-features.js')]);
+  assert.match(html, /rp-case-study\.css/);
+  assert.doesNotMatch(html, /src="rp-case-study\.js"/);
+  assert.match(build, /rp-case-study\.js/);
+  assert.match(loader, /ecosysteme-rp/);
+  assert.match(loader, /rp-case-study\.js/);
 });
 
 test('la fiche RP distingue quatre outils et cinq étapes de parcours', async () => {

@@ -23,6 +23,15 @@ for(const file of ['app.js','catalog.js','release-notes.js','admin-view.js']) {
     await access(new URL(match[1].split('?')[0],root));
   }
 }
+const projectFeatures=await readFile(new URL('project-features.js',root),'utf8');
+assert.match(html,new RegExp(`project-features\\.js\\?v=${revision}`),'Project feature loader needs the same build fingerprint');
+for(const file of ['project-gallery.js','project-pages.js','rp-case-study.js']) {
+  await access(new URL(file,root));
+  assert.match(projectFeatures,new RegExp(file.replace('.', '\\.')));
+  assert.doesNotMatch(html,new RegExp(`<script[^>]+src="${file.replace('.', '\\.')}"`),'Heavy project modules must stay lazy');
+}
+assert.match(projectFeatures,/searchParams\.get\('v'\)/,'Lazy modules must inherit the build fingerprint');
+assert.match(projectFeatures,/searchParams\.set\('v', revision\)/,'Lazy module URLs must preserve cache coherence');
 for (const file of ['model.js','github-activity.js']) await access(new URL(file,root));
 await access(new URL('.nojekyll',root));
-console.log('GitHub Pages package verified under /Labz/: HTML assets, module import, covers and .nojekyll.');
+console.log('GitHub Pages package verified under /Labz/: HTML assets, module imports, lazy project features, covers and .nojekyll.');

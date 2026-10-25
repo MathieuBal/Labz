@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.10",
+    "date": "2026-10-25",
+    "title": "Les pages projet se chargent seulement quand elles servent",
+    "description": "L’accueil, le catalogue et les nouveautés n’embarquent plus immédiatement les longs modules de présentation des fiches projet.",
+    "items": [
+      "Un chargeur léger importe les galeries et les récits riches uniquement lorsqu’une route projet est ouverte.",
+      "L’étude de cas RP reste encore plus ciblée : son module n’est chargé que pour la fiche Écosystème RP.",
+      "Les imports différés héritent de la même empreinte de build que le reste du site afin de conserver la cohérence du cache après publication."
+    ]
+  },
+  {
     "version": "0.18.9",
     "date": "2026-10-25",
     "title": "Labz rembourse sa dette de synchronisation",
