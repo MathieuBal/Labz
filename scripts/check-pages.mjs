@@ -42,7 +42,7 @@ assert.match(robots,/Sitemap: https:\/\/mathieubal\.github\.io\/Labz\/sitemap\.x
 for(const project of projects) {
   const canonical=`https://mathieubal.github.io/Labz/projets/${project.id}/`;
   const page=await readFile(new URL(`projets/${project.id}/index.html`,root),'utf8');
-  assert.match(page,/<base href="\/Labz\/">/,`${project.id}: static page needs the GitHub Pages base`);
+  assert.match(page,/<base href="\.\.\/\.\.\/">/,`${project.id}: static page needs a portable base`);
   assert.ok(page.includes(`<link rel="canonical" href="${canonical}">`),`${project.id}: canonical URL mismatch`);
   assert.ok(page.includes(`<meta property="og:url" content="${canonical}">`),`${project.id}: OpenGraph URL mismatch`);
   assert.ok(page.includes(`#/projet/${project.id}`),`${project.id}: browser bootstrap must open the interactive route`);
