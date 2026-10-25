@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.8",
+    "date": "2026-10-25",
+    "title": "Les douze fiches retrouvent leur récit complet",
+    "description": "La passe éditoriale préparée pendant la revue projet par projet est enfin intégrée dans son ensemble, avec une origine, un déroulé et un état honnête adaptés à chaque création.",
+    "items": [
+      "Sensoria, Million de Pixels, Lootchest, Diagnostic numérique, Perfoptimize, Pip-Boy et AFK Farm récupèrent les récits détaillés travaillés pendant la revue.",
+      "Constella, les outils d’ateliers mémoire, Crimson’s Blade et Total War AI gagnent eux aussi une histoire complète adaptée à leur format de suite, étude de cas ou R&D.",
+      "Les composants de page savent désormais afficher l’origine et le déroulé sur tous les formats, tandis que des tests verrouillent les formulations et faits essentiels de la passe."
+    ]
+  },
+  {
     "version": "0.18.7",
     "date": "2026-10-25",
     "title": "Les fiches retrouvent leur vrai statut",
