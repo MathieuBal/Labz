@@ -116,21 +116,21 @@ function render({focus=true, scroll=true}={}) {
   let active = 'home';
   if (route.segments[0] === 'admin') {
     disposeAdmin = mountAdmin(main, projects);
-    active = 'admin'; document.title = 'Administration — Mathieu / Labs';
+    active = 'admin'; document.title = 'Administration | Mathieu / Labs';
   } else if (route.segments[0] === 'projet') {
     const project = projects.find(p => p.id === route.segments[1]);
     main.innerHTML = project ? detail(project) : retiredProjectIds.includes(route.segments[1]) ? '<div class="empty"><span class="eyebrow">LA SÉLECTION ÉVOLUE</span><h1>Ce projet a quitté la sélection.</h1><p>Le Labs se concentre sur quelques créations. Le dépôt d’origine reste conservé.</p><a href="#/catalogue" class="button primary">Découvrir la sélection →</a></div>' : '<div class="empty"><h1>Projet introuvable.</h1><a href="#/catalogue" class="button secondary">Retour au catalogue</a></div>';
-    document.title = project ? `${project.name} — Mathieu / Labs` : 'Projet introuvable — Mathieu / Labs';
+    document.title = project ? `${project.name} | Mathieu / Labs` : 'Projet introuvable | Mathieu / Labs';
   } else if (route.segments[0] === 'catalogue') {
     const options = catalogueOptions();
     main.innerHTML = catalogue(options);
     active = options.favorites ? 'favorites' : options.category === 'all' ? 'catalogue' : options.category;
-    document.title = `${options.favorites ? 'Mes favoris' : 'Le catalogue'} — Mathieu / Labs`;
+    document.title = `${options.favorites ? 'Mes favoris' : 'Le catalogue'} | Mathieu / Labs`;
   } else if (route.segments[0] === 'nouveautes') {
     main.innerHTML = `<div class="page-intro"><span class="eyebrow">LE CARNET DU LABO</span><h1>Ce qui bouge ici.</h1><p>Des étapes concrètes, au fil des projets.</p></div>${updates.map(update => updateCard(update, 2)).join('')}<section class="activity-section">${heading('LES PROJETS BOUGENT AUSSI', 'Du côté des projets.')}<p class="muted">Versions publiées sur GitHub ou, à défaut, derniers changements du code. Un commit ne garantit pas une mise à jour du jeu en ligne.</p><div id="github-activity" data-project="all" aria-busy="true"><p class="muted" role="status">Lecture des nouveautés GitHub…</p></div><button class="button secondary" data-refresh-activity>Actualiser les projets ↻</button></section>`;
-    active = 'nouveautes'; document.title = 'Nouveautés — Mathieu / Labs';
+    active = 'nouveautes'; document.title = 'Nouveautés | Mathieu / Labs';
   } else if (!route.segments.length) {
-    main.innerHTML = home(); document.title = 'Mathieu / Labs — Des créations à explorer';
+    main.innerHTML = home(); document.title = 'Mathieu / Labs | Des créations à explorer';
   } else {
     main.innerHTML = '<div class="empty"><h1>Un détour imprévu.</h1><p>Cette page n’existe pas.</p><a href="#/" class="button secondary">Retour au Labs</a></div>';
   }
