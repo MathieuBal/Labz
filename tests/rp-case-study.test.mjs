@@ -27,5 +27,5 @@ test('la fiche explique honnêtement l’absence de démo publique', async () =>
   const source = await read('rp-case-study.js');
   assert.match(source, /Pourquoi il n’y a pas encore de bouton « Essayer »/);
   assert.match(source, /ZepRasso est aujourd’hui le meilleur candidat/);
-  assert.match(source, /sans fabriquer de faux screenshots/);
+  assert.match(source, /Aucun faux screenshot ne sera fabriqué/);
 });
