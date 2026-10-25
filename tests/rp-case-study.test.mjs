@@ -29,3 +29,14 @@ test('la fiche explique honnêtement l’absence de démo publique', async () =>
   assert.match(source, /ZepRasso est aujourd’hui le meilleur candidat/);
   assert.match(source, /Aucun faux screenshot ne sera fabriqué/);
 });
+
+test('la timeline ne transforme jamais les listes internes en sous-timelines', async () => {
+  const [baseCss, rpCss] = await Promise.all([read('project-pages.css'), read('rp-case-study.css')]);
+  assert.match(baseCss, /\.project-timeline>li\{/);
+  assert.match(baseCss, /\.project-timeline>li:not\(:last-child\)::before/);
+  assert.doesNotMatch(baseCss, /\.project-timeline li\{/);
+  assert.match(rpCss, /\.rp-capabilities li\{/);
+  assert.match(rpCss, /@media\(max-width:760px\)/);
+  assert.match(rpCss, /\.rp-stage-grid\{display:block\}/);
+  assert.match(rpCss, /grid-template-columns:34px minmax\(0,1fr\)/);
+});
