@@ -20,12 +20,16 @@ test('les routes accueil et projet forcent un retour en haut sans restauration n
   assert.match(source, /window\.scrollTo\(\{top:0,left:0,behavior:'auto'\}\)/);
 });
 
-test('les modules de pages riches sont publiés sans couche de catalogue runtime', async () => {
-  const [html, build] = await Promise.all([read('index.html'), read('scripts/build.mjs')]);
-  for (const name of ['project-pages.js','navigation-fixes.js','project-pages.css']) {
-    assert.match(html, new RegExp(name.replace('.', '\\.')));
+test('les pages riches sont chargées seulement sur une route projet', async () => {
+  const [html, build, loader] = await Promise.all([read('index.html'), read('scripts/build.mjs'), read('project-features.js')]);
+  assert.match(html, /project-features\.js/);
+  assert.match(build, /project-features\.js/);
+  assert.match(loader, /\^#\\\/projet\\\//);
+  for (const name of ['project-gallery.js','project-pages.js','rp-case-study.js']) {
+    assert.doesNotMatch(html, new RegExp(`src="${name.replace('.', '\\.')}"`));
     assert.match(build, new RegExp(name.replace('.', '\\.')));
+    assert.match(loader, new RegExp(name.replace('.', '\\.')));
   }
-  assert.doesNotMatch(html, /catalog-runtime\.js/);
-  assert.doesNotMatch(build, /catalog-runtime\.js/);
+  assert.match(loader, /searchParams\.get\('v'\)/);
+  assert.match(loader, /searchParams\.set\('v', revision\)/);
 });
