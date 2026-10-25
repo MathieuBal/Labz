@@ -40,7 +40,7 @@ test('la narration du parcours emploie la première personne', async () => {
   assert.match(source, /je deviens copatron/);
   assert.match(source, /J’ai d’abord construit Saloon/);
   assert.match(source, /POURQUOI JE REVIENS À ZEPRASSO/);
-  assert.doesNotMatch(source, /Mathieu devient copatron/);
+  assert.doesNotMatch(source, /Mathieu/);
 });
 
 test('la fiche explique honnêtement l’absence de démo publique et la suite non planifiée', async () => {
