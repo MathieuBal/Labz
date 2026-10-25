@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.5",
+    "date": "2026-10-25",
+    "title": "La chronologie RP retrouve sa vraie logique",
+    "description": "La fiche distingue désormais deux histoires différentes : le retour d’un même besoin métier plusieurs années plus tard, puis un cycle d’expérimentation autour des événements, du web et des QR codes.",
+    "items": [
+      "Saloon et HotzDoggz ne sont plus présentés comme deux versions d’un même bot : ils répondent à un besoin proche dans deux contextes séparés par plusieurs années et un net gain de maturité technique.",
+      "La timeline événementielle montre maintenant ZepRasso, le détour local par Zepevents face au risque d’acceptation des QR codes, puis le retour vers ZepRasso après les premiers usages.",
+      "Les différences de loterie sont précisées : Zepevents aide à préparer prix et seuil de rentabilité, tandis que ZepRasso suit paiements, recettes, coût du lot et bénéfice dans une plateforme événementielle plus large."
+    ]
+  },
+  {
     "version": "0.18.4",
     "date": "2026-10-25",
     "title": "La fiche RP devient vraiment lisible sur téléphone",

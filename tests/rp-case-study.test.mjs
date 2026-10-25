@@ -12,21 +12,26 @@ test('la fiche RP enrichie est chargée et publiée', async () => {
   }
 });
 
-test('la fiche RP conserve les quatre générations et leurs flux', async () => {
+test('la fiche RP distingue quatre outils et cinq étapes de parcours', async () => {
   const source = await read('rp-case-study.js');
   for (const project of ['Saloon','HotzDoggz','ZepRasso','Zepevents']) assert.match(source, new RegExp(project));
+  assert.match(source, /4 OUTILS · 5 ÉTAPES/);
+  assert.match(source, /Retour à ZepRasso/);
+  assert.match(source, /plusieurs années/);
   assert.match(source, /≈ 40/);
   assert.match(source, /≈ 15 j/);
   assert.match(source, /165/);
   assert.match(source, /PostgreSQL/);
-  assert.match(source, /QR \/ lien/);
-  assert.match(source, /Human-in-the-loop/);
+  assert.match(source, /QR ou lien/);
+  assert.match(source, /prix conseillé, seuil de rentabilité/);
+  assert.match(source, /coût réel du lot, statut payé, revenus, bénéfice/);
 });
 
-test('la fiche explique honnêtement l’absence de démo publique', async () => {
+test('la fiche explique honnêtement l’absence de démo publique et la suite non planifiée', async () => {
   const source = await read('rp-case-study.js');
   assert.match(source, /Pourquoi il n’y a pas encore de bouton « Essayer »/);
-  assert.match(source, /ZepRasso est aujourd’hui le meilleur candidat/);
+  assert.match(source, /ZepRasso reste le meilleur candidat/);
+  assert.match(source, /piste possible, pas un développement planifié aujourd’hui/);
   assert.match(source, /Aucun faux screenshot ne sera fabriqué/);
 });
 
