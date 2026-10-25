@@ -6,9 +6,10 @@ const read = path => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 
 test('AFK Farm raconte son vrai point de départ dans Sensoria', async () => {
   const source = await read('project-pages.js');
-  assert.match(source, /tableau Champ magnétique de Sensoria/);
-  assert.match(source, /Un tableau de Sensoria avec un feeling assez fort pour devenir un jeu/);
-  assert.match(source, /Prototype avancé · jouable/);
+  assert.match(source, /AFK Farm est né du Champ magnétique de Sensoria/);
+  assert.match(source, /Le point de départ, c’était simplement un geste qui fonctionnait bien/);
+  assert.match(source, /LA BOUCLE DE PROGRESSION/);
+  assert.match(source, /prototype avancé/);
   assert.doesNotMatch(source, /ne pas trouver exactement l’idle que j’avais envie de jouer/);
 });
 
