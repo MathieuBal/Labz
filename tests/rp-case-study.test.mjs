@@ -22,17 +22,33 @@ test('la fiche RP distingue quatre outils et cinq étapes de parcours', async ()
   assert.match(source, /≈ 15 j/);
   assert.match(source, /165/);
   assert.match(source, /PostgreSQL/);
-  assert.match(source, /QR ou lien/);
   assert.match(source, /prix conseillé, seuil de rentabilité/);
   assert.match(source, /coût réel du lot, statut payé, revenus, bénéfice/);
+});
+
+test('la fiche explique concrètement ce que sont ZepRasso et Zepevents', async () => {
+  const source = await read('rp-case-study.js');
+  assert.match(source, /ZepRasso est une plateforme web locale/);
+  assert.match(source, /rassemblements et événements automobiles GTA RP/);
+  assert.match(source, /Zepevents est le plan B que je développe/);
+  assert.match(source, /inscriptions, véhicules, concours, paiements, caisse, loterie et résultats/);
+  assert.match(source, /Le QR code reste un moyen d’accès, pas une obligation/);
+});
+
+test('la narration du parcours emploie la première personne', async () => {
+  const source = await read('rp-case-study.js');
+  assert.match(source, /je deviens copatron/);
+  assert.match(source, /J’ai d’abord construit Saloon/);
+  assert.match(source, /POURQUOI JE REVIENS À ZEPRASSO/);
+  assert.doesNotMatch(source, /Mathieu/);
 });
 
 test('la fiche explique honnêtement l’absence de démo publique et la suite non planifiée', async () => {
   const source = await read('rp-case-study.js');
   assert.match(source, /Pourquoi il n’y a pas encore de bouton « Essayer »/);
   assert.match(source, /ZepRasso reste le meilleur candidat/);
-  assert.match(source, /piste possible, pas un développement planifié aujourd’hui/);
-  assert.match(source, /Aucun faux screenshot ne sera fabriqué/);
+  assert.match(source, /possibilité, pas un développement planifié aujourd’hui/);
+  assert.match(source, /je ne fabriquerai pas de faux screenshots/);
 });
 
 test('la timeline ne transforme jamais les listes internes en sous-timelines', async () => {
