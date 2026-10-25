@@ -7,7 +7,7 @@ const read = path => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 test('AFK Farm raconte son vrai point de départ dans Sensoria', async () => {
   const source = await read('project-pages.js');
   assert.match(source, /tableau Champ magnétique de Sensoria/);
-  assert.match(source, /Un tableau de Sensoria avec un feeling assez fort pour devenir un jeu/);
+  assert.match(source, /Le point de départ, c’était vraiment le feeling du Champ magnétique/);
   assert.match(source, /Prototype avancé · jouable/);
   assert.doesNotMatch(source, /ne pas trouver exactement l’idle que j’avais envie de jouer/);
 });
@@ -20,7 +20,7 @@ test('Total War AI est présenté comme une expérimentation arrêtée sur une i
   assert.match(source, /coût devenu disproportionné/);
 });
 
-test('le catalogue harmonise les statuts et la v0.18.7 publie la révision éditoriale', async () => {
+test('le catalogue harmonise les statuts et la v0.19.0 consolide la refonte éditoriale', async () => {
   const [runtime, releases] = await Promise.all([read('catalog-runtime.js'), read('release-notes.js')]);
   for (const label of [
     'Public · expérience jouable',
@@ -28,7 +28,8 @@ test('le catalogue harmonise les statuts et la v0.18.7 publie la révision édit
     'Étude de cas · usage réel',
     'R&D · expérimentation arrêtée',
   ]) assert.match(runtime, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-  assert.match(releases, /"version": "0\.18\.7"/);
-  assert.match(releases, /Les fiches retrouvent leur vrai statut/);
-  assert.match(releases, /Champ magnétique de Sensoria/);
+  assert.match(releases, /"version": "0\.19\.0"/);
+  assert.match(releases, /Les projets racontent enfin leur histoire/);
+  assert.match(releases, /Diagnostic numérique utilisé en atelier/);
+  assert.doesNotMatch(releases, /"version": "0\.18\.[1-7]"/);
 });
