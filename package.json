@@ -1,12 +1,12 @@
 {
   "name": "mathieu-labs",
-  "version": "0.18.2",
+  "version": "0.18.3",
   "private": true,
   "type": "module",
   "description": "Les jeux, expériences et outils de Mathieu, réunis dans un labo personnel.",
   "scripts": {
     "start": "node scripts/serve.mjs",
-    "check": "node scripts/check-release.mjs && node --check admin-client.js && node --check admin-view.js && node --check admin-config.js && node --check app.js && node --check project-gallery.js && node --check project-pages.js && node --check rp-case-study.js && node --check navigation-fixes.js && node --check catalog-runtime.js && node --check catalog.js && node --check model.js && node --check github-activity.js && node --check feedback-client.js && node --check supabase/functions/labz-feedback/handler.js && node scripts/check.mjs && node --test tests/*.test.mjs",
+    "check": "node scripts/check-copy-style.mjs && node scripts/check-release.mjs && node --check admin-client.js && node --check admin-view.js && node --check admin-config.js && node --check app.js && node --check project-gallery.js && node --check project-pages.js && node --check rp-case-study.js && node --check navigation-fixes.js && node --check catalog-runtime.js && node --check catalog.js && node --check model.js && node --check github-activity.js && node --check feedback-client.js && node --check supabase/functions/labz-feedback/handler.js && node scripts/check.mjs && node --test tests/*.test.mjs",
     "build": "node scripts/build.mjs",
     "release": "node scripts/release.mjs"
   },

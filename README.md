@@ -1,4 +1,4 @@
-# Labz — Mathieu / Labs
+# Labz | Mathieu / Labs
 
 Un point d'entrée pour découvrir les jeux, expériences et outils de Mathieu, puis lui envoyer des retours privés sans compte.
 
