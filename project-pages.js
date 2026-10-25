@@ -76,22 +76,38 @@ const profiles = {
   },
   lootchest: {
     type: 'product',
-    kicker: 'RPG / LOOTER · NAVIGATEUR',
-    headline: 'Ouvrez un coffre. Équipez ce qui tombe. Descendez toujours un peu plus bas.',
-    narrative: 'Lootchest part du plaisir le plus simple du looter : ouvrir quelque chose et espérer mieux. Puis la boucle s’étend. L’équipement construit votre héros, le donjon pousse à progresser, la Plongée change les règles et le village finit par produire pendant que vous préparez le prochain palier.',
+    kicker: 'RPG / LOOTER · BUILDS ET CRAFT',
+    headline: 'Looter. Construire un build. Puis essayer de rendre chaque pièce meilleure.',
+    narrative: 'Lootchest est le jeu que j’avais envie de lancer pour une boucle très précise : récupérer du stuff, équiper un personnage en pensant aux synergies, comparer les gains réels d’un objet puis pousser l’optimisation avec une forge profonde. Autour de ce noyau, le jeu a ensuite grandi en donjons, boss, progression, Plongée roguelite et village.',
+    origin: {
+      label: 'POURQUOI JE L’AI CRÉÉ',
+      title: 'Je voulais retrouver le plaisir du loot et de l’optimisation dans mon propre système.',
+      paragraphs: [
+        'Au départ, mon envie est très précise : looter de l’équipement, construire un personnage autour de synergies, chercher les meilleures combinaisons et continuer à travailler une bonne pièce au lieu de simplement attendre qu’un objet supérieur tombe. La profondeur de craft de Path of Exile, que je trouve incroyable, est une référence importante dans cette envie.',
+        'Puis j’ai commencé à partager le lien à plusieurs personnes. Les retours ont nourri les itérations et le projet s’est mis à grossir bien au-delà de sa boucle initiale. L’historique du dépôt le montre bien : la forge s’est enrichie, les sets et le prestige sont arrivés, puis les monnaies de craft inspirées de Path of Exile, les contrats, l’onboarding, la Plongée, le village et d’autres couches de progression.'
+      ],
+    },
     features: [
-      ['Le loot est le moteur', 'Objets générés, affixes, raretés, équipements, coffres et mimics alimentent la construction du personnage. Chaque amélioration sert une idée très lisible : être prêt pour ce qu’il y a derrière la prochaine porte.'],
-      ['Plus d’une façon de progresser', 'Donjon, biomes, boss et combat au tour par tour côtoient une Plongée roguelite avec sa propre boucle. Talents, factions, reliques et prestige ajoutent ensuite des couches de progression plus longues.'],
-      ['Quand l’aventure construit son village', 'Bâtiments, ouvriers, forge et production passive ajoutent une couche idle au RPG. Les ressources continuent à s’accumuler selon le temps réellement écoulé, avec un rattrapage plafonné à huit heures.'],
+      ['Le stuff doit donner envie de réfléchir', 'Raretés, affixes, préfixes, suffixes, sets, uniques et pièces procédurales ne servent pas seulement à faire monter un score. L’intérêt est de regarder ce qu’un objet change réellement dans le build et de décider s’il mérite d’être équipé, recyclé ou travaillé.'],
+      ['Une forge inspirée par ce que j’aime dans Path of Exile', 'Le craft utilise notamment des monnaies dédiées pour transformer la rareté, ajouter ou relancer des affixes, modifier leurs valeurs ou cibler certaines améliorations. L’objectif est de laisser une marge de décision entre accepter le hasard et investir dans une pièce prometteuse.'],
+      ['Le jeu a grandi autour de son noyau', 'Donjon, biomes, boss, talents, factions, prestige, contrats, Plongée roguelite et village sont venus ajouter de nouveaux objectifs sans remplacer la boucle centrale : trouver, comparer, équiper et optimiser.'],
     ],
-    aboutLabel: 'À PROPOS DU JEU',
-    aboutTitle: 'Le prochain coffre doit toujours donner une raison de continuer.',
+    flowLabel: 'LA BOUCLE QUE JE VOULAIS JOUER',
+    flowTitle: 'Trouver une pièce, comprendre sa valeur, la travailler, puis aller chercher mieux.',
+    flow: [
+      ['Je loot', 'Coffres et donjons génèrent des objets avec raretés, statistiques, affixes et identités différentes. Le premier plaisir reste celui de voir tomber quelque chose qui mérite d’être regardé.'],
+      ['Je construis mon personnage', 'Je compare les objets avec ce qui est déjà équipé et je cherche des synergies entre statistiques, sets, talents et autres couches du build plutôt qu’un simple chiffre de puissance.'],
+      ['Je travaille les bonnes pièces', 'La forge permet de modifier une pièce avec différentes monnaies et opérations. Un bon objet peut devenir un projet d’optimisation plutôt qu’un drop immédiatement jetable.'],
+      ['Je repars plus loin', 'Le build sert ensuite à pousser le donjon, affronter des boss, explorer la Plongée et alimenter les systèmes de progression plus longs, dont le village et le prestige.'],
+    ],
+    aboutLabel: 'COMMENT LE PROJET A GROSSI',
+    aboutTitle: 'Un prototype personnel devenu un terrain d’itération avec des joueurs.',
     about: [
-      'Lootchest s’est développé autour d’une question très simple : combien de systèmes peut-on accrocher à une boucle de loot sans perdre le plaisir immédiat d’ouvrir, comparer et équiper ? Le donjon fournit la pression, l’équipement apporte la réponse, puis le village et la forge commencent à préparer les runs suivants.',
-      'La Plongée permet de casser cette routine avec une boucle plus roguelite, tandis que le prestige, les reliques, les factions et les talents donnent des objectifs au-delà de l’objet obtenu dans l’instant. Le projet est moins une recherche de minimalisme qu’un laboratoire de progression où chaque nouvelle couche doit nourrir les précédentes.'
+      'Lootchest n’a pas été conçu d’un seul bloc avec tous ses systèmes prévus dès le départ. J’ai d’abord construit la boucle que je voulais jouer, puis les retours de plusieurs personnes à qui j’avais partagé le lien ont fait apparaître de nouvelles envies, des problèmes d’ergonomie, des besoins d’objectifs et des pistes d’équilibrage.',
+      'Cette croissance se voit directement dans les commits : premières fonctions de forge, sets et prestige, remplacement de la forge initiale par un système de monnaies inspiré de Path of Exile, contrats pour donner une direction aux sessions, refonte de l’onboarding, puis ajout d’une vraie couche de village avec production, bâtiments et progression liée au donjon. La richesse actuelle vient de cette accumulation d’itérations, avec le risque inverse de devoir maintenant mieux protéger et équilibrer tout ce qui s’est empilé.'
     ],
-    tech: [['Surface', 'Navigateur · mobile et desktop'], ['Stack', 'JavaScript / HTML / CSS sans framework ni bundler'], ['Sauvegarde', 'Locale · migrations · export / import JSON'], ['État', 'Jeu public · prototype riche']],
-    status: 'Lootchest est déjà un vrai jeu jouable, surtout remarquable par la quantité de systèmes reliés dans un projet vanilla JS. Cette richesse est aussi sa dette principale : aucune suite de tests automatisés ne protège encore les combats, le loot, le village ou les sauvegardes. Pour les essais publics, les exports personnels sont adaptés au backup ; l’import de fichiers de sauvegarde externes n’est pas encore suffisamment durci pour être considéré comme une fonction de partage sûre.'
+    tech: [['Surface', 'Navigateur · mobile et desktop'], ['Stack', 'JavaScript / HTML / CSS sans framework ni bundler'], ['Loot', 'Affixes · sets · uniques · génération procédurale'], ['Craft', 'Monnaies dédiées · préfixes / suffixes · forge ciblée'], ['Sauvegarde', 'Locale · migrations · export / import JSON']],
+    status: 'Lootchest est aujourd’hui un prototype public très riche, avec une vraie boucle de loot, de build et de craft entourée de nombreux systèmes de progression. Cette richesse est aussi sa dette principale : aucune suite de tests automatisés ne protège encore l’ensemble des combats, du loot, de la forge, du village ou des sauvegardes. Les exports personnels conviennent au backup ; l’import d’une sauvegarde externe n’est pas encore suffisamment durci pour être présenté comme une fonction de partage sûre.'
   },
   'afk-farm': {
     type: 'product',
