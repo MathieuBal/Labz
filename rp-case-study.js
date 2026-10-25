@@ -3,8 +3,8 @@ const esc = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<'
 
 const caseStudy = {
   kicker: 'ÉTUDE DE CAS · 4 GÉNÉRATIONS · USAGE RÉEL',
-  headline: 'Automatiser ce qui coupe le RP — sans automatiser le RP lui-même.',
-  narrative: 'Cet écosystème ne raconte pas quatre dépôts isolés. Il raconte plusieurs années de la même obsession : enlever aux joueurs et aux responsables les tâches de gestion qui les sortent de leur personnage, tout en gardant les décisions importantes entre des mains humaines. Le support change — bot Discord, application web par QR code, poste de contrôle local — mais le problème reste le même.',
+  headline: 'Automatiser ce qui coupe le RP, sans automatiser le RP lui-même.',
+  narrative: 'Cet écosystème ne raconte pas quatre dépôts isolés. Il raconte plusieurs années de la même obsession : enlever aux joueurs et aux responsables les tâches de gestion qui les sortent de leur personnage, tout en gardant les décisions importantes entre des mains humaines. Le support change : bot Discord, application web par QR code ou poste de contrôle local. Le problème reste le même.',
   metrics: [
     ['4', 'générations d’outils'],
     ['≈ 40', 'utilisateurs sur HotzDoggz'],
@@ -14,7 +14,7 @@ const caseStudy = {
   principles: [
     ['Rester dans les habitudes des joueurs', 'Discord quand l’activité vit déjà dans Discord, un QR code quand une interaction de quelques secondes suffit, une application locale quand il vaut mieux que les participants ne quittent jamais le jeu.'],
     ['Automatiser le répétitif, pas la décision', 'Le logiciel collecte, calcule, vérifie, trace et prépare. La direction valide une vente, l’organisateur arbitre un signal anti-triche, le jury décide d’une note.'],
-    ['Faire de la donnée une preuve, pas un décor', 'Transactions, historiques, sauvegardes, preuves de vente, écritures financières et exports servent à pouvoir expliquer après coup ce qui s’est passé — pas seulement à afficher un joli tableau.'],
+    ['Faire de la donnée une preuve, pas un décor', 'Transactions, historiques, sauvegardes, preuves de vente, écritures financières et exports servent à pouvoir expliquer après coup ce qui s’est passé, au lieu de seulement afficher un joli tableau.'],
   ],
   stages: [
     {
@@ -108,7 +108,7 @@ const caseStudy = {
     title: 'Pourquoi il n’y a pas encore de bouton « Essayer »',
     body: 'Une démo crédible doit montrer le fonctionnement sans exposer un vrai serveur Discord ni donner l’illusion d’un service public prêt à héberger. HotzDoggz dépend de Discord et PostgreSQL ; Saloon reste une origine historique. ZepRasso est aujourd’hui le meilleur candidat pour une future démo fictive autonome, après durcissement de son accès admin et de ses écritures publiques. Zepevents pourra être montré plus tard avec son interface locale réelle.',
   },
-  status: 'Cette étude de cas est volontairement plus importante qu’une simple fiche de dépôt. Saloon a réellement servi ; HotzDoggz a été exploité en conditions réelles puis considérablement enrichi ; ZepRasso et Zepevents explorent deux compromis événementiels différents. Les captures réelles seront ajoutées lorsque les applications pourront être relancées sur une machine adaptée — sans fabriquer de faux screenshots entre-temps.',
+  status: 'Cette étude de cas est volontairement plus importante qu’une simple fiche de dépôt. Saloon a réellement servi ; HotzDoggz a été exploité en conditions réelles puis considérablement enrichi ; ZepRasso et Zepevents explorent deux compromis événementiels différents. Les captures réelles seront ajoutées lorsque les applications pourront être relancées sur une machine adaptée. Aucun faux screenshot ne sera fabriqué entre-temps.',
 };
 
 function chips(items) {
