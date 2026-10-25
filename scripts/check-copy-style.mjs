@@ -7,7 +7,6 @@ const publicTextFiles = [
   'app.js',
   'model.js',
   'catalog.js',
-  'catalog-runtime.js',
   'release-notes.js',
   'project-pages.js',
   'rp-case-study.js',
