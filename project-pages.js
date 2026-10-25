@@ -65,20 +65,20 @@ const profiles = {
     type: 'product',
     kicker: 'IDLE / INCRÉMENTAL · PROTOTYPE AVANCÉ',
     headline: 'Récoltez à la main. Automatisez. Changez de biome. Recommencez plus fort.',
-    narrative: 'AFK Farm est né d’un réflexe très personnel : ne pas trouver exactement l’idle que j’avais envie de jouer, alors construire le mien. Au départ, un champ magnétique et quelques grains. Puis arrivent l’énergie, les combos, les drones, les projets, les biomes, le prestige et un arbre de progression à sept branches.',
+    narrative: 'AFK Farm est né du tableau Champ magnétique de Sensoria. J’aimais suffisamment son feeling pour vouloir en faire une vraie mécanique de jeu. L’idle s’est imposé naturellement comme format web accessible à prototyper, puis le geste magnétique a grandi autour d’une progression complète : énergie, combos, drones, chantiers, biomes, prestige et arbre à sept branches.',
     features: [
       ['Du geste à l’automatisation', 'Les premières récoltes se font directement dans le champ magnétique, avec énergie, stockage, chaînes de captures et Surge. Les drones et améliorations prennent ensuite progressivement une partie du travail à votre place.'],
       ['Une progression en couches', 'Projets temporisés, six biomes de base, progression procédurale au-delà, prestige, perks, succès et arbre déterministe donnent plusieurs horizons de progression au lieu d’une simple courbe de chiffres.'],
-      ['Un idle pensé pour revenir souvent', 'Interface touch-first, PWA, sauvegarde locale et rendu Canvas optimisé en font un prototype pensé dès le départ pour le téléphone et les petites sessions régulières.'],
+      ['Un prototype pensé pour le web', 'Interface touch-first, PWA, sauvegarde locale et rendu Canvas permettent de construire un vrai gameplay incrémental sans partir sur la lourdeur d’un jeu 3D. Le format reste simple à lancer, mais n’empêche pas une boucle de jeu dense.'],
     ],
-    aboutLabel: 'POURQUOI IL EXISTE',
-    aboutTitle: 'Quand le jeu que l’on veut n’existe pas, on peut essayer de le fabriquer.',
+    aboutLabel: 'LE POINT DE DÉPART',
+    aboutTitle: 'Un tableau de Sensoria avec un feeling assez fort pour devenir un jeu.',
     about: [
-      'AFK Farm appartient à une famille de projets nés sans cahier des charges extérieur : l’envie de jouer à quelque chose de précis, l’impression de ne pas le trouver exactement ailleurs, puis la décision d’en construire une version soi-même. Le champ magnétique fournit le geste de départ ; l’idle vient ensuite donner une raison d’y revenir.',
-      'Le projet a été poussé bien plus loin que cette première intuition. Chaque système ajouté, des drones au prestige en passant par les biomes et l’arbre, cherche à déplacer progressivement le joueur de la récolte immédiate vers la construction d’une machine qui travaille pour lui. C’est cette trajectoire, plus que l’équilibrage actuel, qui donne son identité au prototype.'
+      'Le projet ne part pas d’un manque compliqué à théoriser. Le Champ magnétique de Sensoria était simplement agréable à manipuler, et j’ai eu envie de donner un objectif à ce geste. Comme j’aime les jeux idle et que ce format se prête bien au navigateur, la récolte magnétique est devenue le cœur d’une boucle de progression.',
+      'Le prototype a ensuite largement dépassé cette intuition de départ. Les drones, chantiers, biomes, perks, prestige et branches de l’arbre cherchent tous à faire évoluer le joueur d’une récolte très active vers une machine de production qu’il construit progressivement, sans supprimer complètement l’intérêt de revenir jouer à la main.'
     ],
-    tech: [['Surface', 'Navigateur · PWA mobile-first'], ['Moteur', 'Canvas · tableaux typés · densité adaptée à l’écran'], ['Progression', 'Biomes · projets · prestige · arbre à 7 branches'], ['État', 'Prototype jouable ouvert aux retours']],
-    status: 'AFK Farm est précisément le type de projet que Labz peut aider à décider de reprendre. La boucle existe et le contenu est déjà conséquent, mais deux incohérences touchent encore le cœur du jeu : le retour après mise en arrière-plan peut perdre une partie de la progression AFK, et les Cores servent à la fois de multiplicateur et de monnaie dépensable, ce qui peut rendre certains achats contre-productifs. La fiche assume donc un prototype avancé, pas un idle équilibré et terminé.'
+    tech: [['Surface', 'Navigateur · PWA mobile-first'], ['Moteur', 'Canvas · tableaux typés · densité adaptée à l’écran'], ['Progression', 'Biomes · projets · prestige · arbre à 7 branches'], ['État', 'Prototype avancé · jouable']],
+    status: 'AFK Farm est réellement jouable et la majorité de ses systèmes importants interagit déjà. Il reste pourtant un prototype avancé : le retour après simple mise en arrière-plan peut perdre une partie de la progression AFK, et les Cores servent à la fois de multiplicateur et de monnaie dépensable, ce qui peut rendre certains achats contre-productifs. La fiche assume ces limites au lieu de présenter le jeu comme équilibré ou terminé.'
   },
   diagnostic: {
     type: 'product', kicker: 'OUTIL DE MÉDIATION', headline: 'Comprendre un groupe avant de construire l’atelier pour lui.',
@@ -165,16 +165,23 @@ const profiles = {
     status: 'Les quatre dépôts restent présentés comme une évolution et non comme quatre produits indépendants. HotzDoggz est la pièce centrale car il a rencontré un usage réel et a évolué au contact de ses utilisateurs.'
   },
   totalwarai: {
-    type: 'research', kicker: 'R&D EXPÉRIMENTALE', headline: 'Construire un général autonome, puis comprendre pourquoi la vraie bataille refuse le scénario prévu.',
-    narrative: 'Total War AI cherchait à permettre d’observer les batailles plutôt que de les jouer soi-même. Le projet a construit beaucoup de briques sérieuses : pont Lua/Python, télémétrie, règles, mémoire, simulateur et tests. Malgré cela, l’objectif final n’a pas été atteint en vraie bataille.',
-    question: 'Peut-on piloter une armée de Total War: WARHAMMER III avec un agent tactique à règles suffisamment autonome pour gagner une vraie bataille ?',
+    type: 'research',
+    kicker: 'R&D · EXPÉRIMENTATION ARRÊTÉE',
+    headline: 'Construire un agent tactique avec une vision incomplète de la bataille.',
+    narrative: 'Total War AI était une expérimentation visant à mesurer jusqu’où un agent autonome pouvait aller avec les API de bataille de Total War: WARHAMMER III. Le pont Lua/Python, l’observation du champ de bataille et les ordres de déplacement ont réellement fonctionné. Les essais ont ensuite révélé une limite structurelle : l’agent externe ne voyait qu’une partie des informations dont dispose l’IA interne du moteur.',
+    question: 'Jusqu’où peut aller un agent tactique autonome quand l’API ne lui donne pas toute l’information dont dispose l’IA native du jeu ?',
     experiments: [
-      ['Instrumentation', 'Pont Lua/Python et télémétrie pour transformer l’état du champ de bataille en données exploitables.'],
-      ['Planification', 'Règles tactiques, doctrines adaptatives, mémoire et simulateur pour tester les décisions hors du jeu.'],
-      ['Confrontation au réel', 'Les comportements validés dans le simulateur ont révélé des écarts importants une fois confrontés aux contraintes de la vraie bataille.'],
+      ['Observer et agir', 'Le pont Lua/Python transforme l’état accessible de la bataille en données exploitables, puis renvoie des décisions et des ordres de déplacement au jeu.'],
+      ['Simuler puis comparer', 'Des scénarios et simulations servent à ajuster les règles avant de les confronter au vrai moteur. Plusieurs corrections utiles en simulation ont pourtant produit un comportement moins bon en bataille réelle.'],
+      ['Chercher l’information manquante', 'Le développement devient progressivement empirique : identifier ce que l’agent ne sait pas, inférer ou reconstruire ce qui manque, tester, mesurer puis recommencer avec des armées et situations différentes.'],
     ],
-    learnings: ['Le simulateur ne reproduit pas toutes les contraintes du moteur réel.', 'Une batterie de tests peut sécuriser l’architecture sans prouver l’efficacité tactique finale.', 'Le prochain critère de succès doit être une victoire reproductible en vraie bataille, pas seulement un scénario simulé.'],
-    status: 'L’agent n’a jamais gagné une vraie bataille. C’est précisément pourquoi le projet est présenté comme R&D : les échecs, les hypothèses invalidées et l’écart simulation/réalité sont ici une partie centrale du résultat.'
+    learnings: [
+      'L’agent externe ne dispose pas directement de plusieurs informations importantes comme le moral, la fatigue, la largeur de front ou une représentation complète des obstacles, forêts et lignes de vue.',
+      'L’IA interne bénéficie du moteur, du terrain, du pathfinding, des formations et d’informations auxquelles le script externe n’accède pas de la même manière.',
+      'Une simulation peut sécuriser une idée sans prédire correctement son comportement dans le vrai jeu. Le projet a donc demandé des allers-retours constants entre modèle et terrain.',
+      'Continuer aurait nécessité de reconstruire ou d’inférer progressivement une grande partie de ce contexte, pour un coût devenu disproportionné par rapport à l’objectif initial.',
+    ],
+    status: 'Le projet a été arrêté après des essais réels sans victoire. Il ne s’agit pas d’une IA capable de bien jouer à Total War, mais d’une expérimentation technique qui a validé une partie de l’architecture puis mis en évidence une limite fondamentale d’information. Cette limite, et la méthode empirique utilisée pour la comprendre, constituent le résultat le plus intéressant du projet.'
   }
 };
 
