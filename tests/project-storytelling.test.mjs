@@ -2,49 +2,66 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 
-const read = path => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
+const source = await readFile(new URL('../project-pages.js', import.meta.url), 'utf8');
 
-test('les pages produit peuvent raconter origine et fonctionnement avant la technique', async () => {
-  const source = await read('project-pages.js');
-  assert.match(source, /profile\.origin\?\.paragraphs/);
-  assert.match(source, /profile\.flow\?\.length/);
-  assert.match(source, /POURQUOI JE L’AI CRÉÉ/);
-  assert.match(source, /COMMENT ÇA FONCTIONNE/);
+const has = (...patterns) => {
+  for (const pattern of patterns) assert.match(source, pattern);
+};
+
+test('le renderer sait raconter origine, fonctionnement et contexte au-delà des produits', () => {
+  has(/function originBlock\(profile\)/, /function flowBlock\(profile\)/, /function aboutBlock\(profile\)/);
+  has(/\$\{originBlock\(profile\)\}/, /\$\{flowBlock\(profile\)\}/, /\$\{aboutBlock\(profile\)\}/);
 });
 
-test('la fiche Pip-Boy raconte son origine réelle à la première personne', async () => {
-  const source = await read('project-pages.js');
-  assert.match(source, /Faire du Pip-Boy un véritable objet de la partie/);
-  assert.match(source, /Le point de départ n’était pas de mieux ranger mes notes de MJ/);
-  assert.match(source, /je voulais rendre l’expérience plus sombre et plus immersive/);
-  assert.match(source, /Préparer, cacher, révéler/);
-  assert.match(source, /PostgreSQL construit une projection filtrée de la campagne/);
+test('Sensoria raconte le laboratoire web et ses limites pratiques', () => {
+  has(/Jusqu’où peut-on pousser un navigateur \?/, /22 terrains d’essai distincts/, /COMMENT NAÎT UNE EXPÉRIENCE/);
 });
 
-test('la fiche Sensoria présente le projet comme un laboratoire des capacités du navigateur', async () => {
-  const source = await read('project-pages.js');
-  assert.match(source, /LABORATOIRE WEB · 22 EXPÉRIENCES/);
-  assert.match(source, /Jusqu’où peut-on pousser un navigateur/);
-  assert.match(source, /explorer les limites pratiques du web/);
-  assert.match(source, /sans introduire un moteur de jeu dédié/);
-  assert.match(source, /Pas un benchmark, un laboratoire perceptible/);
+test('Million de Pixels raconte la pub mobile puis la transformation de toute image en niveau', () => {
+  has(/Une pub de jeu mobile m’a donné une idée beaucoup plus grande/, /n’importe quelle photo/, /COMMENT UNE IMAGE DEVIENT UN NIVEAU/);
 });
 
-test('la fiche Million de Pixels raconte le déclic mobile puis la transformation de toute image en niveau', async () => {
-  const source = await read('project-pages.js');
-  assert.match(source, /Et si n’importe quelle photo pouvait devenir un niveau de jeu/);
-  assert.match(source, /Une pub de jeu mobile m’a donné une idée beaucoup plus grande/);
-  assert.match(source, /et si je pouvais prendre n’importe quelle photo et en faire directement un niveau de jeu/);
-  assert.match(source, /1 048 576 cellules/);
-  assert.match(source, /COMMENT UNE IMAGE DEVIENT UN NIVEAU/);
+test('Lootchest raconte le loot, le craft inspiré de Path of Exile et les retours joueurs', () => {
+  has(/profondeur de craft de Path of Exile/, /partager le lien à plusieurs personnes/, /LA BOUCLE QUE JE VOULAIS JOUER/);
 });
 
-test('la fiche Lootchest raconte la boucle de build, la forge inspirée de Path of Exile et les retours joueurs', async () => {
-  const source = await read('project-pages.js');
-  assert.match(source, /RPG \/ LOOTER · BUILDS ET CRAFT/);
-  assert.match(source, /Je voulais retrouver le plaisir du loot et de l’optimisation dans mon propre système/);
-  assert.match(source, /Path of Exile/);
-  assert.match(source, /j’ai commencé à partager le lien à plusieurs personnes/);
-  assert.match(source, /LA BOUCLE QUE JE VOULAIS JOUER/);
-  assert.match(source, /Un prototype personnel devenu un terrain d’itération avec des joueurs/);
+test('AFK Farm repart du Champ magnétique de Sensoria', () => {
+  has(/AFK Farm est né du tableau Champ magnétique de Sensoria/, /Le point de départ, c’était vraiment le feeling du Champ magnétique/, /arbre à sept branches/);
+  assert.doesNotMatch(source, /ne pas trouver exactement l’idle que j’avais envie de jouer/);
+});
+
+test('Diagnostic numérique raconte les douze ateliers et son usage réel immédiat', () => {
+  has(/cycle réel de douze ateliers numériques/, /Je devais préparer douze vendredis d’ateliers/, /Je l’ai codé dans la semaine, puis utilisé le vendredi suivant/, /33 activités/);
+});
+
+test('Perfoptimize part des lags du PC et montre les itérations sur matériel réel', () => {
+  has(/Pourquoi mon PC rame alors qu’il devrait tenir ce jeu/, /zéro échantillon/, /Engine Multithreading/, /mon PC tombe en panne/);
+});
+
+test('Pip-Boy raconte l’objet de jeu et la relation MJ joueur', () => {
+  has(/Faire du Pip-Boy un véritable objet de la partie/, /Smoky Waters/, /COMMENT ÇA SE PASSE À TABLE/, /projection filtrée/);
+});
+
+test('Constella raconte Explore puis le passage organique vers Watch', () => {
+  has(/cartographier des goûts et des préférences personnelles/, /La constellation devient le vrai concept/, /Des goûts personnels à une mémoire de veille/, /synthèse multi-source/);
+});
+
+test('les outils mémoire racontent le passage de PowerPoint aux petits programmes', () => {
+  has(/Quand PowerPoint devient trop lourd/, /chemins, flèches, décisions, énigmes/, /ClicReflexe/, /Ball Passing Simulation/, /tables de rappel/);
+});
+
+test('Crimson’s Blade raconte le temps perdu avant les raids et l’usage OVH', () => {
+  has(/18 h prévu\. 20 h, toujours pas de raid/, /disponibilités et ce qu’il cherchait à obtenir/, /Hébergé sur OVH/, /resté en ligne et utilisable/);
+});
+
+test('Total War AI est une expérimentation arrêtée sur une information incomplète', () => {
+  has(/R&D · EXPÉRIMENTATION ARRÊTÉE/, /vision incomplète de la bataille/, /moral, la fatigue, la largeur de front/, /sans victoire/);
+});
+
+test('la fiche RP de secours respecte les deux arcs plutôt qu’une fausse évolution linéaire', () => {
+  has(/deux rencontres, séparées de plusieurs années/, /Le détour par Zepevents/, /Retour à ZepRasso/);
+});
+
+test('aucun tiret cadratin ne revient dans les récits publics', () => {
+  assert.equal(source.includes('—'), false);
 });
