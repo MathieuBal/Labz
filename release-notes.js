@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.3",
+    "date": "2026-10-25",
+    "title": "Les textes gagnent un ton plus naturel",
+    "description": "La ponctuation éditoriale est simplifiée sur tout le contenu public de Labz et un contrôle automatique empêche le retour du caractère désormais interdit.",
+    "items": [
+      "Les pages projet, l’étude de cas RP, les titres de navigation, les messages de feedback et la page 404 ont été reformulés sans tiret cadratin.",
+      "Les titres de page utilisent désormais une séparation simple et cohérente.",
+      "La CI vérifie les principaux fichiers éditoriaux publics avant chaque publication."
+    ]
+  },
+  {
     "version": "0.18.2",
     "date": "2026-10-25",
     "title": "L’écosystème RP raconte enfin le travail derrière les outils",
