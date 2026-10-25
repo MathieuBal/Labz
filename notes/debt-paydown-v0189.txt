@@ -1,5 +1,0 @@
-v0.18.9
-- feedback production aligned with the current catalogue contract
-- catalog-runtime removed; catalog.js is canonical
-- contract test added between catalogue and feedback validator
-- continuity docs refreshed
