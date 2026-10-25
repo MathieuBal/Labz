@@ -105,7 +105,7 @@ const caseStudy = {
         'Gérer plusieurs événements avec véhicules, participants, votes, catégories et paiements.',
         'Suivre des loteries avec prix du ticket, coût réel du lot, statut payé, revenus, bénéfice et export pour course de billes.',
         'Gérer des courses chronométrées avec pilotes, frais d’entrée, paris, répartition des gains et part organisateur.',
-        'Agrég­er concours, loteries, courses, redistributions, coûts et bénéfice net dans un récap financier global.',
+        'Agréger concours, loteries, courses, redistributions, coûts et bénéfice net dans un récap financier global.',
         'Conserver un audit anti-triche, des sauvegardes, une restauration et une administration dédiée.',
       ],
       flow: ['Joueur ou organisateur', 'Web mobile / admin', 'Événements', 'Loteries + courses + paris', 'Calculs métier', 'Suivi financier'],
