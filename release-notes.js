@@ -1,80 +1,15 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
-    "version": "0.18.7",
+    "version": "0.19.0",
     "date": "2026-10-25",
-    "title": "Les fiches retrouvent leur vrai statut",
-    "description": "La revue éditoriale des douze fiches est consolidée : AFK Farm et Total War AI sont recadrés à partir du code et les statuts du catalogue distinguent mieux ce qui est public, jouable, en pause ou expérimental.",
+    "title": "Les projets racontent enfin leur histoire",
+    "description": "Les douze fiches de Labz ont été reprises pour expliquer d’abord ce que chaque projet est, pourquoi je l’ai créé, comment il a évolué et ce qu’il permet réellement aujourd’hui, avant de descendre dans la technique et les limites.",
     "items": [
-      "AFK Farm repart de son vrai point de départ : le Champ magnétique de Sensoria, transformé en mécanique d’un idle web devenu beaucoup plus ambitieux.",
-      "Total War AI est présenté comme une expérimentation arrêtée face à une information de bataille incomplète, avec sa démarche empirique et ses limites structurelles.",
-      "Les statuts du catalogue sont harmonisés entre projets publics, prototypes jouables, démos, alpha, études de cas, projet en pause et R&D arrêtée."
-    ]
-  },
-  {
-    "version": "0.18.6",
-    "date": "2026-10-25",
-    "title": "La fiche RP parle enfin avec ma voix",
-    "description": "Le récit du parcours passe à la première personne et les deux projets Zep sont maintenant définis clairement avant d’expliquer leurs choix de conception.",
-    "items": [
-      "Les passages autobiographiques parlent désormais en « je » au lieu de raconter mon parcours comme s’il appartenait à un tiers.",
-      "ZepRasso est présenté dès l’ouverture comme une plateforme web locale d’événements automobiles GTA RP, avec rôle joueur et administration organisateur clairement distingués.",
-      "Zepevents est défini comme une application locale côté organisateur pour gérer inscriptions, véhicules, concours, paiements, caisse, loteries et résultats sans imposer de site aux participants."
-    ]
-  },
-  {
-    "version": "0.18.5",
-    "date": "2026-10-25",
-    "title": "La chronologie RP retrouve sa vraie logique",
-    "description": "La fiche distingue désormais deux histoires différentes : le retour d’un même besoin métier plusieurs années plus tard, puis un cycle d’expérimentation autour des événements, du web et des QR codes.",
-    "items": [
-      "Saloon et HotzDoggz ne sont plus présentés comme deux versions d’un même bot : ils répondent à un besoin proche dans deux contextes séparés par plusieurs années et un net gain de maturité technique.",
-      "La timeline événementielle montre maintenant ZepRasso, le détour local par Zepevents face au risque d’acceptation des QR codes, puis le retour vers ZepRasso après les premiers usages.",
-      "Les différences de loterie sont précisées : Zepevents aide à préparer prix et seuil de rentabilité, tandis que ZepRasso suit paiements, recettes, coût du lot et bénéfice dans une plateforme événementielle plus large."
-    ]
-  },
-  {
-    "version": "0.18.4",
-    "date": "2026-10-25",
-    "title": "La fiche RP devient vraiment lisible sur téléphone",
-    "description": "La timeline conserve son rôle narratif, mais le contenu cesse d’être comprimé sur mobile et les blocs gagnent une hiérarchie plus claire.",
-    "items": [
-      "Le sélecteur de timeline ne s’applique plus aux listes internes, ce qui supprime les colonnes et lignes parasites visibles dans les cartes.",
-      "Sur mobile, chaque étape utilise presque toute la largeur disponible et empile fonctions, flux, preuves et données techniques dans un ordre lisible.",
-      "La timeline, les métriques et les cartes sont allégées sur petit écran afin de privilégier le contenu plutôt que le décor."
-    ]
-  },
-  {
-    "version": "0.18.3",
-    "date": "2026-10-25",
-    "title": "Les textes gagnent un ton plus naturel",
-    "description": "La ponctuation éditoriale est simplifiée sur tout le contenu public de Labz et un contrôle automatique empêche le retour du caractère désormais interdit.",
-    "items": [
-      "Les pages projet, l’étude de cas RP, les titres de navigation, les messages de feedback et la page 404 ont été reformulés sans tiret cadratin.",
-      "Les titres de page utilisent désormais une séparation simple et cohérente.",
-      "La CI vérifie les principaux fichiers éditoriaux publics avant chaque publication."
-    ]
-  },
-  {
-    "version": "0.18.2",
-    "date": "2026-10-25",
-    "title": "L’écosystème RP raconte enfin le travail derrière les outils",
-    "description": "La chronologie RP devient une vraie étude de cas : fonctions, flux, architecture, usage réel, compromis produit et limites sont montrés au lieu de résumer quatre projets en quelques lignes.",
-    "items": [
-      "La timeline Saloon → HotzDoggz → ZepRasso → Zepevents reste la colonne vertébrale, mais chaque génération devient un mini-dossier avec capacités, fonctionnement et enseignements.",
-      "HotzDoggz est remis au centre avec son workflow de ventes, preuves, validation, comptabilité, paies, dashboards, architecture PostgreSQL et chiffres d’exploitation documentés.",
-      "ZepRasso et Zepevents montrent deux compromis événementiels différents ; la fiche explique aussi pourquoi aucune fausse capture ni démo artificielle n’est publiée aujourd’hui."
-    ]
-  },
-  {
-    "version": "0.18.1",
-    "date": "2026-10-24",
-    "title": "Les démos racontent mieux ce qu’elles font ressentir",
-    "description": "Les cinq expériences jouables principales gagnent un discours plus proche d’une vraie page produit, sans perdre les limites révélées par leurs audits.",
-    "items": [
-      "Sensoria, Million de Pixels, Lootchest, AFK Farm et Pip-Boy disposent désormais d’une accroche, de points forts et d’un récit propres à leur expérience plutôt que d’un texte générique de portfolio.",
-      "Chaque page ajoute une section éditoriale qui explique la boucle, l’intention ou le contexte du projet avant de descendre dans la partie technique.",
-      "Les promesses restent bornées par les audits : les défauts connus, limites de validation et statuts de prototype restent explicitement visibles."
+      "Les jeux et expériences racontent leur vrai point de départ : Sensoria comme laboratoire web, Million de Pixels né d’une idée vue dans une publicité mobile, Lootchest autour du loot et du craft, AFK Farm à partir du Champ magnétique et Pip-Boy comme objet de jeu pour une campagne Fallout.",
+      "Les outils et études de cas intègrent enfin leur contexte réel : Diagnostic numérique utilisé en atelier, Perfoptimize testé sur ma propre machine, Constella passé des goûts à la veille, Crimson’s Blade exploité par une guilde et les petits outils mémoire nés de besoins d’animation concrets.",
+      "Total War AI reste visible comme expérimentation arrêtée et assume son échec en bataille réelle ; l’écosystème RP conserve sa page dédiée comme référence pour la narration des projets.",
+      "La page Nouveautés est allégée : les micro-versions éditoriales 0.18.1 à 0.18.7 sont regroupées dans cette livraison au lieu de saturer le journal avec chaque correction de texte."
     ]
   },
   {
