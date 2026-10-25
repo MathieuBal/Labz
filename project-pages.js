@@ -6,22 +6,38 @@ const esc = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<'
 const profiles = {
   sensoria: {
     type: 'product',
-    kicker: 'GALERIE INTERACTIVE · 22 TABLEAUX',
-    headline: 'Touchez l’image. Regardez-la vous répondre.',
-    narrative: 'Sensoria est une collection de 22 mondes interactifs à explorer avec les gestes. Ici, pas de score à battre ni de bonne façon de jouer : une surface se trouble, une matière se tend, des encres dérivent, des particules s’organisent. On ne regarde pas simplement l’image. On la provoque.',
+    kicker: 'LABORATOIRE WEB · 22 EXPÉRIENCES',
+    headline: 'Jusqu’où peut-on pousser un navigateur ?',
+    narrative: 'Sensoria est mon laboratoire d’expérimentation web. J’y décline 22 expériences interactives pour tester jusqu’où un navigateur peut aller en simulation, animation 2D et 3D, matière, particules et interactions gestuelles, sans passer par un moteur de jeu dédié. Chaque tableau transforme une question technique en quelque chose que l’on peut toucher, perturber et observer.',
+    origin: {
+      label: 'POURQUOI JE L’AI CRÉÉ',
+      title: 'Je voulais voir jusqu’où le navigateur pouvait aller.',
+      paragraphs: [
+        'Le point de départ était autant personnel que technique : me confronter à mes propres limites de développement et aux limites pratiques du web. Jusqu’où puis-je simuler une matière, faire vivre une scène 3D, gérer plusieurs points de contact ou construire une réaction crédible tout en restant dans une page web ?',
+        'Plutôt qu’un benchmark ou une seule démonstration, j’ai choisi d’en faire une collection. Chaque expérience isole un comportement différent et me donne un nouveau terrain pour tester une idée, une technique ou une contrainte. C’est aussi très proche de l’esprit que j’ai ensuite donné à Labz : expérimenter, montrer le résultat et apprendre de ce qui résiste.'
+      ],
+    },
     features: [
-      ['Une galerie vraiment vivante', 'Mosaïque infinie, Lac nocturne, Ferrofluide, Argile vivante, Encres flottantes ou Échos du geste : chaque tableau possède sa propre ambiance, ses propres réactions et sa propre manière d’être découvert.'],
-      ['Le geste comme langage', 'Dessiner, pousser, attirer, maintenir, perturber ou simplement effleurer : la souris, le stylet et le tactile ne servent pas à naviguer autour de l’œuvre, ils font partie de l’œuvre.'],
-      ['Explorer sans objectif imposé', 'Certaines scènes se comprennent immédiatement, d’autres demandent quelques essais. On peut y rester dix secondes ou plusieurs minutes, puis passer à la suivante et construire son propre parcours dans la collection.'],
+      ['22 terrains d’essai distincts', 'Mosaïque infinie, Lac nocturne, Ferrofluide, Argile vivante, Encres flottantes ou Échos du geste ne cherchent pas à reproduire la même recette. Chaque tableau explore un comportement, une sensation ou une contrainte différente.'],
+      ['Du Canvas à la 3D', 'Certaines scènes reposent sur Canvas 2D, d’autres utilisent Three.js et WebGL2. L’intérêt est justement de changer d’approche selon l’expérience plutôt que d’imposer le même moteur à toute la collection.'],
+      ['Le geste fait partie du test', 'Souris, stylet, tactile et multi-touch servent à dessiner, pousser, attirer, maintenir ou perturber. L’interaction n’est pas ajoutée après le rendu : elle fait partie de ce que chaque expérience cherche à éprouver.'],
     ],
-    aboutLabel: 'L’EXPÉRIENCE',
-    aboutTitle: 'Une collection qui n’attend pas d’être comprise avant d’être touchée.',
+    flowLabel: 'COMMENT NAÎT UNE EXPÉRIENCE',
+    flowTitle: 'Une question technique devient quelque chose que l’on peut toucher.',
+    flow: [
+      ['Je pars d’un comportement', 'Fluidité, tension, attraction, dispersion, lumière, mémoire du geste ou interaction 3D deviennent le point de départ d’un nouveau tableau.'],
+      ['Je prototype directement dans le web', 'Je cherche la combinaison la plus adaptée entre Canvas, WebGL, Three.js, calculs locaux et APIs du navigateur sans introduire un moteur de jeu dédié.'],
+      ['Je mets l’interaction au centre', 'Le test ne vaut que si le visiteur peut provoquer le système, observer sa réponse et découvrir intuitivement ce qui tient ou ce qui casse.'],
+      ['J’observe la limite', 'Performance, stabilité, tactile, densité d’objets et cycle de vie de la scène me donnent ensuite les contraintes à corriger ou à contourner.'],
+    ],
+    aboutLabel: 'CE QUE SENSORIA TESTE VRAIMENT',
+    aboutTitle: 'Pas un benchmark, un laboratoire perceptible.',
     about: [
-      'Chaque tableau part d’un comportement différent : fluidité, attraction, tension, équilibre, dispersion, lumière ou mémoire du geste. Le but n’est pas de reproduire fidèlement une matière physique, mais de trouver une réaction assez crédible et surprenante pour donner envie d’essayer encore une fois.',
-      'Le vrai moment Sensoria arrive quand on cesse de chercher “ce qu’il faut faire” et qu’on commence simplement à tester la scène. Une interaction déclenche une autre idée, un geste révèle une propriété inattendue, puis on passe à un nouveau tableau avec la curiosité de voir comment celui-ci va répondre.'
+      'Le but n’est pas d’afficher le plus de particules possible pour obtenir un chiffre. Je cherche plutôt le point où une simulation reste suffisamment fluide, lisible et réactive pour donner une sensation crédible dans un navigateur ordinaire.',
+      'À l’échelle de 22 expériences, le défi devient aussi architectural : un InputManager commun gère les pointeurs, le RenderLoop borne le temps entre les images, le SceneManager démonte les scènes quand on les quitte et certaines expériences 3D sont chargées à la demande. Un moniteur de performance peut aussi réduire la qualité, même si toutes les scènes ne l’exploitent pas encore de la même manière.'
     ],
-    tech: [['Surface', 'Navigateur · PWA installable'], ['Interaction', 'Pointer Events · souris / stylet / multi-touch'], ['Rendu', 'Canvas 2D + Three.js / WebGL2 selon les scènes'], ['Contenu', '22 tableaux jouables']],
-    status: 'Sensoria est déjà public et pleinement exploratoire : les 22 tableaux sont présents, le passage d’une scène à l’autre libère correctement les ressources et plusieurs scripts Playwright vérifient les interactions desktop/mobile. Le prochain enjeu n’est pas de grossir la collection à tout prix, mais d’identifier les tableaux dont les visiteurs se souviennent vraiment et de faire entrer ces validations navigateur dans la CI de publication.'
+    tech: [['Surface', 'Navigateur · PWA installable'], ['Interaction', 'Pointer Events · souris / stylet / multi-touch'], ['Rendu', 'Canvas 2D + Three.js / WebGL2'], ['Architecture', 'RenderLoop · SceneManager · chargement dynamique'], ['Validation', 'Playwright desktop + mobile émulé']],
+    status: 'Sensoria est public et les 22 expériences sont jouables. J’ai déjà plusieurs scripts Playwright qui vérifient les scènes et les interactions, mais ils ne bloquent pas encore la publication dans la CI et le facteur de qualité dynamique n’est pas utilisé uniformément partout. La prochaine étape est moins d’ajouter encore des tableaux que d’identifier ceux qui marquent vraiment, de consolider leur comportement et de les valider davantage sur de vrais appareils.'
   },
   'million-de-pixels': {
     type: 'product',
