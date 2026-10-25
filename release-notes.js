@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.11",
+    "date": "2026-10-26",
+    "title": "Chaque projet gagne une vraie adresse publique",
+    "description": "Labz conserve son application GitHub Pages, mais chaque projet dispose maintenant d’une page statique identifiable par les moteurs de recherche et les aperçus de partage.",
+    "items": [
+      "Douze pages /Labz/projets/.../ sont générées automatiquement à partir du catalogue, sans nouvelle source éditoriale à maintenir.",
+      "Chaque page expose un titre, une description, une URL canonique et des métadonnées OpenGraph propres, puis ouvre la fiche interactive dans le navigateur.",
+      "Un sitemap.xml et robots.txt rendent ces pages découvrables, et le bouton Partager utilise désormais leur URL publique."
+    ]
+  },
+  {
     "version": "0.18.10",
     "date": "2026-10-25",
     "title": "Les pages projet se chargent seulement quand elles servent",
