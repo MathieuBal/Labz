@@ -27,12 +27,13 @@ test('Diagnostic numérique raconte le cycle de 12 ateliers et son usage terrain
   assert.match(source, /Mes 12 ateliers/);
 });
 
-test('Perfoptimize raconte le problème personnel, les tests matériels et la limite de validation', async () => {
+test('Perfoptimize raconte le problème personnel, les essais matériels et la limite de validation sans suggérer une causalité', async () => {
   const source = await read('project-pages.js');
   assert.match(source, /je voulais simplement comprendre ce qui arrivait à mon propre PC/);
   assert.match(source, /Engine Multithreading/);
-  assert.match(source, /mon PC est tombé en panne pendant le développement/);
+  assert.match(source, /pas encore validé sur plusieurs machines/);
   assert.match(source, /mesurer et expliquer avant de modifier/);
+  assert.doesNotMatch(source, /mon PC est tombé en panne|Ma machine est ensuite tombée en panne/);
 });
 
 test('Constella raconte le passage de la carte de goûts à la veille', async () => {
