@@ -3,6 +3,17 @@ import {releases as previousReleases} from './release-history.js';
 
 export const releases = [
   {
+    "version": "0.18.14",
+    "date": "2026-10-26",
+    "title": "Perfoptimize clarifie ce que les essais matériels prouvent vraiment",
+    "description": "La fiche distingue désormais clairement les corrections issues des essais sur ma machine de ce qui reste à valider sur plusieurs configurations.",
+    "items": [
+      "La panne de mon ancien PC disparaît entièrement de la narration Perfoptimize afin de ne suggérer aucun lien de cause à effet avec les essais.",
+      "Le bloc consacré aux essais se concentre maintenant sur les écarts réellement observés : démarrage WMI, télémétrie et recommandation Engine Multithreading.",
+      "Le statut indique simplement que l’alpha a été essayée sur ma configuration mais n’est pas encore validée sur plusieurs machines."
+    ]
+  },
+  {
     "version": "0.18.13",
     "date": "2026-10-26",
     "title": "Les parcours critiques passent dans un vrai navigateur",
