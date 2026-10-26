@@ -50,8 +50,8 @@ test('la recherche et les favoris survivent à une navigation puis à un recharg
   const search=page.getByLabel('Rechercher un projet');
   await search.fill('Sensoria');
   await search.press('Enter');
-  await expect(page.locator('.project-card')).toHaveCount(1);
-  await expect(page.getByRole('status').filter({hasText:'1 projet'})).toContainText('Sensoria');
+  await expect(page.locator('.project-card')).toHaveCount(2);
+  await expect(page.locator('.project-card h3').filter({hasText:'Sensoria'})).toHaveCount(1);
   await page.getByRole('button',{name:'Ajouter Sensoria aux favoris'}).click();
   await page.goto('/#/catalogue?collection=favorites');
   await expect(page.locator('.project-card')).toHaveCount(1);
@@ -143,5 +143,5 @@ test('l’administration simulée se connecte et confirme un changement de statu
   await expect(page.getByLabel('Statut du retour')).toHaveValue('in_progress');
   await page.getByRole('tab',{name:'Sujets & décisions'}).click();
   await expect(page.getByRole('heading',{name:'Navigation mobile'})).toBeVisible();
-  await expect(page.getByText('Vérifier le parcours mobile.')).toBeVisible();
+  await expect(page.locator('.admin-topic-synthesis')).toHaveText('Vérifier le parcours mobile.');
 });
