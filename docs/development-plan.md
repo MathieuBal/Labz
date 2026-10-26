@@ -2,7 +2,7 @@
 
 **Créé : 21 octobre 2026**  
 **Dernière mise à jour : 26 octobre 2026**  
-**Version de référence : v0.18.12**
+**Version de référence : v0.18.15**
 
 ## Objectif produit
 
@@ -29,39 +29,16 @@ La plateforme possède :
 - feedback privé Supabase ;
 - reprise des brouillons et relances idempotentes ;
 - administration propriétaire ;
+- suppression manuelle des retours non pertinents ;
 - sujets durables distincts des messages bruts ;
 - impact, effort, état et historique de décisions ;
 - maximum trois sujets `en cours` garanti en base ;
+- tests Node et parcours Playwright Chromium ;
 - CI, versioning et déploiement GitHub Pages.
 
-La v0.18.9 a remboursé la dette de synchronisation du catalogue et du feedback. La v0.18.10 a retiré les modules projet lourds du chargement initial. La v0.18.11 a donné une vraie URL publique aux douze projets sans changer d’hébergement. La v0.18.12 ajoute le flux Retours → Sujets → Décisions.
+Les évolutions récentes ont remboursé la dette de synchronisation du catalogue, allégé le chargement initial, donné une vraie URL publique aux projets, ajouté le flux Retours → Sujets → Décisions puis intégré les parcours critiques dans un vrai navigateur.
 
-## Priorité 1 | Tests navigateur ciblés
-
-Le plus gros angle mort restant est maintenant la recette réelle dans un navigateur.
-
-Ajouter quelques E2E qui couvrent les invariants que les tests unitaires et contractuels ne peuvent pas garantir :
-
-- accueil → fiche projet ;
-- navigation mobile ;
-- formulaire feedback ;
-- erreur réseau puis reprise ;
-- rendu d’une page riche ;
-- ouverture d’une vraie URL `/projets/.../` puis arrivée sur la bonne fiche ;
-- connexion admin simulée ;
-- création d’un sujet depuis un retour ;
-- décision et blocage du quatrième sujet `en cours` côté interface.
-
-L’objectif n’est pas une grosse suite E2E. Quelques parcours critiques bien choisis valent davantage qu’un grand volume de tests fragiles.
-
-### Validation attendue
-
-- exécution automatisée dans un vrai moteur navigateur ;
-- échec explicite si une navigation, un formulaire ou un rendu critique casse ;
-- pas de faux test mobile annoncé comme recette appareil réel ;
-- temps d’exécution raisonnable dans la CI.
-
-## Priorité 2 | Administration autonome
+## Priorité 1 | Administration autonome et sécurité d’accès
 
 ### Récupération d’accès
 
@@ -69,26 +46,15 @@ Intégrer un parcours de récupération de mot de passe propriétaire compatible
 
 Ne jamais demander, stocker ou transmettre un mot de passe dans la conversation ou le dépôt.
 
+### Protection des mots de passe
+
+La protection Supabase contre les mots de passe compromis est encore désactivée. L’activer et vérifier le parcours de connexion réel avant de considérer ce point fermé.
+
 ### Recette propriétaire réelle
 
-Valider le parcours avec le vrai compte propriétaire dans un navigateur réel, puis sur téléphone. Cette recette doit rester distincte des tests automatisés.
+Valider le parcours avec le vrai compte propriétaire dans un navigateur desktop, puis sur téléphone physique. Cette recette doit rester distincte des tests automatisés et ne doit jamais créer de données factices sans nettoyage explicite.
 
-### Cycle de vie des messages bruts
-
-La rétention de 90 jours reste pilotée par la réception de nouveaux retours. Les sujets et décisions survivent déjà à la suppression des messages source grâce à la séparation introduite en v0.18.12.
-
-À surveiller avant toute évolution :
-
-- besoin réel d’une purge plus proactive ;
-- capacité maximale de 500 messages ;
-- sauvegarde avant toute suppression destructive ;
-- absence de copie inutile de données privées dans les synthèses.
-
-### Protection contre les abus
-
-Le quota global protège le stockage mais peut être saturé. N’ajouter CAPTCHA ou mécanisme équivalent qu’en réponse à un risque réel ou à une hausse de trafic mesurée.
-
-## Priorité 3 | Qualité de la vitrine
+## Priorité 2 | Qualité de la vitrine
 
 Avant d’ajouter de nouvelles fiches :
 
@@ -100,6 +66,30 @@ Avant d’ajouter de nouvelles fiches :
 
 Le SEO structurel n’est plus une priorité forte : les projets disposent maintenant d’URLs statiques, de métadonnées propres, d’un sitemap et d’un partage sans hash. Une stratégie SEO éditoriale plus lourde aurait aujourd’hui un rendement faible pour un portfolio personnel.
 
+## Priorité 3 | Qualité navigateur et accessibilité
+
+Les parcours critiques sont maintenant testés dans Chromium, avec une émulation Pixel 7 pour la navigation mobile. Ne pas transformer cette base en grosse suite fragile.
+
+Prochaines améliorations possibles seulement si elles répondent à un risque réel :
+
+- ajouter un contrôle d’accessibilité navigateur ciblé sur les pages principales ;
+- ajouter un petit smoke WebKit ou Firefox si une incompatibilité apparaît ou si le public le justifie ;
+- conserver traces et captures uniquement en cas d’échec ;
+- continuer à distinguer émulation mobile et appareil physique.
+
+## Cycle de vie des messages bruts
+
+La rétention de 90 jours reste pilotée par la réception de nouveaux retours. Les sujets et décisions survivent à la suppression des messages source. L’administrateur peut également supprimer immédiatement un retour non pertinent.
+
+À surveiller avant toute évolution :
+
+- besoin réel d’une purge plus proactive ;
+- capacité maximale de 500 messages ;
+- absence de copie inutile de données privées dans les synthèses ;
+- éventuel besoin de protection anti-abus plus forte si le trafic augmente.
+
+Le quota global protège le stockage mais peut être saturé. N’ajouter CAPTCHA ou mécanisme équivalent qu’en réponse à un risque réel ou à une hausse de trafic mesurée.
+
 ## Dette technique restante
 
 ### Front
@@ -108,22 +98,24 @@ L’architecture vanilla reste adaptée à la taille actuelle et ne justifie pas
 
 - `app.js` concentre encore plusieurs responsabilités ;
 - les pages riches et galeries utilisent encore des `MutationObserver` pour se greffer après le rendu principal ;
-- `navigation-fixes.js` compense explicitement certains comportements de scroll ;
-- l’administration reste rendue par chaînes HTML et mérite surtout des tests navigateur avant un éventuel refactoring.
+- `navigation-fixes.js` compense explicitement certains comportements de scroll avec plusieurs réinitialisations temporisées ;
+- l’administration reste rendue par chaînes HTML.
 
-Les modules riches sont déjà chargés à la demande depuis la v0.18.10. Ne pas réintroduire leur chargement global.
+Les modules riches sont chargés à la demande depuis la v0.18.10. Ne pas réintroduire leur chargement global.
 
-Ordre recommandé : mesurer d’abord, ajouter les E2E, puis remplacer progressivement les coordinations implicites par des points d’extension explicites. Ne pas réécrire l’application uniquement pour obtenir une architecture plus « moderne ».
+Ordre recommandé : conserver les E2E comme filet, puis remplacer progressivement les coordinations implicites par des points d’extension explicites seulement lorsqu’une modification fonctionnelle touche déjà cette zone. Ne pas réécrire l’application uniquement pour obtenir une architecture plus moderne.
 
 ### Supabase
 
-Le modèle Retours → Sujets → Décisions est maintenant en production avec RLS, triggers privés et limite WIP transactionnelle.
+Le modèle Retours → Sujets → Décisions est en production avec RLS, triggers privés, limite WIP transactionnelle et suppression admin des messages bruts.
 
 Durcissements encore utiles :
 
-- activer la protection contre les mots de passe compromis si le plan et la configuration le permettent ;
-- conserver les nouvelles tables avec grants explicites, car Supabase retire progressivement l’exposition automatique des nouvelles tables ;
-- continuer à lancer les advisors après chaque migration sensible.
+- activer la protection contre les mots de passe compromis ;
+- conserver des grants explicites sur les nouvelles tables et fonctions ;
+- continuer à lancer les advisors après chaque migration sensible ;
+- garder `labz_feedback_quota` inaccessible au navigateur, même si l’advisor signale volontairement RLS sans policy ;
+- ne pas supprimer les index récents sur la seule base du lint `unused_index` tant qu’ils n’ont pas reçu de trafic représentatif.
 
 ## Publication éventuelle des décisions
 
@@ -142,9 +134,11 @@ Ce chantier n’est pas prioritaire tant qu’un besoin réel de communication p
 Pour toute livraison applicative :
 
 ```sh
+npm ci
 npm run check
 npm run build
 node scripts/check-pages.mjs
+npm run e2e
 ```
 
 Puis vérifier la CI, le déploiement Pages et la version réellement publiée.
@@ -160,9 +154,10 @@ Règles permanentes :
 - les retours utilisateurs peuvent diminuer une priorité autant que l’augmenter ;
 - maximum trois sujets Labz réellement actifs en parallèle.
 
-## Ordre recommandé après v0.18.12
+## Ordre recommandé après v0.18.15
 
-1. quelques vrais tests navigateur ;
-2. récupération propriétaire et recette réelle ;
-3. amélioration progressive des preuves visuelles ;
-4. refactoring ciblé des coordinations `MutationObserver` seulement si les tests rendent l’opération sûre.
+1. récupération propriétaire + protection contre les mots de passe compromis ;
+2. recette ponctuelle sur vrais appareils ;
+3. amélioration progressive des preuves visuelles et des assets externes ;
+4. accessibilité navigateur ciblée ;
+5. refactoring local des coordinations `MutationObserver` uniquement lorsqu’un besoin fonctionnel rend l’opération utile.
