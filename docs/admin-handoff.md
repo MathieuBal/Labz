@@ -1,8 +1,8 @@
 # Administration Labz
 
-**État courant : 25 octobre 2026**
+**État courant : 26 octobre 2026**
 
-L’administration est publiée dans Labz sous `#/admin`. Elle sert à consulter les retours privés et à les classer sans exposer les messages au public.
+L’administration est publiée dans Labz sous `#/admin`. Elle sert à consulter les retours privés, les regrouper en sujets durables et conserver un historique de décisions sans exposer ces données au public.
 
 ## Accès
 
@@ -17,45 +17,90 @@ Il n’existe :
 
 La clé embarquée dans `admin-config.js` est une clé Supabase publishable. Les permissions réelles restent imposées par RLS et l’appartenance à `labz_admins`.
 
+## Données privées
+
+Le flux est maintenant séparé en quatre objets :
+
+1. `labz_feedback` conserve le message brut reçu ;
+2. `labz_topics` conserve le sujet durable, sa synthèse, son impact, son effort et son état ;
+3. `labz_topic_feedback` relie un ou plusieurs retours d’un même projet à un sujet ;
+4. `labz_decisions` conserve l’historique immuable des changements d’état et leur justification.
+
+Les liens vers un retour utilisent `ON DELETE CASCADE`. Si un message brut expire selon sa règle de rétention, le sujet et ses décisions restent présents. La synthèse doit donc rester compréhensible sans recopier inutilement le texte visiteur, son pseudo ou d’autres données privées.
+
+## États des sujets
+
+Les états disponibles sont :
+
+- `to_study` : À étudier ;
+- `in_progress` : En cours ;
+- `deferred` : Différé ;
+- `abandoned` : Abandonné ;
+- `shipped` : Livré.
+
+Tout changement d’état exige une justification. Un trigger privé enregistre automatiquement la décision correspondante.
+
+Maximum trois sujets peuvent être `in_progress` simultanément. Cette limite est imposée en base avec un verrou transactionnel, elle ne dépend donc pas seulement de l’interface.
+
 ## Autorisation en base
 
-`labz_admins` associe explicitement un `user_id` Auth aux droits propriétaire.
+Toutes les nouvelles tables ont RLS activé.
 
-Les politiques actuelles :
+Les politiques :
 
-- permettent à un utilisateur authentifié de vérifier uniquement sa propre appartenance ;
-- autorisent la lecture de `labz_feedback` uniquement lorsqu’une ligne correspondante existe dans `labz_admins` ;
-- autorisent la modification de la seule colonne `status` ;
-- bornent `status` à `new`, `in_progress`, `done`.
+- refusent tout accès `anon` aux sujets, associations et décisions ;
+- autorisent les lectures et écritures nécessaires uniquement lorsqu’une ligne correspondante existe dans `labz_admins` ;
+- gardent les décisions en lecture seule depuis le client ;
+- imposent qu’un retour soit rattaché uniquement à un sujet du même projet ;
+- ne donnent pas au client la possibilité de modifier les identifiants ou dates techniques.
 
-Un compte authentifié sans appartenance admin ne peut pas lire la boîte ni s’auto-promouvoir.
+Les triggers privilégiés vivent dans le schéma `private`, non exposé aux rôles navigateur. Le RPC `labz_create_topic` est `security invoker` et reste donc soumis aux droits et RLS de l’utilisateur connecté.
 
 ## Comportement du client
 
-L’interface propose :
+L’interface propose deux espaces.
 
-- connexion e-mail / mot de passe ;
-- liste des retours ;
+### Retours
+
 - recherche ;
-- filtre par projet ;
-- filtre par statut ;
-- compteurs Nouveau / En cours / Traité ;
-- capacité utilisée sur 500 messages ;
-- changement de statut ;
-- actualisation et déconnexion.
+- filtres projet et statut ;
+- changement Nouveau / En cours / Traité ;
+- création d’un sujet à partir d’un retour ;
+- rattachement à un sujet existant du même projet.
 
-Les access tokens et les messages restent uniquement en mémoire. Ils ne sont pas écrits dans `localStorage` ou `sessionStorage`.
+### Sujets & décisions
+
+- création d’un sujet indépendant ;
+- synthèse ;
+- type Idée / Problème / Signal ;
+- impact et effort Faible / Moyen / Fort ;
+- filtres projet et état ;
+- modification de la synthèse ;
+- changement d’état avec justification ;
+- historique des décisions ;
+- consultation et détachement des retours encore présents.
+
+Les access tokens et les données privées restent uniquement en mémoire. Ils ne sont pas écrits dans `localStorage` ou `sessionStorage`.
 
 Recharger la page, quitter l’administration, expirer la session ou se déconnecter détruit l’état privé local. Les réponses réseau arrivées après déconnexion ou expiration sont ignorées grâce à une génération de session invalidée et à l’annulation des requêtes.
 
-## État sécurité vérifié
+## Validation réalisée
 
-Le 25 octobre 2026, les advisors Supabase ne signalent aucun problème de performance. Côté sécurité :
+Le 26 octobre 2026 :
 
-- `labz_feedback_quota` possède RLS sans politique, ce qui est volontaire car cette table serveur n’est pas destinée aux visiteurs ;
-- la protection Supabase contre les mots de passe compromis est encore désactivée et reste à activer via la configuration Auth si l’option est disponible pour le projet.
+- la migration `20261026060647_labz_feedback_decisions` est appliquée en production ;
+- une transaction avec rollback a confirmé que trois sujets passent `in_progress` et que le quatrième est refusé ;
+- la même transaction a confirmé l’écriture automatique d’une décision par changement d’état ;
+- une requête simulant le compte admin a créé et relu un sujet et sa décision ;
+- une requête authentifiée avec un identifiant non-admin a vu zéro sujet, zéro association et zéro décision ;
+- les tests applicatifs couvrent le chargement des quatre jeux de données, la création de sujet, les décisions, les erreurs WIP et les associations.
 
-La réception publique utilise une Edge Function distincte ; elle ne donne aucun droit de lecture sur la boîte.
+Les advisors Supabase ne signalent aucun problème de performance. Côté sécurité :
+
+- `labz_feedback_quota` possède RLS sans politique, volontairement, car cette table est réservée au serveur ;
+- la protection Supabase contre les mots de passe compromis reste désactivée et constitue encore un durcissement à activer.
+
+La réception publique utilise une Edge Function distincte et ne donne aucun droit de lecture sur les données d’administration.
 
 ## Limites restantes
 
@@ -65,17 +110,13 @@ Labz ne propose pas encore de parcours intégré de récupération d’accès. L
 
 Ne jamais demander ni transmettre un mot de passe via une conversation ou un commit.
 
-### Recette propriétaire réelle
+### Recette navigateur réelle
 
-Les tests automatisés couvrent le client, les refus d’accès, l’expiration, les réponses tardives et les changements de statut simulés. Ils ne remplacent pas une recette complète du vrai compte propriétaire sur téléphone réel.
+Les tests actuels restent principalement unitaires et contractuels. Ils ne remplacent pas une recette complète du vrai compte propriétaire dans un navigateur et sur téléphone réel.
 
-### Cycle de vie
+### Publication éventuelle
 
-Le statut `Traité` n’efface pas le message et ne libère pas de capacité. La suppression ou l’archivage doit rester un chantier séparé avec règle de conservation explicite et sauvegarde avant action destructive.
-
-### Retours vers décisions
-
-L’administration est encore une boîte de réception. Elle ne regroupe pas plusieurs messages en problème, synthèse, impact, effort et décision. Cette couche constitue la prochaine évolution produit prioritaire, pas une fonction cachée déjà disponible.
+Les sujets et décisions sont entièrement privés. Aucune publication automatique n’existe. Si une synthèse publique est ajoutée plus tard, elle devra être un objet volontaire et distinct, sans exposer le texte source ni le pseudo du visiteur.
 
 ## Reprise du travail
 
@@ -85,4 +126,5 @@ Avant toute modification sensible :
 2. vérifier les migrations réellement appliquées et la version de l’Edge Function ;
 3. ne pas recréer de compte propriétaire ou de projet Supabase ;
 4. tester les règles avec un compte sans droits et le propriétaire sans exposer de données privées ;
-5. conserver les changements destructifs hors production tant que leur restauration n’est pas démontrée.
+5. garder la limite de trois sujets en cours comme invariant de base ;
+6. conserver les changements destructifs hors production tant que leur restauration n’est pas démontrée.
