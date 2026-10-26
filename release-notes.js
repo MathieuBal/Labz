@@ -1,6 +1,17 @@
 // Journal public des versions livrées avec ce site.
 export const releases = [
   {
+    "version": "0.18.12",
+    "date": "2026-10-26",
+    "title": "Les retours deviennent des décisions",
+    "description": "L’administration distingue maintenant les messages bruts des sujets durables qui servent à décider quoi étudier, poursuivre, différer, abandonner ou livrer.",
+    "items": [
+      "Un retour peut créer ou rejoindre un sujet sans recopier inutilement son message privé ; la synthèse du sujet reste exploitable après expiration de la source brute.",
+      "Chaque sujet porte un impact, un effort et un état, avec un historique immuable des décisions et de leur justification.",
+      "La base limite à trois les sujets simultanément en cours, y compris en cas de requêtes concurrentes, et toutes les données de pilotage restent réservées aux administrateurs autorisés."
+    ]
+  },
+  {
     "version": "0.18.11",
     "date": "2026-10-26",
     "title": "Chaque projet gagne une vraie adresse publique",
