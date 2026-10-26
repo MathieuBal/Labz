@@ -96,6 +96,12 @@ export function mountAdmin(root,projects) {
    composer={feedbackId:feedback.request_id,project:feedback.project,type:kindToTopic[feedback.kind]||'signal',title:feedback.summary,synthesis:'',impact:'medium',effort:'medium'};drawFeedback(state);
   });
   panel.querySelectorAll('[data-attach-feedback]').forEach(select=>select.onchange=()=>{if(select.value)void client.attachFeedback(select.value,select.dataset.attachFeedback);});
+  panel.querySelectorAll('[data-delete-feedback]').forEach(button=>button.onclick=()=>{
+   const feedback=state.rows.find(r=>r.request_id===button.dataset.deleteFeedback);if(!feedback)return;
+   const linked=state.links.filter(l=>l.feedback_id===feedback.request_id).length;
+   const consequence=linked?' Il sera aussi détaché des sujets auxquels il est lié, sans supprimer ces sujets.':'';
+   if(window.confirm(`Supprimer définitivement le retour « ${feedback.summary} » ?${consequence}`))void client.deleteFeedback(feedback.request_id);
+  });
   wireComposer(state);
  }
  function feedbackCard(r,state) {
@@ -105,8 +111,9 @@ export function mountAdmin(root,projects) {
    <h2>${esc(r.summary)}</h2><p class="admin-message-body">${esc(r.message)}</p>${r.nickname?`<p class="muted">Pseudo : ${esc(r.nickname)}</p>`:''}
    ${linked.length?`<div class="admin-linked"><span class="eyebrow">RATTACHÉ À</span>${linked.map(t=>`<span class="admin-chip">${esc(t.title)}</span>`).join('')}</div>`:''}
    <div class="admin-message-actions"><label class="field">Statut du retour<select data-status-id="${esc(r.request_id)}" ${state.busy?'disabled':''}>${selectOptions(statuses,r.status)}</select></label>
-   <button class="button secondary" data-topic-from-feedback="${esc(r.request_id)}" ${state.busy?'disabled':''}>Créer un sujet</button>
-   ${available.length?`<label class="field">Rattacher à un sujet<select data-attach-feedback="${esc(r.request_id)}" ${state.busy?'disabled':''}><option value="">Choisir…</option>${available.map(t=>`<option value="${esc(t.id)}">${esc(t.title)}</option>`).join('')}</select></label>`:''}</div></article>`;
+   <button class="button secondary" type="button" data-topic-from-feedback="${esc(r.request_id)}" ${state.busy?'disabled':''}>Créer un sujet</button>
+   ${available.length?`<label class="field">Rattacher à un sujet<select data-attach-feedback="${esc(r.request_id)}" ${state.busy?'disabled':''}><option value="">Choisir…</option>${available.map(t=>`<option value="${esc(t.id)}">${esc(t.title)}</option>`).join('')}</select></label>`:''}
+   <button class="button secondary" type="button" data-delete-feedback="${esc(r.request_id)}" ${state.busy?'disabled':''}>Supprimer</button></div></article>`;
  }
  function drawTopics(state) {
   const panel=root.querySelector('#admin-panel');if(!panel)return;

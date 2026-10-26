@@ -117,6 +117,14 @@ export function createInbox({url,key,fetcher=fetch,changed=()=>{},now=Date.now,
    if(!Array.isArray(rows)||rows.length!==1||rows[0].status!==status)throw new Error('not_updated');
   });
  }
+ async function deleteFeedback(id) {
+  if(!state.rows.some(r=>r.request_id===id))return false;
+  return mutate(async()=>{
+   const rows=await request('/rest/v1/labz_feedback?request_id=eq.'+encodeURIComponent(id)+'&select=request_id',
+    {method:'DELETE',returning:true});
+   if(!Array.isArray(rows)||rows.length!==1||rows[0].request_id!==id)throw new Error('not_deleted');
+  });
+ }
  async function createTopic({feedbackId=null,project,type,title,synthesis='',impact='medium',effort='medium'}) {
   if(!project||!Object.hasOwn(topicTypes,type)||!Object.hasOwn(levels,impact)||!Object.hasOwn(levels,effort))return false;
   return mutate(async()=>{
@@ -153,5 +161,5 @@ export function createInbox({url,key,fetcher=fetch,changed=()=>{},now=Date.now,
   if(previous)try{await request('/auth/v1/logout?scope=local',{method:'POST',access:previous});}
   catch { /* Local private state was already destroyed. No refresh token is stored. */ }
  }
- return {login,refresh,updateStatus,createTopic,updateTopic,attachFeedback,detachFeedback,logout,dispose:()=>clear(),snapshot:clone};
+ return {login,refresh,updateStatus,deleteFeedback,createTopic,updateTopic,attachFeedback,detachFeedback,logout,dispose:()=>clear(),snapshot:clone};
 }

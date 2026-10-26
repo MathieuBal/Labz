@@ -1,7 +1,7 @@
 # Labz | état du portefeuille
 
-**Snapshot : 25 octobre 2026**  
-**Version Labz : v0.18.9**
+**Snapshot : 26 octobre 2026**  
+**Version Labz : v0.18.15**
 
 Ce document est la vue de pilotage du portefeuille public. `catalog.js` reste la source canonique des fiches effectivement publiées ; ce document explique les décisions de portefeuille et les prochaines étapes utiles.
 
@@ -48,15 +48,19 @@ Constella reste une seule fiche avec Explore et Watch comme deux surfaces d’un
 
 ### Pip-Boy
 
-La démonstration publique locale est de nouveau accessible. Elle permet d’explorer le parcours MJ/joueur sans compte et sans backend. Le mode connecté Supabase, les vraies sessions et leurs garanties de sécurité restent un système distinct et ne doivent pas être assimilés à la démo.
+La démonstration publique locale est accessible. Elle permet d’explorer le parcours MJ/joueur sans compte et sans backend. Le mode connecté Supabase, les vraies sessions et leurs garanties de sécurité restent un système distinct et ne doivent pas être assimilés à la démo.
 
 ### AFK Farm
 
-La fiche doit conserver son origine réelle : le projet part du Champ magnétique de Sensoria, dont le feeling a été transformé en boucle idle. Les limites connues sur les Cores et la reprise après arrière-plan restent affichées.
+La fiche conserve son origine réelle : le projet part du Champ magnétique de Sensoria, dont le feeling a été transformé en boucle idle. Les limites connues sur les Cores et la reprise après arrière-plan restent affichées.
 
 ### Total War AI
 
 Le projet reste présenté comme une expérimentation arrêtée. Le pont Lua/Python, la télémétrie, le simulateur et les essais sont des résultats réels ; une IA capable de gagner une vraie bataille ne l’est pas. La valeur de la fiche tient aux hypothèses testées et aux limites d’information découvertes.
+
+### Perfoptimize
+
+Les essais sur la machine de développement sont présentés uniquement pour les écarts réellement observés et corrigés. La fiche ne relie pas ces essais à un incident matériel et indique simplement que la validation multi-machines reste à faire.
 
 ## Ce que Labz sait déjà faire
 
@@ -66,65 +70,70 @@ Le projet reste présenté comme une expérimentation arrêtée. Le pont Lua/Pyt
 - catégories, recherche et filtres ;
 - favoris et historique locaux ;
 - pages projet riches selon leur nature ;
+- vraies URLs statiques par projet ;
+- canonical, OpenGraph, sitemap et robots.txt générés ;
 - guides d’essai ;
 - galeries ;
 - journal public de versions ;
 - activité GitHub publique bornée à une liste explicite de dépôts.
 
-### Retours privés
+### Retours et décisions privées
 
 - envoi sans compte visiteur ;
 - stockage privé Supabase ;
 - brouillon local et reprise idempotente ;
 - administration propriétaire ;
 - statuts Nouveau / En cours / Traité ;
+- suppression manuelle des retours non pertinents ;
 - visibilité de la capacité ;
-- contrat serveur indépendant d’une whitelist projet parallèle ;
-- test automatique vérifiant que les douze fiches actives peuvent satisfaire ce contrat.
+- sujets durables séparés des messages bruts ;
+- synthèse, impact, effort et état ;
+- historique immuable des décisions ;
+- maximum trois sujets En cours, garanti en base ;
+- contrat serveur indépendant d’une whitelist projet parallèle.
 
-### Publication
+### Publication et qualité
 
 - versioning et release notes synchronisés ;
 - contrôle CI des changements applicatifs ;
 - build GitHub Pages ;
 - empreinte commune JS/CSS par déploiement ;
-- tests Node et vérification des chemins de publication.
+- chargement différé des modules riches ;
+- tests Node ;
+- vérification des chemins de publication ;
+- parcours Playwright Chromium avant déploiement ;
+- traces et captures conservées en cas d’échec.
 
-## Priorités après v0.18.9
+## Priorités après v0.18.15
 
-### 1. Retours → décisions
-
-La prochaine vraie valeur produit reste :
-
-```text
-retours
-  -> sujet / problème
-  -> synthèse
-  -> impact / effort
-  -> décision
-  -> état
-  -> éventuelle publication publique
-```
-
-Labz collecte maintenant de façon suffisamment fiable. La prochaine étape utile est de réduire la distance entre un message reçu et une décision de portefeuille.
-
-### 2. Administration autonome
+### 1. Administration autonome
 
 Restent à traiter :
 
 - récupération de mot de passe ;
-- cycle de vie de la capacité ;
-- purge explicite et sûre ;
-- protection renforcée contre les abus si le trafic augmente ;
-- recette propriétaire complète sur téléphone réel.
+- activation de la protection contre les mots de passe compromis ;
+- recette propriétaire complète sur desktop et téléphone physique ;
+- purge plus proactive seulement si le volume réel le justifie ;
+- protection renforcée contre les abus seulement si le trafic augmente.
 
-### 3. Preuves visuelles et partage
+### 2. Preuves visuelles et partage
 
 Avant d’ajouter de nouvelles fiches :
 
 - remplacer les visuels génériques quand une capture réelle est disponible ;
 - figer les ressources importantes au lieu de dépendre de chemins `main` externes ;
-- améliorer le partage par projet et les métadonnées sociales si le besoin devient concret.
+- améliorer les images sociales projet par projet quand de bons visuels réels existent.
+
+Le SEO structurel est désormais suffisant pour le besoin actuel. Une stratégie plus lourde n’est pas prioritaire.
+
+### 3. Qualité navigateur et architecture
+
+La CI couvre les parcours critiques dans Chromium et une navigation mobile émulée. Les améliorations suivantes doivent rester ciblées :
+
+- contrôle d’accessibilité navigateur sur les pages principales ;
+- smoke Firefox ou WebKit seulement si un besoin concret apparaît ;
+- recette physique ponctuelle ;
+- remplacement progressif des coordinations `MutationObserver` et des correctifs de scroll lorsqu’un chantier fonctionnel touche déjà ces zones.
 
 ## Règles de pilotage
 

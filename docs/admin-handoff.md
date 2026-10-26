@@ -2,7 +2,7 @@
 
 **État courant : 26 octobre 2026**
 
-L’administration est publiée dans Labz sous `#/admin`. Elle sert à consulter les retours privés, les regrouper en sujets durables et conserver un historique de décisions sans exposer ces données au public.
+L’administration est publiée dans Labz sous `#/admin`. Elle sert à consulter les retours privés, écarter les messages non pertinents, les regrouper en sujets durables et conserver un historique de décisions sans exposer ces données au public.
 
 ## Accès
 
@@ -26,7 +26,7 @@ Le flux est maintenant séparé en quatre objets :
 3. `labz_topic_feedback` relie un ou plusieurs retours d’un même projet à un sujet ;
 4. `labz_decisions` conserve l’historique immuable des changements d’état et leur justification.
 
-Les liens vers un retour utilisent `ON DELETE CASCADE`. Si un message brut expire selon sa règle de rétention, le sujet et ses décisions restent présents. La synthèse doit donc rester compréhensible sans recopier inutilement le texte visiteur, son pseudo ou d’autres données privées.
+Les liens vers un retour utilisent `ON DELETE CASCADE`. Si un message brut expire selon sa règle de rétention ou si l’administrateur supprime un retour non pertinent, ses liens disparaissent mais le sujet et ses décisions restent présents. La synthèse doit donc rester compréhensible sans recopier inutilement le texte visiteur, son pseudo ou d’autres données privées.
 
 ## États des sujets
 
@@ -50,6 +50,7 @@ Les politiques :
 
 - refusent tout accès `anon` aux sujets, associations et décisions ;
 - autorisent les lectures et écritures nécessaires uniquement lorsqu’une ligne correspondante existe dans `labz_admins` ;
+- autorisent la suppression d’un message brut uniquement à un compte administrateur ;
 - gardent les décisions en lecture seule depuis le client ;
 - imposent qu’un retour soit rattaché uniquement à un sujet du même projet ;
 - ne donnent pas au client la possibilité de modifier les identifiants ou dates techniques.
@@ -65,8 +66,11 @@ L’interface propose deux espaces.
 - recherche ;
 - filtres projet et statut ;
 - changement Nouveau / En cours / Traité ;
+- suppression définitive d’un retour après confirmation ;
 - création d’un sujet à partir d’un retour ;
 - rattachement à un sujet existant du même projet.
+
+La suppression utilise `Prefer: return=representation` et le client attend exactement le retour supprimé avant de considérer l’opération comme réussie. Si le retour était lié à un sujet, l’association est supprimée automatiquement ; le sujet, sa synthèse et ses décisions restent conservés.
 
 ### Sujets & décisions
 
@@ -89,16 +93,16 @@ Recharger la page, quitter l’administration, expirer la session ou se déconne
 Le 26 octobre 2026 :
 
 - la migration `20261026060647_labz_feedback_decisions` est appliquée en production ;
+- la migration `20261026194810_labz_admin_feedback_delete` réserve la suppression de `labz_feedback` aux administrateurs authentifiés ;
 - une transaction avec rollback a confirmé que trois sujets passent `in_progress` et que le quatrième est refusé ;
 - la même transaction a confirmé l’écriture automatique d’une décision par changement d’état ;
 - une requête simulant le compte admin a créé et relu un sujet et sa décision ;
 - une requête authentifiée avec un identifiant non-admin a vu zéro sujet, zéro association et zéro décision ;
-- les tests applicatifs couvrent le chargement des quatre jeux de données, la création de sujet, les décisions, les erreurs WIP et les associations.
+- la présence du privilège DELETE, de la politique RLS admin et du `ON DELETE CASCADE` des associations a été vérifiée en production ;
+- les tests applicatifs couvrent le chargement des quatre jeux de données, la création de sujet, les décisions, les erreurs WIP, les associations et la suppression ;
+- la CI exécute aussi les parcours critiques dans Chromium, dont l’administration simulée, sans écrire dans les données Supabase de production.
 
-Les advisors Supabase ne signalent aucun problème de performance. Côté sécurité :
-
-- `labz_feedback_quota` possède RLS sans politique, volontairement, car cette table est réservée au serveur ;
-- la protection Supabase contre les mots de passe compromis reste désactivée et constitue encore un durcissement à activer.
+Côté sécurité, la dette connue restante est la protection Supabase contre les mots de passe compromis, encore désactivée.
 
 La réception publique utilise une Edge Function distincte et ne donne aucun droit de lecture sur les données d’administration.
 
@@ -110,9 +114,9 @@ Labz ne propose pas encore de parcours intégré de récupération d’accès. L
 
 Ne jamais demander ni transmettre un mot de passe via une conversation ou un commit.
 
-### Recette navigateur réelle
+### Recette sur appareils réels
 
-Les tests actuels restent principalement unitaires et contractuels. Ils ne remplacent pas une recette complète du vrai compte propriétaire dans un navigateur et sur téléphone réel.
+La CI lance les parcours critiques dans Chromium et émule un Pixel 7 pour la navigation mobile. Cela ne remplace pas encore une recette ponctuelle du vrai compte propriétaire sur un navigateur desktop et un téléphone physique.
 
 ### Publication éventuelle
 
@@ -127,4 +131,5 @@ Avant toute modification sensible :
 3. ne pas recréer de compte propriétaire ou de projet Supabase ;
 4. tester les règles avec un compte sans droits et le propriétaire sans exposer de données privées ;
 5. garder la limite de trois sujets en cours comme invariant de base ;
-6. conserver les changements destructifs hors production tant que leur restauration n’est pas démontrée.
+6. confirmer explicitement toute suppression définitive depuis l’interface ;
+7. conserver les autres changements destructifs hors production tant que leur restauration n’est pas démontrée.
