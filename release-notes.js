@@ -8,7 +8,7 @@ export const releases = [
     "title": "Perfoptimize clarifie ce que les essais matériels prouvent vraiment",
     "description": "La fiche distingue désormais clairement les corrections issues des essais sur ma machine de ce qui reste à valider sur plusieurs configurations.",
     "items": [
-      "La panne de mon ancien PC disparaît entièrement de la narration Perfoptimize afin de ne suggérer aucun lien de cause à effet avec les essais.",
+      "Une formulation pouvant suggérer un lien de cause à effet non démontré disparaît entièrement de la narration Perfoptimize.",
       "Le bloc consacré aux essais se concentre maintenant sur les écarts réellement observés : démarrage WMI, télémétrie et recommandation Engine Multithreading.",
       "Le statut indique simplement que l’alpha a été essayée sur ma configuration mais n’est pas encore validée sur plusieurs machines."
     ]
