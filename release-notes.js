@@ -3,6 +3,17 @@ import {releases as previousReleases} from './release-history.js';
 
 export const releases = [
   {
+    "version": "0.18.15",
+    "date": "2026-10-26",
+    "title": "L’administration peut écarter les retours non pertinents",
+    "description": "Les messages bruts inutiles peuvent maintenant être supprimés directement depuis l’espace privé, sans toucher aux sujets ou aux décisions déjà structurés.",
+    "items": [
+      "Chaque retour dispose d’une action Supprimer avec confirmation explicite avant effacement définitif.",
+      "Si le retour était lié à un sujet, son lien disparaît automatiquement mais le sujet, sa synthèse et son historique de décisions restent conservés.",
+      "Le droit DELETE reste réservé aux comptes administrateurs autorisés par RLS, et le client vérifie que le serveur confirme bien la suppression avant de rafraîchir la boîte."
+    ]
+  },
+  {
     "version": "0.18.14",
     "date": "2026-10-26",
     "title": "Perfoptimize clarifie ce que les essais matériels prouvent vraiment",
