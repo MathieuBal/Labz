@@ -5,7 +5,11 @@ import {readFile} from 'node:fs/promises';
 const read=path=>readFile(new URL(`../${path}`,import.meta.url),'utf8');
 
 test('decision schema stays private, admin-only and concurrency safe',async()=>{
- const sql=await read('supabase/migrations/20261026060647_labz_feedback_decisions.sql');
+ const [sql,rationale,index]=await Promise.all([
+  read('supabase/migrations/20261026060647_labz_feedback_decisions.sql'),
+  read('supabase/migrations/20261026061654_labz_decision_rationale_freshness.sql'),
+  read('supabase/migrations/20261026061544_labz_decisions_decided_by_index.sql'),
+ ]);
  for(const table of ['labz_topics','labz_topic_feedback','labz_decisions']) {
   assert.match(sql,new RegExp(`alter table public\\.${table} enable row level security`));
  }
@@ -19,6 +23,9 @@ test('decision schema stays private, admin-only and concurrency safe',async()=>{
  assert.match(sql,/private\.labz_topics_record_decision\(\)[\s\S]*security definer/);
  assert.match(sql,/public\.labz_create_topic\([\s\S]*security invoker/);
  assert.match(sql,/on delete cascade/);
+ assert.match(index,/create index labz_decisions_decided_by on public\.labz_decisions\(decided_by\)/);
+ assert.match(rationale,/new\.decision_rationale is not distinct from old\.decision_rationale/);
+ assert.match(rationale,/message = 'decision_rationale_state_change_required'/);
 });
 
 test('admin UI separates raw feedback from durable topics and decisions',async()=>{
@@ -30,4 +37,6 @@ test('admin UI separates raw feedback from durable topics and decisions',async()
  assert.match(view,/data-topic-decision/);
  assert.match(view,/data-topic-from-feedback/);
  assert.match(view,/3 en cours/);
+ assert.match(view,/redrawSearch/);
+ assert.match(view,/focus\(\{preventScroll:true\}\)/);
 });
