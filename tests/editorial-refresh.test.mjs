@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
+import {releases as siteReleases} from '../release-notes.js';
 
 const read = path => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 
@@ -24,7 +25,7 @@ test('Total War AI est présenté comme une expérimentation arrêtée sur une i
 });
 
 test('le catalogue canonique porte les statuts et la v0.18.9 publie le remboursement de dette', async () => {
-  const [catalog, releases, html] = await Promise.all([read('catalog.js'), read('release-notes.js'), read('index.html')]);
+  const [catalog, html] = await Promise.all([read('catalog.js'), read('index.html')]);
   for (const label of [
     'Public · expérience jouable',
     'Prototype avancé · jouable',
@@ -32,6 +33,7 @@ test('le catalogue canonique porte les statuts et la v0.18.9 publie le rembourse
     'R&D · expérimentation arrêtée',
   ]) assert.match(catalog, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   assert.doesNotMatch(html, /catalog-runtime\.js/);
-  assert.match(releases, /"version": "0\.18\.9"/);
-  assert.match(releases, /dette de synchronisation/);
+  const debtRelease = siteReleases.find(release => release.version === '0.18.9');
+  assert.ok(debtRelease, 'La note 0.18.9 doit rester dans le journal publié.');
+  assert.match([debtRelease.title,debtRelease.description,...(debtRelease.items||[])].join(' '), /dette de synchronisation/);
 });
