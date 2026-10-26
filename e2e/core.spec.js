@@ -1,6 +1,8 @@
 import {test,expect,devices} from '@playwright/test';
 
 const supabaseBase='https://kforawentogotkizxldl.supabase.co';
+const pixel7={...devices['Pixel 7']};
+delete pixel7.defaultBrowserType;
 const cors={
   'access-control-allow-origin':'http://127.0.0.1:4173',
   'access-control-allow-methods':'GET,POST,PATCH,DELETE,OPTIONS',
@@ -96,7 +98,7 @@ test('une panne de réception garde le brouillon après rechargement',async({pag
 });
 
 test.describe('navigation mobile',()=>{
-  test.use({...devices['Pixel 7']});
+  test.use(pixel7);
   test('la barre mobile pilote les routes principales',async({page})=>{
     await page.goto('/');
     const nav=page.getByRole('navigation',{name:'Navigation mobile'});
