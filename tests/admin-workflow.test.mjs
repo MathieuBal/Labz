@@ -16,8 +16,8 @@ test('decision schema stays private, admin-only and concurrency safe',async()=>{
  assert.match(sql,/count\(\*\) from public\.labz_topics where state = 'in_progress'/);
  assert.match(sql,/message = 'topic_wip_limit'/);
  assert.match(sql,/message = 'decision_rationale_required'/);
- assert.match(sql,/security definer[\s\S]*private\.labz_topics_record_decision/);
- assert.match(sql,/security invoker[\s\S]*public\.labz_create_topic/);
+ assert.match(sql,/private\.labz_topics_record_decision\(\)[\s\S]*security definer/);
+ assert.match(sql,/public\.labz_create_topic\([\s\S]*security invoker/);
  assert.match(sql,/on delete cascade/);
 });
 
