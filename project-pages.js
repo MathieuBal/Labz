@@ -205,14 +205,14 @@ const profiles = {
       ['Le diagnostic cherche le goulot', 'Le moteur relie les mesures à des hypothèses et formule des recommandations avec leur niveau de preuve plutôt que d’annoncer un boost abstrait.'],
       ['Une modification peut être vérifiée', 'Quand une action est compatible, elle peut être prévisualisée, sauvegardée et comparée sur une nouvelle mesure avant d’être conservée.'],
     ],
-    aboutLabel: 'CE QUE LES TESTS RÉELS ONT CHANGÉ',
-    aboutTitle: 'Le matériel réel a plusieurs fois contredit ce qui semblait correct dans le code.',
+    aboutLabel: 'CE QUE LES ESSAIS SUR MA MACHINE ONT APPORTÉ',
+    aboutTitle: 'Le matériel réel a révélé des écarts que le code seul ne montrait pas.',
     about: [
       'Une première exécution sur mon PC a par exemple révélé que le moniteur Windows pouvait collecter zéro échantillon à cause du démarrage à froid de WMI. Une fois corrigé, la télémétrie est devenue plausible et il a fallu ensuite ajuster le rythme de collecte.',
-      'Un autre essai sur Path of Exile a mis en évidence une recommandation dangereuse : le système pouvait conseiller de baisser Engine Multithreading alors que la logique du réglage était inversée par rapport à l’hypothèse du moteur. Ce test a poussé le modèle de recommandations vers une logique plus explicite d’action et de preuve. Ma machine est ensuite tombée en panne, ce qui a stoppé la validation matérielle plus large.'
+      'Un autre essai sur Path of Exile a mis en évidence une recommandation dangereuse : le système pouvait conseiller de baisser Engine Multithreading alors que la logique du réglage était inversée par rapport à l’hypothèse du moteur. Ce retour a fait évoluer le modèle vers une logique plus explicite d’action et de preuve. Ces essais restent limités à ma propre configuration et ne valent pas encore validation multi-machines.'
     ],
     tech: [['Surface', 'Windows x64'], ['Architecture', '.NET · Core partagé · CLI · application locale ASP.NET'], ['Mesure', 'PresentMon · télémétrie système · incidents · réseau'], ['Qualité', 'xUnit · CI Linux + Windows · package autonome']],
-    status: 'Perfoptimize est une alpha réellement testable et techniquement solide. Il a connu de vrais essais sur mon matériel, mais pas une validation large sur plusieurs configurations, notamment parce que mon PC est tombé en panne pendant le développement. Avant une diffusion grand public, il reste aussi à renforcer la signature du binaire, la chaîne de confiance de PresentMon et certains garde-fous de distribution.'
+    status: 'Perfoptimize est une alpha réellement testable et techniquement solide. Il a été essayé sur ma propre configuration, mais il n’est pas encore validé sur plusieurs machines. Avant une diffusion grand public, il reste aussi à renforcer la signature du binaire, la chaîne de confiance de PresentMon et certains garde-fous de distribution.'
   },
   pipboy: {
     type: 'product',
