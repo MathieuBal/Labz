@@ -70,6 +70,15 @@ export function mountAdmin(root,projects) {
    composer=null;void client.createTopic(payload);
   };
  }
+ function redrawSearch(state,draw,id,filtersState,event) {
+  filtersState.query=event.target.value;
+  const start=event.target.selectionStart,end=event.target.selectionEnd;
+  draw(state);
+  const next=root.querySelector('#'+id);
+  if(!next)return;
+  next.focus({preventScroll:true});
+  if(start!==null&&end!==null)next.setSelectionRange(start,end);
+ }
  function drawFeedback(state) {
   const panel=root.querySelector('#admin-panel');if(!panel)return;
   const rows=filterFeedback(state.rows,filters);
@@ -78,7 +87,9 @@ export function mountAdmin(root,projects) {
    <label class="field">Statut<select id="admin-status"><option value="">Tous les statuts</option>${selectOptions(statuses,filters.status)}</select></label></div>
    <p class="admin-result">${state.phase==='loading'?'Chargement des retours…':state.rows.length===0?'Aucun retour reçu pour le moment.':rows.length===0?'Aucun retour ne correspond à ces filtres.':rows.length+' retour(s) affiché(s) sur '+state.rows.length+'.'}</p>
    <div id="admin-list">${rows.map(r=>feedbackCard(r,state)).join('')}</div>`;
-  for(const [id,key] of [['admin-query','query'],['admin-project','project'],['admin-status','status']]) panel.querySelector('#'+id).addEventListener(key==='query'?'input':'change',event=>{filters[key]=event.target.value;drawFeedback(state);});
+  panel.querySelector('#admin-query').addEventListener('input',event=>redrawSearch(state,drawFeedback,'admin-query',filters,event));
+  panel.querySelector('#admin-project').addEventListener('change',event=>{filters.project=event.target.value;drawFeedback(state);});
+  panel.querySelector('#admin-status').addEventListener('change',event=>{filters.status=event.target.value;drawFeedback(state);});
   panel.querySelectorAll('[data-status-id]').forEach(select=>select.onchange=()=>void client.updateStatus(select.dataset.statusId,select.value));
   panel.querySelectorAll('[data-topic-from-feedback]').forEach(button=>button.onclick=()=>{
    const feedback=state.rows.find(r=>r.request_id===button.dataset.topicFromFeedback);if(!feedback)return;
@@ -107,7 +118,9 @@ export function mountAdmin(root,projects) {
    <p class="admin-result">${state.topics.length===0?'Aucun sujet structuré pour le moment.':topics.length===0?'Aucun sujet ne correspond à ces filtres.':topics.length+' sujet(s) affiché(s) sur '+state.topics.length+'.'}</p>
    <div id="admin-topic-list">${topics.map(t=>topicCard(t,state)).join('')}</div>`;
   panel.querySelector('#admin-new-topic').onclick=()=>{composer={feedbackId:null,project:'',type:'signal',title:'',synthesis:'',impact:'medium',effort:'medium'};drawTopics(state);};
-  for(const [id,key] of [['topic-query','query'],['topic-project','project'],['topic-state','state']]) panel.querySelector('#'+id).addEventListener(key==='query'?'input':'change',event=>{topicFilters[key]=event.target.value;drawTopics(state);});
+  panel.querySelector('#topic-query').addEventListener('input',event=>redrawSearch(state,drawTopics,'topic-query',topicFilters,event));
+  panel.querySelector('#topic-project').addEventListener('change',event=>{topicFilters.project=event.target.value;drawTopics(state);});
+  panel.querySelector('#topic-state').addEventListener('change',event=>{topicFilters.state=event.target.value;drawTopics(state);});
   panel.querySelectorAll('[data-topic-edit]').forEach(form=>form.onsubmit=event=>{
    event.preventDefault();const data=new FormData(form);void client.updateTopic(form.dataset.topicEdit,{type:String(data.get('type')),title:String(data.get('title')),synthesis:String(data.get('synthesis')),impact:String(data.get('impact')),effort:String(data.get('effort'))});
   });
