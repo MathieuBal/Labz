@@ -2,6 +2,17 @@
 import {releases as previousReleases} from './release-history.js';
 
 export const releases = [
+{
+  "version": "0.18.16",
+  "date": "2026-10-30",
+  "title": "AFK Farm : récolte immersive et progression revue",
+  "description": "La fiche et le guide reflètent la nouvelle version jouable.",
+  "items": [
+    "La récolte agrandit son espace et masque les menus pendant la session.",
+    "L’arbre propose zoom et accès direct aux branches ; les perks et les Cores ont reçu une première correction d’équilibrage.",
+    "Le chantier montre les modules du vaisseau et leurs bonus. La progression longue reste en cours d’ajustement."
+  ]
+},
   {
     "version": "0.18.15",
     "date": "2026-10-26",

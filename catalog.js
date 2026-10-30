@@ -100,15 +100,15 @@ const visitorGuides = {
   },
   'afk-farm': {
     invitation: 'Le Champ magnétique de Sensoria devenu un idle web, puis un prototype de progression beaucoup plus vaste.',
-    firstTry: 'Observe la boucle courte avant de laisser tourner',
+    firstTry: 'Essaie une récolte immersive puis équipe ton vaisseau',
     steps: [
-      'Lance le prototype et récolte activement les premiers grains.',
-      'Investis dans l’arbre de progression puis démarre les premiers projets AFK.',
+      'Lance une récolte : les menus disparaissent pour laisser la place aux Lumens et aux jauges.',
+      'Explore les sept branches avec le zoom et le sélecteur, puis lance un module au chantier.',
       'Essaie plusieurs biomes et vois comment leurs règles changent la progression.',
     ],
-    controls: 'Pensé mobile-first et installable comme PWA. Les interactions principales se font au doigt ou à la souris.',
+    controls: 'Au doigt ou à la souris. Dans l’arbre : glisser pour se déplacer, pincer ou utiliser les boutons pour zoomer, choisir une branche pour la rejoindre.',
     saveNote: 'La sauvegarde est locale au navigateur. Le calcul de reprise après simple mise en arrière-plan présente encore un défaut connu.',
-    comfort: 'Prototype avancé, pas jeu fini : l’économie des Cores et certaines liaisons d’arbre ont des incohérences connues. Les retours servent précisément à décider s’il mérite une nouvelle passe.',
+    comfort: 'Récolte immersive, navigation tactile et première passe d’équilibrage disponibles. Les bonus des Cores investis sont conservés et les liaisons entre branches corrigées. La progression longue reste à affiner.',
     takeaway: 'Une expérimentation personnelle poussée loin : boucle idle, biomes, prestige, projets temporisés, arbre massif et rendu Canvas optimisé.',
   },
   pipboy: {
@@ -151,7 +151,7 @@ export const projects = [
   project('afk-farm', 'AFK Farm', 'jeux', 'Le champ magnétique de Sensoria transformé en idle web, puis poussé jusqu’aux drones, biomes, chantiers, prestige et arbre de progression.', {
     art: 'orbit', mode: 'Prototype avancé · jouable', live: 'https://mathieubal.github.io/afk-farm/', repo: 'https://github.com/MathieuBal/afk-farm', action: 'Essayer le prototype',
     detail: 'Un prototype mobile-first né du feeling du Champ magnétique : récolte active, automatisation, progression AFK, biomes, projets temporisés et arbre à sept branches.',
-    hint: 'Prototype réellement jouable. L’économie des Cores et la reprise après simple mise en arrière-plan restent deux limites connues et assumées.',
+    hint: 'Récolte immersive, arbre rééquilibré et chantier visible module par module. La progression longue et la reprise après simple mise en arrière-plan restent à améliorer.',
   }),
   project('diagnostic', 'Diagnostic numérique', 'outils', 'Prépare des ateliers de médiation avec questions, mini-jeux et manipulations.', {
     art: 'tools', mode: 'Outil de médiation · démo', live: 'https://mathieubal.github.io/diagnostic-numerique/', repo: 'https://github.com/MathieuBal/diagnostic-numerique', action: 'Ouvrir la démonstration', launchLabel: 'Ouvrir la démonstration',

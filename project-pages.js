@@ -123,7 +123,7 @@ const profiles = {
       ],
     },
     features: [
-      ['Du geste à l’automatisation', 'Les premières récoltes se font directement dans le champ magnétique, avec énergie, stockage, chaînes de captures et Surge. Les drones et améliorations prennent ensuite progressivement une partie du travail à votre place.'],
+      ['Une récolte immersive', 'Les menus disparaissent pendant la récolte. Le champ occupe la surface disponible avec une mise à l’échelle uniforme, en conservant énergie, soute, combos et Surge. Les drones et améliorations prennent ensuite progressivement une partie du travail à votre place.'],
       ['Une progression en couches', 'Projets temporisés, six biomes de base, progression procédurale au-delà, prestige, perks, succès et arbre déterministe à sept branches donnent plusieurs horizons de progression au lieu d’une simple courbe de chiffres.'],
       ['Un vrai jeu web sans 3D lourde', 'Interface touch-first, PWA, sauvegarde locale et rendu Canvas montrent qu’un format techniquement accessible peut quand même porter une boucle de jeu dense et accrocheuse.'],
     ],
@@ -131,7 +131,7 @@ const profiles = {
     flowTitle: 'Récolter, construire, automatiser, repartir plus fort.',
     flow: [
       ['Je récolte', 'Je manipule le champ magnétique pour attirer les Lumens, gérer l’énergie, remplir la soute et profiter des combos ou du Surge.'],
-      ['Je construis', 'Les ressources alimentent des chantiers temporisés qui débloquent progressivement de nouveaux biomes et de nouvelles règles.'],
+      ['Je construis', 'Le vaisseau prend forme module par module. Chaque pièce installée apporte un bonus de soute, d’énergie, de valeur ou de construction ; terminer un ouvrage débloque un biome.'],
       ['J’automatise', 'Les drones et différentes améliorations prennent en charge une partie de la production, y compris pendant les absences prises en compte par le système AFK.'],
       ['Je prestige', 'Les Cores et l’arbre de progression permettent de repartir avec des avantages permanents et d’accélérer les cycles suivants.'],
     ],
@@ -142,7 +142,7 @@ const profiles = {
       'C’est là que le projet devient intéressant techniquement et en game design : la récolte manuelle, les drones, les projets, le prestige et les biomes doivent tous progresser ensemble sans qu’un système rende les autres inutiles.'
     ],
     tech: [['Surface', 'Navigateur · PWA mobile-first'], ['Moteur', 'Canvas · tableaux typés · densité adaptée à l’écran'], ['Progression', 'Biomes · projets · prestige · arbre à 7 branches'], ['AFK', 'Rattrapage hors-ligne plafonné de base à 8 h']],
-    status: 'AFK Farm est réellement jouable et la majorité de ses systèmes importants interagit déjà. Il reste pourtant un prototype avancé : le retour après simple mise en arrière-plan peut perdre une partie de la progression AFK, et les Cores servent à la fois de multiplicateur et de monnaie dépensable, ce qui peut rendre certains achats contre-productifs.'
+    status: 'AFK Farm est réellement jouable et la majorité de ses systèmes importants interagit déjà. Il reste pourtant un prototype avancé : le retour après simple mise en arrière-plan peut perdre une partie de la progression AFK, tandis que l’équilibrage de la progression longue reste à affiner. La révision du 30 octobre corrige les liaisons entre branches et conserve le bonus des Cores investis. Elle ajoute le zoom tactile, les boutons de navigation et un accès direct aux branches. Les 24 tests et 1 400 sessions simulées de cette révision ne remplacent pas les essais humains sur téléphone.'
   },
   diagnostic: {
     type: 'product',
