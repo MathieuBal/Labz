@@ -146,34 +146,34 @@ test('l’administration simulée se connecte et confirme un changement de statu
   await expect(page.locator('.admin-topic-synthesis')).toHaveText('Vérifier le parcours mobile.');
 });
 
-test('un retour de démo propose un avis privé une fois pour le projet', async ({page}) => {
+test('donner un avis par-dessus la démo puis reprendre au même endroit', async ({page}) => {
+  await page.setViewportSize({width:390, height:844});
+  await page.route('https://mathieubal.github.io/Sensoria/', route =>
+    route.fulfill({contentType:'text/html', body:'<label>Progression<input></label>'}));
   await page.goto('/#/projet/sensoria');
   await page.clock.install();
   const launch = page.locator('[data-launch]').first();
-  // Exercise the launch handler without loading the external project in CI.
-  await launch.evaluate(link => link.removeAttribute('href'));
-  async function visit(seconds) {
-    await launch.click();
-    await page.evaluate(() => {
-      Object.defineProperty(document, 'hidden', {configurable:true, value:true});
-      document.dispatchEvent(new Event('visibilitychange'));
-    });
-    await page.clock.fastForward(seconds * 1000);
-    await page.evaluate(() => {
-      Object.defineProperty(document, 'hidden', {configurable:true, value:false});
-      document.dispatchEvent(new Event('visibilitychange'));
-    });
-  }
-  const dialog = page.locator('#feedback');
-  await visit(2);
-  await expect(dialog).toBeHidden();
-  await visit(20);
-  await expect(dialog).toBeVisible();
-  await expect(dialog.locator('#feedback-context')).toContainText('Sensoria');
-  await expect(dialog.locator('[value=opinion]')).toBeChecked();
-  await dialog.getByLabel('Fermer le formulaire').click();
-  await visit(20);
-  await expect(dialog).toBeHidden();
-  await page.locator('[data-feedback]').click();
-  await expect(dialog).toBeVisible();
+  await launch.click();
+  const viewer = page.locator('#demo-viewer');
+  const progress = viewer.frameLocator('iframe').getByLabel('Progression');
+  await progress.fill('tableau 4');
+  const invitation = page.locator('#demo-invite');
+  await page.clock.fastForward(30000);
+  await expect(invitation).toBeHidden();
+  await page.clock.fastForward(31000);
+  await expect(invitation).toBeVisible();
+  await invitation.getByText('Donner mon avis').click();
+  const feedback = page.locator('#feedback');
+  await expect(feedback.locator('#feedback-context')).toContainText('Sensoria');
+  await expect(feedback.locator('[value=opinion]')).toBeChecked();
+  await feedback.getByLabel('Fermer le formulaire').click();
+  await expect(progress).toHaveValue('tableau 4');
+  await viewer.getByRole('button',{name:'‹ Labz'}).click();
+  await expect(viewer.locator('iframe')).toHaveCount(0);
+  await launch.click();
+  await expect(progress).toBeVisible();
+  await page.clock.fastForward(61000);
+  await expect(invitation).toBeHidden();
+  await viewer.getByRole('button',{name:'Mon avis'}).click();
+  await expect(feedback).toBeVisible();
 });

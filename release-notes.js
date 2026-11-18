@@ -5,9 +5,9 @@ export const releases = [
   {
     version: "0.18.17",
     date: "2026-11-18",
-    title: "Un avis après ton essai",
-    description: "Au retour d’une démo, Labz te propose de raconter ton expérience à Mathieu en privé.",
-    items: ["Tu peux fermer le formulaire ou retrouver un brouillon commencé sur ce projet."]
+    title: "Ton avis pendant la démo",
+    description: "Les démos web s’ouvrent dans Labz. Une invitation te permet de donner ton avis pendant l’essai.",
+    items: ["Ferme le formulaire pour reprendre ta démo au même endroit."]
   },
 {
   "version": "0.18.16",
