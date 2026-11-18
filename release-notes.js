@@ -7,7 +7,7 @@ export const releases = [
     date: "2026-11-18",
     title: "Ton avis pendant la démo",
     description: "Les démos web s’ouvrent dans Labz. Une invitation te permet de donner ton avis pendant l’essai.",
-    items: ["Ferme le formulaire pour reprendre ta démo au même endroit."]
+    items: ["Fourmiz rejoint les jeux du catalogue avec sa simulation tactile de colonie.", "Ferme le formulaire pour reprendre ta démo au même endroit."]
   },
 {
   "version": "0.18.16",

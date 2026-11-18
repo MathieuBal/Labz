@@ -8,7 +8,7 @@ Site : https://mathieubal.github.io/Labz/
 
 Le numéro de version et les nouveautés viennent de `release-notes.js` ; ils sont validés contre `package.json` et publiés ensemble.
 
-- Catalogue éditorial de **douze fiches**, dont **sept projets ou outils directement essayables**. Les projets non testables sont distingués comme présentations, études de cas ou R&D ; Constella est présenté comme une seule suite avec Explore et Watch sur un Core commun.
+- Catalogue éditorial de **treize fiches**, dont **huit projets ou outils directement essayables**. Les projets non testables sont distingués comme présentations, études de cas ou R&D ; Constella est présenté comme une seule suite avec Explore et Watch sur un Core commun.
 - `catalog.js` est la source canonique des statuts, accès publics, guides de découverte et métadonnées essentielles des fiches.
 - Pages projet enrichies selon leur nature, avec chargement différé des modules lourds.
 - Chaque projet possède une URL statique `/Labz/projets/.../` générée au build avec titre, description, canonical, OpenGraph et entrée sitemap.
