@@ -220,7 +220,31 @@ function updateFeedbackHint() {
   const kind = form.elements.kind.value;
   form.elements.message.placeholder = kind === 'bug' ? 'Que faisais-tu ? Que s’est-il passé ? Sur quel appareil ?' : kind === 'opinion' ? 'Ce qui t’a plu, ce qui t’a gêné…' : 'Explique ton idée et ce qu’elle apporterait.';
 }
-function openFeedback(id, opener) {
+const promptInterval = 7 * 24 * 60 * 60 * 1000;
+const promptedAt = new Map();
+let trial = null;
+
+function onTrialReturn() {
+  if (!trial || document.hidden || trial.leftAt === null) return;
+  const {id, opener, leftAt} = trial;
+  trial = null;
+  if (Date.now() - leftAt < 15000 || dialog.open || privateSendBusy || !feedbackEndpoint) return;
+  const key = `labs-feedback-prompt-${id}`;
+  let last = promptedAt.get(id) || 0;
+  try { last = Math.max(last, Number(storage?.getItem(key)) || 0); } catch { /* Storage is optional. */ }
+  if (Date.now() - last < promptInterval || drafts.state(id) === 'received') return;
+  openFeedback(id, opener, true);
+  promptedAt.set(id, Date.now());
+  try { storage?.setItem(key, String(promptedAt.get(id))); } catch { /* Keep the in-memory cooldown. */ }
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && trial) trial.leftAt = Date.now();
+  else onTrialReturn();
+});
+
+function openFeedback(id, opener, afterTrial = false) {
+  trial = null;
   feedbackProject = projects.find(p => p.id === id);
   if (!feedbackProject) return;
   feedbackOpener = opener; feedbackView++; form.reset(); dirtyDraft = false; draftPersisted = true;
@@ -229,7 +253,9 @@ function openFeedback(id, opener) {
     for (const key of ['summary','message','nickname']) if (typeof draft[key] === 'string') form.elements[key].value = draft[key];
     if (feedbackKinds[draft.kind]) form.elements.kind.value = draft.kind;
   }
+  if (afterTrial && !draft) form.elements.kind.value = 'opinion';
   updateFeedbackHint();
+  document.querySelector('#feedback-title').textContent = afterTrial ? 'Comment s’est passé ton essai ?' : 'Déposer un avis';
   document.querySelector('#feedback-context').textContent = `À propos de ${feedbackProject.name}`;
   feedbackStatus();
   document.querySelector('#private-feedback').hidden = false;
@@ -319,7 +345,12 @@ document.addEventListener('click', async event => {
     if (route.favorites && route.segments[0] === 'catalogue') render({scroll:false});
   }
   const launch = event.target.closest('[data-launch]');
-  if (launch) { collection = rememberLaunch(collection, launch.dataset.launch); saveCollection(); }
+  if (launch && !event.defaultPrevented) {
+    const id = launch.dataset.launch;
+    collection = rememberLaunch(collection, id);
+    saveCollection();
+    trial = {id, opener:launch, leftAt:null};
+  }
   if (event.target.closest('[data-refresh-activity]') && !activityBusy) void refreshActivity(true);
   const filter = event.target.closest('[data-toggle]');
   if (filter) {
@@ -362,6 +393,7 @@ window.addEventListener('storage', event => {
   }
 });
 window.addEventListener('hashchange', () => {
+  trial = null;
   if (dialog.open) dialog.close();
   render();
 });

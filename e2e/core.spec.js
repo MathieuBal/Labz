@@ -145,3 +145,35 @@ test('l’administration simulée se connecte et confirme un changement de statu
   await expect(page.getByRole('heading',{name:'Navigation mobile'})).toBeVisible();
   await expect(page.locator('.admin-topic-synthesis')).toHaveText('Vérifier le parcours mobile.');
 });
+
+test('un retour de démo propose un avis privé une fois pour le projet', async ({page}) => {
+  await page.goto('/#/projet/sensoria');
+  await page.clock.install();
+  const launch = page.locator('[data-launch]').first();
+  // Exercise the launch handler without loading the external project in CI.
+  await launch.evaluate(link => link.removeAttribute('href'));
+  async function visit(seconds) {
+    await launch.click();
+    await page.evaluate(() => {
+      Object.defineProperty(document, 'hidden', {configurable:true, value:true});
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await page.clock.fastForward(seconds * 1000);
+    await page.evaluate(() => {
+      Object.defineProperty(document, 'hidden', {configurable:true, value:false});
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+  }
+  const dialog = page.locator('#feedback');
+  await visit(2);
+  await expect(dialog).toBeHidden();
+  await visit(20);
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('#feedback-context')).toContainText('Sensoria');
+  await expect(dialog.locator('[value=opinion]')).toBeChecked();
+  await dialog.getByLabel('Fermer le formulaire').click();
+  await visit(20);
+  await expect(dialog).toBeHidden();
+  await page.locator('[data-feedback]').click();
+  await expect(dialog).toBeVisible();
+});
