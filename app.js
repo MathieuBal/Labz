@@ -220,7 +220,72 @@ function updateFeedbackHint() {
   const kind = form.elements.kind.value;
   form.elements.message.placeholder = kind === 'bug' ? 'Que faisais-tu ? Que s’est-il passé ? Sur quel appareil ?' : kind === 'opinion' ? 'Ce qui t’a plu, ce qui t’a gêné…' : 'Explique ton idée et ce qu’elle apporterait.';
 }
-function openFeedback(id, opener) {
+const promptInterval = 7 * 24 * 60 * 60 * 1000;
+const promptedAt = new Map();
+const viewer = document.querySelector('#demo-viewer');
+const invite = document.querySelector('#demo-invite');
+const reviewButton = document.querySelector('#demo-review');
+let trial = null;
+let inviteTimer;
+
+function updateInviteTimer() {
+  clearTimeout(inviteTimer);
+  if (!trial || !trial.waiting) return;
+  if (trial.started !== null) trial.remaining -= performance.now() - trial.started;
+  trial.started = null;
+  if (document.hidden || dialog.open) return;
+  trial.started = performance.now();
+  inviteTimer = setTimeout(() => {
+    trial.waiting = false;
+    const key = `labs-feedback-prompt-${trial.project.id}`;
+    let last = promptedAt.get(key) || 0;
+    try { last = Math.max(last, Number(storage?.getItem(key)) || 0); } catch { /* Storage is optional. */ }
+    if (Date.now() - last < promptInterval || drafts.state(trial.project.id) === 'received') return;
+    invite.hidden = false;
+    promptedAt.set(key, Date.now());
+    try { storage?.setItem(key, String(promptedAt.get(key))); } catch { /* Use the in-memory cooldown. */ }
+  }, Math.max(0, trial.remaining));
+}
+
+function launchDemo(project) {
+  const frame = document.createElement('iframe');
+  frame.title = project.name;
+  frame.src = project.live;
+  trial = {project, remaining:60000, started:null, waiting:false};
+  frame.addEventListener('load', () => {
+    if (trial?.project !== project || !frame.isConnected) return;
+    trial.waiting = true;
+    updateInviteTimer();
+  }, {once:true});
+  document.querySelector('#demo-name').textContent = project.name;
+  document.querySelector('#demo-external').href = project.live;
+  invite.hidden = true;
+  viewer.showModal();
+  document.querySelector('#demo-screen').replaceChildren(frame);
+}
+
+function reviewDemo() {
+  trial.waiting = false;
+  clearTimeout(inviteTimer);
+  invite.hidden = true;
+  openFeedback(trial.project.id, reviewButton, true);
+}
+
+reviewButton.addEventListener('click', reviewDemo);
+document.querySelector('#demo-accept').addEventListener('click', reviewDemo);
+document.querySelector('#demo-dismiss').addEventListener('click', () => {
+  invite.hidden = true;
+  reviewButton.focus();
+});
+document.querySelector('#demo-close').addEventListener('click', () => viewer.close());
+viewer.addEventListener('close', () => {
+  clearTimeout(inviteTimer);
+  trial = null;
+  document.querySelector('#demo-screen').replaceChildren();
+});
+document.addEventListener('visibilitychange', updateInviteTimer);
+
+function openFeedback(id, opener, afterTrial = false) {
   feedbackProject = projects.find(p => p.id === id);
   if (!feedbackProject) return;
   feedbackOpener = opener; feedbackView++; form.reset(); dirtyDraft = false; draftPersisted = true;
@@ -229,7 +294,9 @@ function openFeedback(id, opener) {
     for (const key of ['summary','message','nickname']) if (typeof draft[key] === 'string') form.elements[key].value = draft[key];
     if (feedbackKinds[draft.kind]) form.elements.kind.value = draft.kind;
   }
+  if (afterTrial && !draft) form.elements.kind.value = 'opinion';
   updateFeedbackHint();
+  document.querySelector('#feedback-title').textContent = afterTrial ? 'Ton avis sur la démo' : 'Déposer un avis';
   document.querySelector('#feedback-context').textContent = `À propos de ${feedbackProject.name}`;
   feedbackStatus();
   document.querySelector('#private-feedback').hidden = false;
@@ -319,7 +386,17 @@ document.addEventListener('click', async event => {
     if (route.favorites && route.segments[0] === 'catalogue') render({scroll:false});
   }
   const launch = event.target.closest('[data-launch]');
-  if (launch) { collection = rememberLaunch(collection, launch.dataset.launch); saveCollection(); }
+  if (launch && !event.defaultPrevented) {
+    const id = launch.dataset.launch;
+    collection = rememberLaunch(collection, id);
+    saveCollection();
+    const project = projects.find(item => item.id === id);
+    if (project?.live && !/\.zip(?:$|[?#])/i.test(project.live) &&
+        !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+      event.preventDefault();
+      launchDemo(project);
+    }
+  }
   if (event.target.closest('[data-refresh-activity]') && !activityBusy) void refreshActivity(true);
   const filter = event.target.closest('[data-toggle]');
   if (filter) {
@@ -363,6 +440,7 @@ window.addEventListener('storage', event => {
 });
 window.addEventListener('hashchange', () => {
   if (dialog.open) dialog.close();
+  if (viewer.open) viewer.close();
   render();
 });
 render({focus:false});

@@ -143,6 +143,17 @@ export const projects = [
     detail: 'Un idle/roguelite navigateur qui traite réellement un million de cellules avec TypedArrays, index spécialisés, workers et rendu GPU.',
     hint: 'Projet techniquement solide. La reprise après simple retour d’arrière-plan reste un défaut connu à corriger.',
   }),
+  project('fourmiz', 'Fourmiz', 'jeux', 'Dépose des graines et regarde les ouvrières tracer leurs pistes jusqu’au nid.', {
+    cover: 'assets/fourmiz.webp', coverLabel: 'Les ouvrières sur le terrain de Fourmiz',
+    mode: 'Simulation de colonie · jouable', action: 'Jouer', launchLabel: 'Jouer',
+    live: 'https://mathieubal.github.io/Fourmiz/', repo: 'https://github.com/MathieuBal/Fourmiz',
+    firstTry: 'Observe le premier retour au nid',
+    steps: ['Touche le sol près du nid pour déposer des graines.', 'Suis une ouvrière qui transporte une graine, puis observe les fourmis qui empruntent sa piste.', 'Passe en vitesse ×4 pour suivre les œufs et les larves.'],
+    controls: 'Au doigt ou à la souris. Tu peux masquer les pistes, accélérer ou mettre en pause.',
+    saveNote: 'Une nouvelle colonie démarre à chaque lancement.',
+    comfort: 'La démo fonctionne directement dans le navigateur.',
+    detail: 'Les ouvrières marquent le chemin du retour avec des phéromones. Les récoltes alimentent la réserve où la colonie puise pour élever les larves.',
+  }),
   project('lootchest', 'Lootchest', 'jeux', 'Ouvre des coffres, construis ton équipement et pousse toujours plus loin ta progression.', {
     art: 'chest', mode: 'Public · prototype riche', live: 'https://mathieubal.github.io/Lootchest/', repo: 'https://github.com/MathieuBal/Lootchest', action: 'Jouer',
     detail: 'RPG-looter vanilla JS avec donjon, affixes, plongée roguelite, village idle, forge, talents, prestige et loot procédural.',
