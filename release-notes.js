@@ -3,6 +3,13 @@ import {releases as previousReleases} from './release-history.js';
 
 export const releases = [
   {
+    version: "0.18.18",
+    date: "2026-11-19",
+    title: "Deux fourmilières dans Fourmiz",
+    description: "Depuis Labz, Fourmiz démarre avec les colonies ocre et bleue.",
+    items: ["Observe les rencontres sur le grand terrain.", "Le mode à une colonie reste accessible dans la démo."]
+  },
+  {
     version: "0.18.17",
     date: "2026-11-18",
     title: "Ton avis pendant la démo",
