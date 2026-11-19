@@ -146,7 +146,7 @@ export const projects = [
   project('fourmiz', 'Fourmiz', 'jeux', 'Dépose des graines et regarde les ouvrières tracer leurs pistes jusqu’au nid.', {
     cover: 'assets/fourmiz.webp', coverLabel: 'Les ouvrières sur le terrain de Fourmiz',
     mode: 'Simulation de colonie · jouable', action: 'Jouer', launchLabel: 'Jouer',
-    live: 'https://mathieubal.github.io/Fourmiz/', repo: 'https://github.com/MathieuBal/Fourmiz',
+    live: 'https://mathieubal.github.io/Fourmiz/?duel=1', repo: 'https://github.com/MathieuBal/Fourmiz',
     firstTry: 'Observe le premier retour au nid',
     steps: ['Touche le sol près du nid pour déposer des graines.', 'Suis une ouvrière qui transporte une graine, puis observe les fourmis qui empruntent sa piste.', 'Passe en vitesse ×4 pour suivre les œufs et les larves.'],
     controls: 'Au doigt ou à la souris. Tu peux masquer les pistes, accélérer ou mettre en pause.',
