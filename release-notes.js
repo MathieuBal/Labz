@@ -3,6 +3,13 @@ import {releases as previousReleases} from './release-history.js';
 
 export const releases = [
   {
+    version: "0.18.19",
+    date: "2026-11-21",
+    title: "Fourmiz : suivre un tas disputé",
+    description: "La fiche présente les deux colonies et propose une première observation sur le terrain des nids voisins.",
+    items: ["Le guide explique comment suivre une ouvrière, repérer une offensive et voir qui rapporte les graines."]
+  },
+  {
     version: "0.18.18",
     date: "2026-11-19",
     title: "Deux fourmilières dans Fourmiz",
