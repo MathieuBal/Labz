@@ -143,6 +143,16 @@ export const projects = [
     detail: 'Un idle/roguelite navigateur qui traite réellement un million de cellules avec TypedArrays, index spécialisés, workers et rendu GPU.',
     hint: 'Projet techniquement solide. La reprise après simple retour d’arrière-plan reste un défaut connu à corriger.',
   }),
+  project('ruche', 'Le Rucher', 'jeux', 'Observe les vols dans un jardin puis ouvre la ruche en bois pour suivre la colonie au fil des saisons.', {
+    cover: 'assets/ruche.webp', coverLabel: 'La ruche au milieu du jardin',
+    mode: 'Simulation de colonie', action: 'Observer', launchLabel: 'Observer',
+    live: 'https://mathieubal.github.io/Ruche/', repo: 'https://github.com/MathieuBal/Ruche',
+    firstTry: 'Entre dans la ruche',
+    steps: ['Observe les allers-retours au-dessus des fleurs.', 'Touche la ruche en bois et repère le couvain.', 'Accélère le temps pour comparer le printemps et l’hiver.'],
+    controls: 'Touche la ruche pour ouvrir la coupe, puis Jardin pour revenir aux vols.',
+    saveNote: 'Chaque lancement démarre au printemps.',
+    detail: 'Une colonie déjà installée élève ses ouvrières, renouvelle ses butineuses et constitue ses réserves. Le modèle suit les générations et les saisons. Les références biologiques sont accessibles dans la simulation.',
+  }),
   project('fourmiz', 'Fourmiz', 'jeux', 'Suis deux colonies de fourmis, ocre et bleue, qui tracent leurs pistes et se disputent les mêmes graines.', {
     cover: 'assets/fourmiz.webp', coverLabel: 'Les ouvrières sur le terrain de Fourmiz',
     mode: 'Simulation de colonies autonomes', action: 'Jouer', launchLabel: 'Jouer',

@@ -13,7 +13,7 @@ const base = {
 };
 
 test('chaque projet actif du catalogue est accepté par le contrat feedback', () => {
-  assert.equal(projects.length, 13);
+  assert.equal(projects.length, 14);
   for (const project of projects) {
     const submission = validateSubmission({...base, project:project.id});
     assert.ok(submission, `Feedback rejeté pour ${project.id}`);

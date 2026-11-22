@@ -3,6 +3,13 @@ import {releases as previousReleases} from './release-history.js';
 
 export const releases = [
   {
+    version: "0.18.20",
+    date: "2026-11-22",
+    title: "Le Rucher rejoint Labz",
+    description: "Observe les vols dans le jardin puis touche la ruche pour suivre le couvain et les réserves au fil des saisons.",
+    items: ["La coupe et le jardin présentent la même colonie."]
+  },
+  {
     version: "0.18.19",
     date: "2026-11-21",
     title: "Fourmiz : suivre un tas disputé",
